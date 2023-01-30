@@ -16,7 +16,8 @@ namespace GhostUI.Controllers
         {
             "Freezing", "Bracing", "Chilly", "Cool", "Mild", "Warm", "Balmy", "Hot", "Sweltering", "Scorching"
         });
-        [Authorize]
+        
+        // [Authorize]
         [HttpGet]
         public IEnumerable<WeatherForecast> WeatherForecasts(int startDateIndex)
         {
