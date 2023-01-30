@@ -1,0 +1,38 @@
+import { Fragment, StrictMode } from 'react';
+import { createRoot } from 'react-dom/client';
+import { BrowserRouter } from 'react-router-dom';
+import { ToastContainer } from 'react-toastify';
+import App from './App';
+import './assets/style/scss/site.scss';
+import { registerIcons, toastifyProps } from './config';
+
+registerIcons();
+
+const container = document.getElementById('root');
+const root = createRoot(container as HTMLElement);
+
+function AppRenderer() {
+
+  return (
+    <Fragment>
+      <BrowserRouter>
+          <StrictMode>
+            <App />
+          </StrictMode>
+      </BrowserRouter>
+      <ToastContainer {...toastifyProps} />
+    </Fragment>
+  );
+}
+
+root.render(<AppRenderer />);
+
+// If you want your app to work offline and load faster, you can change
+// unregister() to register() below. Note this comes with some pitfalls.
+// Learn more about service workers: https://cra.link/PWA
+// serviceWorkerRegistration.unregister();
+
+// If you want to start measuring performance in your app, pass a function
+// to log results (for example: reportWebVitals(console.log))
+// or send to an analytics endpoint. Learn more: https://bit.ly/CRA-vitals
+// reportWebVitals();

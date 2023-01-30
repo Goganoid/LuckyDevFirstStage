@@ -1,0 +1,10 @@
+﻿
+/* overrides for bootstrap & react-toastify defaults */
+@import 'base/colors.scss';
+@import 'base/variables';
+
+/* node_modules imports */
+@import "~bootstrap/scss/bootstrap";
+@import 'react-toastify/dist/ReactToastify.css';
+
+/* local styles */
