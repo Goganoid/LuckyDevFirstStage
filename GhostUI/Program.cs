@@ -1,25 +1,31 @@
-using GhostUI.Hubs;
+using System;
+using System.Collections.Generic;
+using System.IO;
+using System.Reflection;
+using System.Text;
+using System.Threading.Tasks;
 using GhostUI.Extensions;
 using HealthChecks.UI.Client;
+using Microsoft.AspNetCore.Authentication.JwtBearer;
 using Microsoft.AspNetCore.Hosting;
 using Microsoft.Extensions.Hosting;
 using Microsoft.AspNetCore.Builder;
 using Microsoft.Extensions.DependencyInjection;
 using Microsoft.AspNetCore.Diagnostics.HealthChecks;
 using Microsoft.AspNetCore.SpaServices.ReactDevelopmentServer;
+using Microsoft.Extensions.Configuration;
+using Microsoft.IdentityModel.Tokens;
+using Microsoft.OpenApi.Models;
+using MyPlan.Helpers;
+using SimpleAuth.Data;
 
 var spaSrcPath = "ClientApp";
 var corsPolicyName = "AllowAll";
 var builder = WebApplication.CreateBuilder(args);
+var configuration = builder.Configuration;
 
-// Custom healthcheck example
-builder.Services.AddHealthChecks()
-    .AddGCInfoCheck("GCInfo");
-
-// Write healthcheck custom results to healthchecks-ui (use InMemory for the DB - AspNetCore.HealthChecks.UI.InMemory.Storage nuget package)
-builder.Services.AddHealthChecksUI()
-    .AddInMemoryStorage();
-
+builder.Services.AddDbContext<DataContext>();
+builder.Services.AddAutoMapper(AppDomain.CurrentDomain.GetAssemblies());
 builder.Services.AddCorsConfig(corsPolicyName);
 builder.Services.AddControllers();
 builder.Services.AddSignalR();
@@ -32,14 +38,99 @@ builder.Services.AddMvc(opt => opt.SuppressAsyncSuffixInActionNames = false);
 
 // In production, the React files will be served from this directory
 // builder.Services.AddSpaStaticFiles(opt => opt.RootPath = $"{spaSrcPath}/dist");
+builder.Services.AddSwaggerGen(c => {
+        c.SwaggerDoc("v1", new OpenApiInfo {Title = "SimpleAuth", Version = "v1"});
 
-// Register the Swagger services (using OpenApi 3.0)
-builder.Services.AddOpenApiDocument(settings =>
-{
-    settings.Version = "v1";
-    settings.Title = "GhostUI API";
-    settings.Description = "Detailed Description of API";
+
+        c.AddSecurityDefinition(JwtAuthenticationDefaults.AuthenticationScheme,
+            new OpenApiSecurityScheme
+            {
+                Description = "JWT Authorization header using the Bearer scheme.",
+                Name = JwtAuthenticationDefaults.HeaderName, // Authorization
+                In = ParameterLocation.Header,
+                Type = SecuritySchemeType.Http,
+                Scheme = "bearer"
+            });
+        c.AddSecurityRequirement(new OpenApiSecurityRequirement
+        {
+            {
+                new OpenApiSecurityScheme
+                {
+                    Reference = new OpenApiReference
+                    {
+                        Type = ReferenceType.SecurityScheme,
+                        Id = JwtAuthenticationDefaults.AuthenticationScheme
+                    }
+                },
+                new List<string>()
+            }
+        });
+        var xmlFilename = $"{Assembly.GetExecutingAssembly().GetName().Name}.xml";
+        c.IncludeXmlComments(Path.Combine(AppContext.BaseDirectory, xmlFilename));
 });
+
+
+// configure strongly typed configurations
+var appSettingsSection = configuration.GetSection("AppSettings");
+builder.Services.Configure<AppSettings>(appSettingsSection);
+
+// configure jwt authentication
+var appSettings = appSettingsSection.Get<AppSettings>();
+var key = Encoding.ASCII.GetBytes(appSettings.Secret);
+
+
+builder.Services.AddAuthentication(JwtBearerDefaults.AuthenticationScheme).AddJwtBearer(options =>
+{
+    options.TokenValidationParameters = new TokenValidationParameters()
+    {
+        ValidateActor = true,
+        ValidateAudience = false,
+        ValidateIssuer = false,
+        ValidateIssuerSigningKey = true,
+        ValidIssuer = appSettings.ValidIssuer,
+        ValidAudience = appSettings.ValidAudience,
+        IssuerSigningKey = new SymmetricSecurityKey(key)
+    };
+    options.Events = new JwtBearerEvents
+    {
+        OnTokenValidated = context =>
+        {
+            var dataContext = context.HttpContext.RequestServices.GetRequiredService<DataContext>();
+            var userId = int.Parse(context.Principal.Identity.Name);
+            var user = dataContext.Users.Find(userId);
+            if (user == null)
+            {
+                // return unauthorized if user no longer exists
+                context.Fail("Unauthorized");
+            }
+
+            return Task.CompletedTask;
+        },
+        OnAuthenticationFailed = context =>
+        {
+            if (context.Exception.GetType() == typeof(SecurityTokenExpiredException))
+                context.Response.Headers.Add("Token-Expired", "true");
+
+            return Task.CompletedTask;
+        },
+        OnMessageReceived = context =>
+        {
+            var accessToken = context.Request.Query["access_token"];
+
+            // If the request is for our hub...
+            var path = context.HttpContext.Request.Path;
+            if (!string.IsNullOrEmpty(accessToken) &&
+                (path.StartsWithSegments("/hubs/dashboard")))
+            {
+                // Read the token out of the query string
+                context.Token = accessToken;
+            }
+
+            return Task.CompletedTask;
+        }
+    };
+});
+builder.Services.AddAuthorization();
 
 var app = builder.Build();
 
@@ -56,30 +147,23 @@ else
     app.UseHsts();
 }
 
-app.UseCustomExceptionHandler();
 app.UseCors(corsPolicyName);
 
-// Show/write HealthReport data from healthchecks (AspNetCore.HealthChecks.UI.Client nuget package)
-app.UseHealthChecksUI();
-app.UseHealthChecks("/healthchecks-json", new HealthCheckOptions()
-{
-    Predicate = _ => true,
-    ResponseWriter = UIResponseWriter.WriteHealthCheckUIResponse
-});
 
 // Register the Swagger generator and the Swagger UI middlewares
-// NSwage.MsBuild + adding automation config in GhostUI.csproj makes this part of the build step (updates to API will be handled automatically)
-app.UseOpenApi();
-app.UseSwaggerUi3();
+// Configure the HTTP request pipeline.
+if (app.Environment.IsDevelopment())
+{
+    app.UseSwagger();
+    // app.UseSwaggerUI();
+    app.UseSwaggerUI(c => { c.SwaggerEndpoint("/swagger/v1/swagger.json", "TestWebApi"); });
+}
+
 app.UseHttpsRedirection();
 app.UseRouting();
-
-// Map controllers / SignalR hubs
-app.UseEndpoints(endpoints =>
-{
-    endpoints.MapControllers();
-    endpoints.MapHub<UsersHub>("/hubs/users");
-});
+app.UseAuthentication();
+app.UseAuthorization();
+app.MapControllers();
 
 // Killing .NET debug session does not kill spawned Node.js process (have to manually kill)
 // app.UseSpa(spa =>

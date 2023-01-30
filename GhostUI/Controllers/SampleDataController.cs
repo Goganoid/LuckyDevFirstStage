@@ -4,6 +4,7 @@ using GhostUI.Models;
 using Microsoft.AspNetCore.Mvc;
 using System.Collections.Generic;
 using System.Collections.Immutable;
+using Microsoft.AspNetCore.Authorization;
 
 namespace GhostUI.Controllers
 {
@@ -15,7 +16,7 @@ namespace GhostUI.Controllers
         {
             "Freezing", "Bracing", "Chilly", "Cool", "Mild", "Warm", "Balmy", "Hot", "Sweltering", "Scorching"
         });
-
+        [Authorize]
         [HttpGet]
         public IEnumerable<WeatherForecast> WeatherForecasts(int startDateIndex)
         {
