@@ -2,7 +2,7 @@
 
 #nullable disable
 
-namespace GhostUI.Migrations
+namespace RecipeWiki.Migrations
 {
     /// <inheritdoc />
     public partial class InitialCreate : Migration

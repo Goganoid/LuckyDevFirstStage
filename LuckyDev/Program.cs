@@ -4,20 +4,17 @@ using System.IO;
 using System.Reflection;
 using System.Text;
 using System.Threading.Tasks;
-using GhostUI.Extensions;
-using HealthChecks.UI.Client;
 using Microsoft.AspNetCore.Authentication.JwtBearer;
-using Microsoft.AspNetCore.Hosting;
-using Microsoft.Extensions.Hosting;
 using Microsoft.AspNetCore.Builder;
-using Microsoft.Extensions.DependencyInjection;
-using Microsoft.AspNetCore.Diagnostics.HealthChecks;
-using Microsoft.AspNetCore.SpaServices.ReactDevelopmentServer;
+using Microsoft.EntityFrameworkCore;
 using Microsoft.Extensions.Configuration;
+using Microsoft.Extensions.DependencyInjection;
+using Microsoft.Extensions.Hosting;
 using Microsoft.IdentityModel.Tokens;
 using Microsoft.OpenApi.Models;
 using MyPlan.Helpers;
-using SimpleAuth.Data;
+using RecipeWiki.Data;
+using RecipeWiki.Extensions;
 
 var spaSrcPath = "ClientApp";
 var corsPolicyName = "AllowAll";
@@ -38,35 +35,36 @@ builder.Services.AddMvc(opt => opt.SuppressAsyncSuffixInActionNames = false);
 
 // In production, the React files will be served from this directory
 // builder.Services.AddSpaStaticFiles(opt => opt.RootPath = $"{spaSrcPath}/dist");
-builder.Services.AddSwaggerGen(c => {
-        c.SwaggerDoc("v1", new OpenApiInfo {Title = "SimpleAuth", Version = "v1"});
+builder.Services.AddSwaggerGen(c =>
+{
+    c.SwaggerDoc("v1", new OpenApiInfo {Title = "RecipeWiki", Version = "v1"});
 
 
-        c.AddSecurityDefinition(JwtAuthenticationDefaults.AuthenticationScheme,
+    c.AddSecurityDefinition(JwtAuthenticationDefaults.AuthenticationScheme,
+        new OpenApiSecurityScheme
+        {
+            Description = "JWT Authorization header using the Bearer scheme.",
+            Name = JwtAuthenticationDefaults.HeaderName, // Authorization
+            In = ParameterLocation.Header,
+            Type = SecuritySchemeType.Http,
+            Scheme = "bearer"
+        });
+    c.AddSecurityRequirement(new OpenApiSecurityRequirement
+    {
+        {
             new OpenApiSecurityScheme
             {
-                Description = "JWT Authorization header using the Bearer scheme.",
-                Name = JwtAuthenticationDefaults.HeaderName, // Authorization
-                In = ParameterLocation.Header,
-                Type = SecuritySchemeType.Http,
-                Scheme = "bearer"
-            });
-        c.AddSecurityRequirement(new OpenApiSecurityRequirement
-        {
-            {
-                new OpenApiSecurityScheme
+                Reference = new OpenApiReference
                 {
-                    Reference = new OpenApiReference
-                    {
-                        Type = ReferenceType.SecurityScheme,
-                        Id = JwtAuthenticationDefaults.AuthenticationScheme
-                    }
-                },
-                new List<string>()
-            }
-        });
-        var xmlFilename = $"{Assembly.GetExecutingAssembly().GetName().Name}.xml";
-        c.IncludeXmlComments(Path.Combine(AppContext.BaseDirectory, xmlFilename));
+                    Type = ReferenceType.SecurityScheme,
+                    Id = JwtAuthenticationDefaults.AuthenticationScheme
+                }
+            },
+            new List<string>()
+        }
+    });
+    var xmlFilename = $"{Assembly.GetExecutingAssembly().GetName().Name}.xml";
+    c.IncludeXmlComments(Path.Combine(AppContext.BaseDirectory, xmlFilename));
 });
 
 
@@ -148,7 +146,14 @@ else
 }
 
 app.UseCors(corsPolicyName);
-
+using (var scope = app.Services.CreateScope())
+{
+    var services = scope.ServiceProvider;
+    var context = services.GetRequiredService<DataContext>();
+    context.Database.Migrate();
+    context.Database.EnsureCreated();
+    // DbInitializer.Initialize(context);
+}
 
 // Register the Swagger generator and the Swagger UI middlewares
 // Configure the HTTP request pipeline.

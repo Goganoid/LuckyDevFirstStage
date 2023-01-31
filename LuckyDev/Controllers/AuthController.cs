@@ -1,36 +1,32 @@
 using System;
-using System.Collections.Generic;
 using System.IdentityModel.Tokens.Jwt;
 using System.Linq;
-using System.Net;
 using System.Security.Claims;
 using System.Text;
 using AutoMapper;
 using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Http;
-using Microsoft.AspNetCore.Http.HttpResults;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.Extensions.Options;
 using Microsoft.IdentityModel.Tokens;
 using MyPlan.Helpers;
-using MyPlan.Models;
 using MyPlan.Models.User;
-using SimpleAuth.Data;
-using SimpleAuth.Entities;
-using SimpleAuth.Entities.DTO;
-
+using RecipeWiki.Data;
+using RecipeWiki.Entities;
+using RecipeWiki.Entities.DTO;
 
 namespace MyPlan.Controllers;
 
 [Authorize]
 [ApiController]
 [Route("[controller]")]
-public class UsersController : ControllerBase
+public class AuthController : ControllerBase
 {
     private readonly AppSettings _appSettings;
     private readonly IMapper _mapper;
     private readonly DataContext _context;
-    public UsersController(
+
+    public AuthController(
         IOptions<AppSettings> appSettings,
         IMapper mapper,
         DataContext context)
@@ -39,6 +35,7 @@ public class UsersController : ControllerBase
         _context = context;
         _appSettings = appSettings.Value;
     }
+
     /// <summary>
     /// Login using email and password
     /// </summary>
@@ -57,10 +54,10 @@ public class UsersController : ControllerBase
     /// <response code="200">Request successful</response>
     /// <response code="400">If the email or password is incorrect </response>
     [AllowAnonymous]
-    [ProducesResponseType(typeof(LoginDTO),StatusCodes.Status200OK)]
-    [ProducesResponseType(typeof(ErrorMessage),StatusCodes.Status400BadRequest)]
+    [ProducesResponseType(typeof(LoginDTO), StatusCodes.Status200OK)]
+    [ProducesResponseType(typeof(ErrorMessage), StatusCodes.Status400BadRequest)]
     [HttpPost("login")]
-    public IActionResult Login([FromBody]AuthenticateModel model)
+    public IActionResult Login([FromBody] AuthenticateModel model)
     {
         var user = Authenticate(model.Email, model.Password);
 
@@ -76,7 +73,8 @@ public class UsersController : ControllerBase
                 new Claim(ClaimTypes.Name, user.Id.ToString())
             }),
             Expires = DateTime.UtcNow.AddDays(7),
-            SigningCredentials = new SigningCredentials(new SymmetricSecurityKey(key), SecurityAlgorithms.HmacSha256Signature)
+            SigningCredentials =
+                new SigningCredentials(new SymmetricSecurityKey(key), SecurityAlgorithms.HmacSha256Signature)
         };
         var token = tokenHandler.CreateToken(tokenDescriptor);
         var tokenString = tokenHandler.WriteToken(token);
@@ -94,7 +92,7 @@ public class UsersController : ControllerBase
 
     [AllowAnonymous]
     [HttpPost("register")]
-    public IActionResult Register([FromBody]RegisterModel model)
+    public IActionResult Register([FromBody] RegisterModel model)
     {
         // map model to entity
         var user = _mapper.Map<User>(model);
@@ -118,32 +116,38 @@ public class UsersController : ControllerBase
         catch (Exception ex)
         {
             // return error message if there was an exception
-            return BadRequest(new { message = ex.Message });
+            return BadRequest(new {message = ex.Message});
         }
     }
 
-    [HttpGet]
-    public IActionResult GetAll()
+
+    private User? Authenticate(string username, string password)
     {
-        var users = _context.Users;
-        var model = _mapper.Map<IList<UserModel>>(users);
-        return Ok(model);
+        if (string.IsNullOrEmpty(username) || string.IsNullOrEmpty(password))
+            return null;
+
+        var user = _context.Users.SingleOrDefault(x => x.Email == username);
+
+        // check if username exists
+        if (user == null)
+            return null;
+
+        // check if password is correct
+        if (!VerifyPasswordHash(password, user.PasswordHash, user.PasswordSalt))
+            return null;
+
+        // authentication successful
+        return user;
     }
 
-    [HttpGet("{id}")]
-    public IActionResult GetById(int id)
+    [HttpPut("update")]
+    public IActionResult Update([FromBody] UpdateModel model)
     {
-        var user = _context.Users.Find(id);
-        var model = _mapper.Map<UserModel>(user);
-        return Ok(model);
-    }
-
-    [HttpPut("{id}")]
-    public IActionResult Update(int id, [FromBody]UpdateModel model)
-    {
+        var id = AuthController.GetUserId(HttpContext.User.Identity as ClaimsIdentity);
+        if (id == null) return BadRequest("Incorrect jwt token");
         // map model to entity and set id
         var userNew = _mapper.Map<User>(model);
-        userNew.Id = id;
+        userNew.Id = id.Value;
         try
         {
             var user = _context.Users.Find(userNew.Id);
@@ -151,7 +155,7 @@ public class UsersController : ControllerBase
                 throw new Exception("User not found");
 
             // update email if it has changed
-            if (!string.IsNullOrWhiteSpace(userNew.Email) && userNew.Email != userNew.Email)
+            if (!string.IsNullOrWhiteSpace(userNew.Email) && userNew.Email != user.Email)
             {
                 // throw error if the new email is already taken
                 if (_context.Users.Any(x => x.Email == userNew.Email))
@@ -183,13 +187,14 @@ public class UsersController : ControllerBase
         catch (Exception ex)
         {
             // return error message if there was an exception
-            return BadRequest(new { message = ex.Message });
+            return BadRequest(new {message = ex.Message});
         }
     }
 
-    [HttpDelete("{id}")]
-    public IActionResult Delete(int id)
+    [HttpDelete("delete")]
+    public IActionResult Delete()
     {
+        var id = AuthController.GetUserId(HttpContext.User.Identity as ClaimsIdentity);
         var user = _context.Users.Find(id);
         if (user != null)
         {
@@ -201,29 +206,11 @@ public class UsersController : ControllerBase
         return NotFound();
     }
 
-
-    private User? Authenticate(string username, string password)
-    {
-        if (string.IsNullOrEmpty(username) || string.IsNullOrEmpty(password))
-            return null;
-
-        var user = _context.Users.SingleOrDefault(x => x.Email == username);
-
-        // check if username exists
-        if (user == null)
-            return null;
-
-        // check if password is correct
-        if (!VerifyPasswordHash(password, user.PasswordHash, user.PasswordSalt))
-            return null;
-
-        // authentication successful
-        return user;
-    }
     private static void CreatePasswordHash(string password, out byte[] passwordHash, out byte[] passwordSalt)
     {
         if (password == null) throw new ArgumentNullException("password");
-        if (string.IsNullOrWhiteSpace(password)) throw new ArgumentException("Value cannot be empty or whitespace only string.", "password");
+        if (string.IsNullOrWhiteSpace(password))
+            throw new ArgumentException("Value cannot be empty or whitespace only string.", "password");
 
         using (var hmac = new System.Security.Cryptography.HMACSHA512())
         {
@@ -231,12 +218,16 @@ public class UsersController : ControllerBase
             passwordHash = hmac.ComputeHash(System.Text.Encoding.UTF8.GetBytes(password));
         }
     }
+
     private static bool VerifyPasswordHash(string password, byte[] storedHash, byte[] storedSalt)
     {
         if (password == null) throw new ArgumentNullException("password");
-        if (string.IsNullOrWhiteSpace(password)) throw new ArgumentException("Value cannot be empty or whitespace only string.", "password");
-        if (storedHash.Length != 64) throw new ArgumentException("Invalid length of password hash (64 bytes expected).", "passwordHash");
-        if (storedSalt.Length != 128) throw new ArgumentException("Invalid length of password salt (128 bytes expected).", "passwordHash");
+        if (string.IsNullOrWhiteSpace(password))
+            throw new ArgumentException("Value cannot be empty or whitespace only string.", "password");
+        if (storedHash.Length != 64)
+            throw new ArgumentException("Invalid length of password hash (64 bytes expected).", "passwordHash");
+        if (storedSalt.Length != 128)
+            throw new ArgumentException("Invalid length of password salt (128 bytes expected).", "passwordHash");
 
         using (var hmac = new System.Security.Cryptography.HMACSHA512(storedSalt))
         {
@@ -248,5 +239,18 @@ public class UsersController : ControllerBase
         }
 
         return true;
+    }
+
+    public static int? GetUserId(ClaimsIdentity? identity)
+    {
+        if (int.TryParse(GetClaim(identity, ClaimTypes.Name), out var id))
+            return id;
+        return null;
+    }
+
+    private static string? GetClaim(ClaimsIdentity? identity, string claimType)
+    {
+        var userClaims = identity?.Claims;
+        return userClaims?.FirstOrDefault(o => o.Type == claimType)?.Value;
     }
 }

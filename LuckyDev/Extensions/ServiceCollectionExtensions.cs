@@ -1,11 +1,11 @@
 ﻿using System;
 using System.IO.Compression;
 using Microsoft.AspNetCore.Builder;
+using Microsoft.AspNetCore.ResponseCompression;
 using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.DependencyInjection;
-using Microsoft.AspNetCore.ResponseCompression;
 
-namespace GhostUI.Extensions
+namespace RecipeWiki.Extensions
 {
     public static class ServiceCollectionExtensions
     {
@@ -27,7 +27,8 @@ namespace GhostUI.Extensions
             var enableForHttps = config.GetValue<bool>("Compression:EnableForHttps");
             var gzipMimeTypes = config.GetSection("Compression:MimeTypes").Get<string[]>();
 
-            services.AddResponseCompression(options => {
+            services.AddResponseCompression(options =>
+            {
                 options.Providers.Add<BrotliCompressionProvider>();
                 options.Providers.Add<GzipCompressionProvider>();
                 options.EnableForHttps = enableForHttps;

@@ -1,8 +1,10 @@
+using System;
+using System.Linq;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.Extensions.Configuration;
-using SimpleAuth.Entities;
+using RecipeWiki.Entities;
 
-namespace SimpleAuth.Data;
+namespace RecipeWiki.Data;
 
 public class DataContext : DbContext
 {
@@ -18,5 +20,16 @@ public class DataContext : DbContext
         // connect to sql server database
         options.UseSqlite(Configuration.GetConnectionString("ConnStr"));
     }
+
+    protected override void OnModelCreating(ModelBuilder modelBuilder)
+    {
+        // Configure the value converter for the Animal
+        modelBuilder.Entity<User>()
+            .Property(x => x.SavedMealsIds)
+            .HasConversion(
+                v => string.Join(',', v),
+                v => v.Split(',', StringSplitOptions.RemoveEmptyEntries).ToList()); // Convert to List<String> for use
+    }
+
     public DbSet<User> Users { get; set; }
 }

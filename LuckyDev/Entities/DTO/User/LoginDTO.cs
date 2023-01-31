@@ -1,4 +1,4 @@
-namespace SimpleAuth.Entities.DTO;
+namespace RecipeWiki.Entities.DTO;
 
 public class LoginDTO
 {

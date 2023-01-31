@@ -1,12 +1,11 @@
 ﻿using System;
-using System.Linq;
-using GhostUI.Models;
-using Microsoft.AspNetCore.Mvc;
 using System.Collections.Generic;
 using System.Collections.Immutable;
-using Microsoft.AspNetCore.Authorization;
+using System.Linq;
+using Microsoft.AspNetCore.Mvc;
+using RecipeWiki.Models;
 
-namespace GhostUI.Controllers
+namespace RecipeWiki.Controllers
 {
     [ApiController]
     [Route("api/[controller]/[action]")]
@@ -16,7 +15,7 @@ namespace GhostUI.Controllers
         {
             "Freezing", "Bracing", "Chilly", "Cool", "Mild", "Warm", "Balmy", "Hot", "Sweltering", "Scorching"
         });
-        
+
         // [Authorize]
         [HttpGet]
         public IEnumerable<WeatherForecast> WeatherForecasts(int startDateIndex)
@@ -24,12 +23,12 @@ namespace GhostUI.Controllers
             var rng = new Random();
 
             return Enumerable.Range(1, 5).Select(index => new WeatherForecast
-            {
-                TemperatureC = rng.Next(-20, 55),
-                Summary = Summaries[rng.Next(Summaries.Length)],
-                DateFormatted = DateTime.Now.AddDays(index + startDateIndex).ToString("d")
-            })
-            .ToArray();
+                {
+                    TemperatureC = rng.Next(-20, 55),
+                    Summary = Summaries[rng.Next(Summaries.Length)],
+                    DateFormatted = DateTime.Now.AddDays(index + startDateIndex).ToString("d")
+                })
+                .ToArray();
         }
     }
 }

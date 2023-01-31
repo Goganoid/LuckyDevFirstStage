@@ -1,4 +1,6 @@
-namespace SimpleAuth.Entities;
+using System.Collections.Generic;
+
+namespace RecipeWiki.Entities;
 
 public class User
 {
@@ -8,4 +10,8 @@ public class User
     public string Email { get; set; }
     public byte[] PasswordHash { get; set; }
     public byte[] PasswordSalt { get; set; }
+
+    public List<string> SavedMealsIds { get; set; } = new();
+
+    public List<CustomMeal> UserMeals { get; set; } = new();
 }

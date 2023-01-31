@@ -1,6 +1,7 @@
 using AutoMapper;
 using MyPlan.Models.User;
-using SimpleAuth.Entities;
+using RecipeWiki.Entities;
+using RecipeWiki.Entities.DTO;
 
 namespace MyPlan.Helpers;
 
@@ -11,6 +12,10 @@ public class AutoMapperProfile : Profile
         CreateMap<User, UserModel>();
         CreateMap<RegisterModel, User>();
         CreateMap<UpdateModel, User>();
-        CreateMap<User,UserDTO>();
+        CreateMap<User, UserDTO>();
+
+        CreateMap<User, UserRecipesDTO>();
+        CreateMap<IngredientModel, Ingredient>();
+        CreateMap<MealModel, CustomMeal>();
     }
 }
