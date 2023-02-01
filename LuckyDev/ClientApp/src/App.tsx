@@ -1,7 +1,8 @@
 import type { FunctionComponent } from 'react';
 import { Route, Routes, useLocation } from 'react-router-dom';
 import { Routes as routes } from './config';
-import Layout from './Layout';
+import Layout from './pages/Layout';
+import Register from './pages/Register';
 import './assets/style/scss/site.scss'
 const App: FunctionComponent = () => {
   const location = useLocation();
