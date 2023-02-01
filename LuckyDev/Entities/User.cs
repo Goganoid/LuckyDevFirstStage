@@ -1,4 +1,5 @@
 using System.Collections.Generic;
+using System.Diagnostics.CodeAnalysis;
 using RecipeWiki.Helpers;
 
 namespace RecipeWiki.Entities;
@@ -9,6 +10,7 @@ public class User
     {
     }
 
+    [SetsRequiredMembers]
     public User(string firstName, string lastName, string email,
         string password)
     {
@@ -21,11 +23,11 @@ public class User
     }
 
     public int Id { get; set; }
-    public string FirstName { get; set; }
-    public string LastName { get; set; }
-    public string Email { get; set; }
-    public byte[] PasswordHash { get; set; }
-    public byte[] PasswordSalt { get; set; }
+    public required string FirstName { get; set; }
+    public required string LastName { get; set; }
+    public required string Email { get; set; }
+    public required byte[] PasswordHash { get; set; }
+    public required byte[] PasswordSalt { get; set; }
 
     public List<Ingredient> StoredIngredients { get; set; } = new();
     public List<string> SavedMealsIds { get; set; } = new();

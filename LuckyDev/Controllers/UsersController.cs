@@ -12,6 +12,7 @@ using Microsoft.Extensions.Options;
 using RecipeWiki.Data;
 using RecipeWiki.Entities;
 using RecipeWiki.Entities.DTO;
+using RecipeWiki.Entities.DTO.Food;
 using RecipeWiki.Entities.DTO.User;
 using RecipeWiki.Helpers;
 
@@ -46,7 +47,7 @@ public class UsersController : ControllerBase
     {
         var id = AuthController.GetUserId(HttpContext.User.Identity as ClaimsIdentity);
         var user = await _context.Users.FindAsync(id);
-        if (user.SavedMealsIds.Find(id => id == mealId) != null) return Conflict("Meal is already saved");
+        if (user!.SavedMealsIds.Find(id => id == mealId) != null) return Conflict("Meal is already saved");
         user.SavedMealsIds.Add(mealId);
         _context.Users.Update(user);
         await _context.SaveChangesAsync();
@@ -135,7 +136,7 @@ public class UsersController : ControllerBase
     {
         var id = AuthController.GetUserId(HttpContext.User.Identity as ClaimsIdentity);
         var user = await _context.Users.Include(u => u.StoredIngredients).FirstOrDefaultAsync(u => u.Id == id);
-        if (user.StoredIngredients.Find(i => i.IngredientInfoId == ingredientId) != null)
+        if (user!.StoredIngredients.Find(i => i.IngredientInfoId == ingredientId) != null)
             return Conflict("This ingredient is already stored");
         var ingredient = new Ingredient() {IngredientInfoId = ingredientId};
         user.StoredIngredients.Add(ingredient);
@@ -155,7 +156,7 @@ public class UsersController : ControllerBase
     {
         var id = AuthController.GetUserId(HttpContext.User.Identity as ClaimsIdentity);
         var user = await _context.Users.Include(u => u.StoredIngredients)
-            .FirstOrDefaultAsync(u => u.Id == id);
+            .FirstAsync(u => u.Id == id);
         return Ok(user.StoredIngredients.Select(i => i.IngredientInfoId));
     }
 

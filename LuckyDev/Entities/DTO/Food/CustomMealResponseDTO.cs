@@ -11,10 +11,10 @@ public class CustomMealResponseDTO
     public int Id { get; set; }
 
     /// <example>Cake</example>
-    public string Name { get; set; }
+    public required string Name { get; set; }
 
-    public List<IngredientDTO> Ingredients { get; set; }
+    public List<IngredientDTO> Ingredients { get; set; } = new();
 
     /// <example>Add eggs, flour and water...</example>
-    public string Instructions { get; set; }
+    public required string Instructions { get; set; }
 }

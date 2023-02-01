@@ -39,7 +39,6 @@ public class AuthController : ControllerBase
     /// <summary>
     /// Login using email and password
     /// </summary>
-    /// <param name="item"></param>
     /// <returns>User info and jwt token</returns>
     /// <response code="200">Request successful</response>
     /// <response code="400">If the email or password is incorrect </response>
@@ -83,7 +82,6 @@ public class AuthController : ControllerBase
     /// <summary>
     /// User Registration
     /// </summary>
-    /// <param name="item"></param>
     /// <response code="200">Request successful</response>
     /// <response code="400">The email or password is incorrect </response>
     [AllowAnonymous]
@@ -125,7 +123,6 @@ public class AuthController : ControllerBase
     /// <summary>
     /// User Registration
     /// </summary>
-    /// <param name="item"></param>
     /// <response code="200">Request successful</response>
     /// <response code="401">Unauthorized</response>
     [HttpPut("update")]

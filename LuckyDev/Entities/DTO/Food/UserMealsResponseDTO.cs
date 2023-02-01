@@ -1,7 +1,6 @@
 using System.Collections.Generic;
-using RecipeWiki.Entities.DTO.Food;
 
-namespace RecipeWiki.Entities.DTO;
+namespace RecipeWiki.Entities.DTO.Food;
 
 public class UserMealsResponseDTO
 {
@@ -9,10 +8,10 @@ public class UserMealsResponseDTO
     /// List of meal ids from the MealDB
     /// </summary>
     /// <example>["532","42","423"]</example>
-    public List<string> SavedMealsIds { get; set; }
+    public List<string> SavedMealsIds { get; set; } = new();
 
     /// <summary>
     /// Custom meals
     /// </summary>
-    public List<CustomMealResponseDTO> UserMeals { get; set; }
+    public List<CustomMealResponseDTO> UserMeals { get; set; } = new();
 }

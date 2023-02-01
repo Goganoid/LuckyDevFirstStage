@@ -10,13 +10,13 @@ public class CustomMeal
     /// <example>1</example>
     public int Id { get; set; }
 
-    public User User { get; set; }
+    public required User User { get; set; }
 
     /// <example>Cake</example>
-    public string Name { get; set; }
+    public required string Name { get; set; }
 
-    public List<Ingredient> Ingredients { get; set; }
+    public List<Ingredient> Ingredients { get; set; } = new();
 
     /// <example>Add eggs, flour and water...</example>
-    public string Instructions { get; set; }
+    public string Instructions { get; set; } = string.Empty;
 }

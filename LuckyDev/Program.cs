@@ -74,7 +74,7 @@ var appSettingsSection = configuration.GetSection("AppSettings");
 builder.Services.Configure<AppSettings>(appSettingsSection);
 
 // configure jwt authentication
-var appSettings = appSettingsSection.Get<AppSettings>();
+var appSettings = appSettingsSection.Get<AppSettings>()!;
 var key = Encoding.ASCII.GetBytes(appSettings.Secret);
 
 
@@ -95,7 +95,13 @@ builder.Services.AddAuthentication(JwtBearerDefaults.AuthenticationScheme).AddJw
         OnTokenValidated = context =>
         {
             var dataContext = context.HttpContext.RequestServices.GetRequiredService<DataContext>();
-            var userId = int.Parse(context.Principal.Identity.Name);
+            if (context.Principal == null)
+            {
+                context.Fail("Unauthorized. Principal is null");
+                return Task.CompletedTask;
+            }
+
+            var userId = int.Parse(context!.Principal!.Identity!.Name!);
             var user = dataContext.Users.Find(userId);
             if (user == null)
             {
