@@ -1,13 +1,10 @@
 import type { FunctionComponent } from 'react';
-import styled from 'styled-components';
-import headerLogo from '../assets/images/header_logo.png';
-import Button from 'react-bootstrap/Button';
 import Container from 'react-bootstrap/Container';
-import Form from 'react-bootstrap/Form';
 import Nav from 'react-bootstrap/Nav';
 import Navbar from 'react-bootstrap/Navbar';
-import NavDropdown from 'react-bootstrap/NavDropdown';
 import Offcanvas from 'react-bootstrap/Offcanvas';
+import styled from 'styled-components';
+import headerLogo from '../assets/images/header_logo.png';
 
 const BrandContent = styled.div`
   display: flex;
@@ -46,16 +43,20 @@ const expand = false;
 const Header: FunctionComponent = () => (
   <StyledHeader expand={expand}>
     <Container fluid>
-      <Navbar.Brand href="#"><LogoWrapper>
-        <LogoImg src={headerLogo} alt="logo" />
-        <h1>RecipeWiki</h1>
-      </LogoWrapper></Navbar.Brand>
+      <Navbar.Brand href="#">
+        <BrandContent>
+          <LogoWrapper>
+            <LogoImg src={headerLogo} alt="logo" />
+            <h1>RecipeWiki</h1>
+          </LogoWrapper>
+        </BrandContent>
+      </Navbar.Brand>
       <Navbar.Toggle aria-controls={`offcanvasNavbar-expand-${expand}`} />
       <Navbar.Offcanvas
         id={`offcanvasNavbar-expand-${expand}`}
         aria-labelledby={`offcanvasNavbarLabel-expand-${expand}`}
         placement="end"
-        style={{backgroundColor:"#343A40", color:"white"}}
+        style={{ backgroundColor: "#343A40", color: "white" }}
       >
         <Offcanvas.Header closeButton closeVariant='white'>
           <Offcanvas.Title id={`offcanvasNavbarLabel-expand-${expand}`}>
