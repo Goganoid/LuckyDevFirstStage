@@ -3,7 +3,7 @@ import React, { useState } from 'react';
 import Alert from 'react-bootstrap/Alert';
 import Button from 'react-bootstrap/Button';
 import { Weather } from 'src/components';
-export const Test: FunctionComponent = () => {
+export const Catalogue: FunctionComponent = () => {
     const [show, setShow] = useState(true);
 
     return (

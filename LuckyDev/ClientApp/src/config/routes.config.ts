@@ -1,6 +1,6 @@
 import type { ComponentType } from 'react';
 import type { Params } from 'react-router-dom';
-import { Test }  from '../containers';
+import { Catalogue }  from '../containers';
 
 export type RouteComponent = ComponentType<any>;
 
@@ -15,6 +15,6 @@ export const Routes: Route[] = [
   {
     name:'home',
     path: '/',
-    Component: Test,
+    Component: Catalogue,
   },
 ];
