@@ -21,7 +21,7 @@ const StyledHeader = styled(Navbar)`
   font-size: 1.5rem;
   padding: 1rem 1.5rem;
   background-color: #343A40;
-  heigth: 120px;
+  heigth: 60px;
 
   @media all and (max-width: 769px) {
     font-size: 1.5rem;
