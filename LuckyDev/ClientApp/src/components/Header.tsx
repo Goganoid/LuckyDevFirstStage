@@ -41,7 +41,7 @@ const LogoWrapper = styled.div`
 const expand = false;
 
 const Header: FunctionComponent = () => (
-  <StyledHeader expand={expand}>
+  <StyledHeader expand={expand} variant="dark">
     <Container fluid>
       <Navbar.Brand href="#">
         <BrandContent>
