@@ -1,8 +1,12 @@
 import type { FunctionComponent } from 'react';
 import styled from 'styled-components';
+import devLogo from '../assets/jpg/dev_logo.jpeg';
 
 const BrandContent = styled.div`
-  text-align: center;
+  display: flex;
+  justify-content: space-between;
+  font-family: Inter;
+  font-style: italic;
   word-spacing: 0.05rem;
 `;
 
@@ -11,18 +15,30 @@ const StyledFooter = styled.footer`
   width: 100%;
   margin: auto;
   display: block;
-  font-size: 1.15rem;
-  padding: 3rem 1.5rem;
-  background-color: #33363b;
+  font-size: 1.5rem;
+  padding: 2rem 1.75rem;
+  background-color: #343A40;
 
   @media all and (max-width: 769px) {
-    font-size: 1rem;
+    font-size: 1.5rem;
   }
+`;
+
+const LogoImg = styled.img`
+  width: 100px;
+  height: 100px;
 `;
 
 const Footer: FunctionComponent = () => (
   <StyledFooter>
-    <BrandContent>Footer</BrandContent>
+    <BrandContent>
+    <div>
+      <p>Проект для хакатону INT20H.
+        <br />
+        Над проектом працювали команда LuckyDev.</p> 
+    </div>
+    <LogoImg src={devLogo} alt="LuckyDev logo" />
+    </BrandContent>
   </StyledFooter>
 );
 
