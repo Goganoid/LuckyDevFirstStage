@@ -1,6 +1,7 @@
 import React, { useEffect, useState, type FunctionComponent } from 'react'
 import { MealDbApi, type Meal } from 'src/api/mealdb.service';
 import styled from 'styled-components';
+import Button from 'react-bootstrap/Button';
 
 const SliderImage = styled.img`
     display: block;
@@ -13,6 +14,7 @@ const Item = styled.div`
     padding: 20px;
     background-color: #D6D6D6;
     border-radius: 15px;
+    box-shadow: 0px 6px 3px 1px #BEBEBE;
 `;
 
 const MealsList = styled.div`
@@ -28,6 +30,7 @@ const RecipeContent = styled.div`
     display: flex;
     flex-direction: column;
     justify-content: space-between;
+    padding-left: 20px;
     width: 100%;
 `;
 
@@ -39,32 +42,8 @@ const RecipeName = styled.span`
     line-height: 29px;
     display: flex;
     align-items: center;
-    padding-left: 5px;
     padding-top: 5px;
     color: #000000;
-`;
-
-const TasteButton = styled.button`
-    font-family: 'Inter';
-    font-style: normal;
-    font-weight: 400;
-    font-size: 24px;
-    line-height: 29px;
-    display: flex;
-    align-items: center;
-    text-align: center;
-    color: #FFFFFF;
-    background: #E09822;
-    border: none;
-    border-radius: 10px;
-    pading: 5px;
-    margin: 0 30px 15px 30px;
-`;
-
-const TasteSpan = styled.span`
-    width: 100%;
-    margin: auto;
-    text-align: center;
 `;
 
 const Cards: FunctionComponent = () => {
@@ -84,7 +63,7 @@ const Cards: FunctionComponent = () => {
             />
             <RecipeContent>
                 <RecipeName>{m.strMeal}</RecipeName>
-                <TasteButton><TasteSpan>Скуштувати!</TasteSpan></TasteButton>
+                <Button variant="primary">Скуштувати!</Button>
             </RecipeContent>
         </Item>
     );
