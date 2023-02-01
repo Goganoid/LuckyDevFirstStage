@@ -19,9 +19,8 @@ const StyledHeader = styled(Navbar)`
   margin: auto;
   display: block;
   font-size: 1.5rem;
-  padding: 1rem 1.5rem;
   background-color: #343A40;
-  heigth: 60px;
+  heigth: 120px;
 
   @media all and (max-width: 769px) {
     font-size: 1.5rem;
@@ -30,7 +29,7 @@ const StyledHeader = styled(Navbar)`
 
 
 const LogoImg = styled.img`
-
+  width: 80px;
 `;
 
 const LogoWrapper = styled.div`

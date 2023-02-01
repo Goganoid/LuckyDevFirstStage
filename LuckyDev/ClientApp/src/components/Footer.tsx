@@ -11,6 +11,7 @@ const BrandContent = styled.div`
 `;
 
 const StyledFooter = styled.footer`
+top: 100%;
   color: #fff;
   width: 100%;
   margin: auto;

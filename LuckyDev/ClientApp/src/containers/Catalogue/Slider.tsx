@@ -2,9 +2,13 @@ import React, { useEffect, useState, type FunctionComponent } from 'react'
 import Carousel from 'react-bootstrap/Carousel';
 import { MealDbApi, type Meal } from 'src/api/mealdb.service';
 import styled from 'styled-components';
+import Button from 'react-bootstrap/Button';
 
 const SliderImage = styled.img`
     display: block;
+    width: 100%;
+    height: 100%;
+    object-fit: cover;
     /* height:400px; */
 `
 const ItemStyle = {
@@ -33,6 +37,7 @@ export const Slider: FunctionComponent = () => {
                         />
                         <Carousel.Caption>
                                 <h3>{meal.strMeal}</h3>
+                                <Button variant="primary">Скуштувати!</Button>
                         </Carousel.Caption>
                     </Carousel.Item>
                     ))}
