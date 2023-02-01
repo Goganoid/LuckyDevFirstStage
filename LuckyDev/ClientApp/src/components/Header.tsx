@@ -1,6 +1,13 @@
 import type { FunctionComponent } from 'react';
 import styled from 'styled-components';
 import headerLogo from '../assets/images/header_logo.png';
+import Button from 'react-bootstrap/Button';
+import Container from 'react-bootstrap/Container';
+import Form from 'react-bootstrap/Form';
+import Nav from 'react-bootstrap/Nav';
+import Navbar from 'react-bootstrap/Navbar';
+import NavDropdown from 'react-bootstrap/NavDropdown';
+import Offcanvas from 'react-bootstrap/Offcanvas';
 
 const BrandContent = styled.div`
   display: flex;
@@ -9,7 +16,7 @@ const BrandContent = styled.div`
   word-spacing: 0.05rem;
 `;
 
-const StyledHeader = styled.footer`
+const StyledHeader = styled(Navbar)`
   color: #fff;
   width: 100%;
   margin: auto;
@@ -23,6 +30,7 @@ const StyledHeader = styled.footer`
   }
 `;
 
+
 const LogoImg = styled.img`
 
 `;
@@ -31,15 +39,37 @@ const LogoWrapper = styled.div`
   display: flex;
   align-items: center;
 `;
+// false - menu is always collapsed
+// 'sm', 'md', 'lg', 'xl', 'xxl' - determines collapse point
+const expand = false;
 
 const Header: FunctionComponent = () => (
-  <StyledHeader>
-    <BrandContent>
-    <LogoWrapper>
+  <StyledHeader expand={expand}>
+    <Container fluid>
+      <Navbar.Brand href="#"><LogoWrapper>
         <LogoImg src={headerLogo} alt="logo" />
-        <h1>RecipeWiki</h1> 
-    </LogoWrapper>
-    </BrandContent>
+        <h1>RecipeWiki</h1>
+      </LogoWrapper></Navbar.Brand>
+      <Navbar.Toggle aria-controls={`offcanvasNavbar-expand-${expand}`} />
+      <Navbar.Offcanvas
+        id={`offcanvasNavbar-expand-${expand}`}
+        aria-labelledby={`offcanvasNavbarLabel-expand-${expand}`}
+        placement="end"
+        style={{backgroundColor:"#343A40", color:"white"}}
+      >
+        <Offcanvas.Header closeButton closeVariant='white'>
+          <Offcanvas.Title id={`offcanvasNavbarLabel-expand-${expand}`}>
+            Menu
+          </Offcanvas.Title>
+        </Offcanvas.Header>
+        <Offcanvas.Body>
+          <Nav className="justify-content-end flex-grow-1 pe-3">
+            <Nav.Link href="#action1">Home</Nav.Link>
+            <Nav.Link href="#action2">Link</Nav.Link>
+          </Nav>
+        </Offcanvas.Body>
+      </Navbar.Offcanvas>
+    </Container>
   </StyledHeader>
 );
 
