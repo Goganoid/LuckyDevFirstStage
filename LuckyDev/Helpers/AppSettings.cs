@@ -1,4 +1,4 @@
-namespace MyPlan.Helpers;
+namespace RecipeWiki.Helpers;
 
 public class AppSettings
 {

@@ -9,13 +9,13 @@ using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.Extensions.Options;
 using Microsoft.IdentityModel.Tokens;
-using MyPlan.Helpers;
-using MyPlan.Models.User;
 using RecipeWiki.Data;
 using RecipeWiki.Entities;
 using RecipeWiki.Entities.DTO;
+using RecipeWiki.Entities.DTO.User;
+using RecipeWiki.Helpers;
 
-namespace MyPlan.Controllers;
+namespace RecipeWiki.Controllers;
 
 [Authorize]
 [ApiController]
@@ -41,23 +41,13 @@ public class AuthController : ControllerBase
     /// </summary>
     /// <param name="item"></param>
     /// <returns>User info and jwt token</returns>
-    /// <remarks>
-    /// Sample request:
-    ///
-    ///     POST
-    ///     {
-    ///         "email":"useremail@email.com",
-    ///         "password":"userPassword"
-    ///     }
-    ///
-    /// </remarks>
     /// <response code="200">Request successful</response>
     /// <response code="400">If the email or password is incorrect </response>
     [AllowAnonymous]
     [ProducesResponseType(typeof(LoginDTO), StatusCodes.Status200OK)]
     [ProducesResponseType(typeof(ErrorMessage), StatusCodes.Status400BadRequest)]
     [HttpPost("login")]
-    public IActionResult Login([FromBody] AuthenticateModel model)
+    public IActionResult Login([FromBody] LoginRequestDTO model)
     {
         var user = Authenticate(model.Email, model.Password);
 
@@ -90,22 +80,33 @@ public class AuthController : ControllerBase
         });
     }
 
+    /// <summary>
+    /// User Registration
+    /// </summary>
+    /// <param name="item"></param>
+    /// <response code="200">Request successful</response>
+    /// <response code="400">The email or password is incorrect </response>
     [AllowAnonymous]
     [HttpPost("register")]
-    public IActionResult Register([FromBody] RegisterModel model)
+    public IActionResult Register([FromBody] RegisterRequestDTO requestDTO)
     {
         // map model to entity
-        var user = _mapper.Map<User>(model);
+        var user = _mapper.Map<User>(requestDTO);
 
         try
         {
-            if (string.IsNullOrWhiteSpace(model.Password))
+            if (string.IsNullOrWhiteSpace(requestDTO.Password))
                 throw new Exception("Password is required");
-
+            if (string.IsNullOrWhiteSpace(requestDTO.FirstName))
+                throw new Exception("First name is required");
+            if (string.IsNullOrWhiteSpace(requestDTO.LastName))
+                throw new Exception("Last name is required");
+            if (string.IsNullOrWhiteSpace(requestDTO.Email))
+                throw new Exception("Email is required");
             if (_context.Users.Any(x => x.Email == user.Email))
-                throw new Exception("Username \"" + user.Email + "\" is already taken");
+                throw new Exception("Email \"" + user.Email + "\" is already taken");
 
-            CreatePasswordHash(model.Password, out var passwordHash, out var passwordSalt);
+            PasswordUtils.CreatePasswordHash(requestDTO.Password, out var passwordHash, out var passwordSalt);
             user.PasswordHash = passwordHash;
             user.PasswordSalt = passwordSalt;
             // create user
@@ -121,32 +122,19 @@ public class AuthController : ControllerBase
     }
 
 
-    private User? Authenticate(string username, string password)
-    {
-        if (string.IsNullOrEmpty(username) || string.IsNullOrEmpty(password))
-            return null;
-
-        var user = _context.Users.SingleOrDefault(x => x.Email == username);
-
-        // check if username exists
-        if (user == null)
-            return null;
-
-        // check if password is correct
-        if (!VerifyPasswordHash(password, user.PasswordHash, user.PasswordSalt))
-            return null;
-
-        // authentication successful
-        return user;
-    }
-
+    /// <summary>
+    /// User Registration
+    /// </summary>
+    /// <param name="item"></param>
+    /// <response code="200">Request successful</response>
+    /// <response code="401">Unauthorized</response>
     [HttpPut("update")]
-    public IActionResult Update([FromBody] UpdateModel model)
+    public IActionResult Update([FromBody] UpdateRequestDTO requestDTO)
     {
         var id = AuthController.GetUserId(HttpContext.User.Identity as ClaimsIdentity);
-        if (id == null) return BadRequest("Incorrect jwt token");
+        if (id == null) return Unauthorized("Unauthorized");
         // map model to entity and set id
-        var userNew = _mapper.Map<User>(model);
+        var userNew = _mapper.Map<User>(requestDTO);
         userNew.Id = id.Value;
         try
         {
@@ -172,9 +160,9 @@ public class AuthController : ControllerBase
                 user.LastName = userNew.LastName;
 
             // update password if provided
-            if (!string.IsNullOrWhiteSpace(model.Password))
+            if (!string.IsNullOrWhiteSpace(requestDTO.Password))
             {
-                CreatePasswordHash(model.Password, out var passwordHash, out var passwordSalt);
+                PasswordUtils.CreatePasswordHash(requestDTO.Password, out var passwordHash, out var passwordSalt);
 
                 user.PasswordHash = passwordHash;
                 user.PasswordSalt = passwordSalt;
@@ -191,6 +179,30 @@ public class AuthController : ControllerBase
         }
     }
 
+    private User? Authenticate(string username, string password)
+    {
+        if (string.IsNullOrEmpty(username) || string.IsNullOrEmpty(password))
+            return null;
+
+        var user = _context.Users.SingleOrDefault(x => x.Email == username);
+
+        // check if username exists
+        if (user == null)
+            return null;
+
+        // check if password is correct
+        if (!PasswordUtils.VerifyPasswordHash(password, user.PasswordHash, user.PasswordSalt))
+            return null;
+
+        // authentication successful
+        return user;
+    }
+
+    /// <summary>
+    /// Delete user
+    /// </summary>
+    /// <response code="200">Request successful</response>
+    /// <response code="401">Unauthorized</response>
     [HttpDelete("delete")]
     public IActionResult Delete()
     {
@@ -203,42 +215,7 @@ public class AuthController : ControllerBase
             return Ok();
         }
 
-        return NotFound();
-    }
-
-    private static void CreatePasswordHash(string password, out byte[] passwordHash, out byte[] passwordSalt)
-    {
-        if (password == null) throw new ArgumentNullException("password");
-        if (string.IsNullOrWhiteSpace(password))
-            throw new ArgumentException("Value cannot be empty or whitespace only string.", "password");
-
-        using (var hmac = new System.Security.Cryptography.HMACSHA512())
-        {
-            passwordSalt = hmac.Key;
-            passwordHash = hmac.ComputeHash(System.Text.Encoding.UTF8.GetBytes(password));
-        }
-    }
-
-    private static bool VerifyPasswordHash(string password, byte[] storedHash, byte[] storedSalt)
-    {
-        if (password == null) throw new ArgumentNullException("password");
-        if (string.IsNullOrWhiteSpace(password))
-            throw new ArgumentException("Value cannot be empty or whitespace only string.", "password");
-        if (storedHash.Length != 64)
-            throw new ArgumentException("Invalid length of password hash (64 bytes expected).", "passwordHash");
-        if (storedSalt.Length != 128)
-            throw new ArgumentException("Invalid length of password salt (128 bytes expected).", "passwordHash");
-
-        using (var hmac = new System.Security.Cryptography.HMACSHA512(storedSalt))
-        {
-            var computedHash = hmac.ComputeHash(System.Text.Encoding.UTF8.GetBytes(password));
-            for (int i = 0; i < computedHash.Length; i++)
-            {
-                if (computedHash[i] != storedHash[i]) return false;
-            }
-        }
-
-        return true;
+        return Unauthorized();
     }
 
     public static int? GetUserId(ClaimsIdentity? identity)

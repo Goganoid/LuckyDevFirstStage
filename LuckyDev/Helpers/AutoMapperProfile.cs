@@ -1,21 +1,24 @@
 using AutoMapper;
-using MyPlan.Models.User;
 using RecipeWiki.Entities;
 using RecipeWiki.Entities.DTO;
+using RecipeWiki.Entities.DTO.Food;
+using RecipeWiki.Entities.DTO.User;
 
-namespace MyPlan.Helpers;
+namespace RecipeWiki.Helpers;
 
 public class AutoMapperProfile : Profile
 {
     public AutoMapperProfile()
     {
-        CreateMap<User, UserModel>();
-        CreateMap<RegisterModel, User>();
-        CreateMap<UpdateModel, User>();
-        CreateMap<User, UserDTO>();
+        CreateMap<RegisterRequestDTO, User>();
+        CreateMap<UpdateRequestDTO, User>();
+        CreateMap<User, UserResponseDTO>();
 
-        CreateMap<User, UserRecipesDTO>();
-        CreateMap<IngredientModel, Ingredient>();
-        CreateMap<MealModel, CustomMeal>();
+        CreateMap<User, UserMealsResponseDTO>();
+        CreateMap<IngredientDTO, Ingredient>();
+        CreateMap<StoredIngredientDTO, Ingredient>();
+        CreateMap<Ingredient, StoredIngredientDTO>();
+        CreateMap<MealRequestDTO, CustomMeal>();
+        CreateMap<CustomMeal, CustomMealResponseDTO>();
     }
 }

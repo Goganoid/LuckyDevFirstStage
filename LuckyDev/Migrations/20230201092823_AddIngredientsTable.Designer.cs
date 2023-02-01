@@ -2,6 +2,7 @@
 using System;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore.Infrastructure;
+using Microsoft.EntityFrameworkCore.Migrations;
 using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 using RecipeWiki.Data;
 
@@ -10,9 +11,11 @@ using RecipeWiki.Data;
 namespace RecipeWiki.Migrations
 {
     [DbContext(typeof(DataContext))]
-    partial class DataContextModelSnapshot : ModelSnapshot
+    [Migration("20230201092823_AddIngredientsTable")]
+    partial class AddIngredientsTable
     {
-        protected override void BuildModel(ModelBuilder modelBuilder)
+        /// <inheritdoc />
+        protected override void BuildTargetModel(ModelBuilder modelBuilder)
         {
 #pragma warning disable 612, 618
             modelBuilder.HasAnnotation("ProductVersion", "7.0.2");
@@ -31,14 +34,14 @@ namespace RecipeWiki.Migrations
                         .IsRequired()
                         .HasColumnType("TEXT");
 
-                    b.Property<int>("UserId")
+                    b.Property<int?>("UserId")
                         .HasColumnType("INTEGER");
 
                     b.HasKey("Id");
 
                     b.HasIndex("UserId");
 
-                    b.ToTable("CustomMeals");
+                    b.ToTable("CustomMeal");
                 });
 
             modelBuilder.Entity("RecipeWiki.Entities.Ingredient", b =>
@@ -106,21 +109,16 @@ namespace RecipeWiki.Migrations
 
             modelBuilder.Entity("RecipeWiki.Entities.CustomMeal", b =>
                 {
-                    b.HasOne("RecipeWiki.Entities.User", "User")
+                    b.HasOne("RecipeWiki.Entities.User", null)
                         .WithMany("UserMeals")
-                        .HasForeignKey("UserId")
-                        .OnDelete(DeleteBehavior.Cascade)
-                        .IsRequired();
-
-                    b.Navigation("User");
+                        .HasForeignKey("UserId");
                 });
 
             modelBuilder.Entity("RecipeWiki.Entities.Ingredient", b =>
                 {
                     b.HasOne("RecipeWiki.Entities.CustomMeal", null)
                         .WithMany("Ingredients")
-                        .HasForeignKey("CustomMealId")
-                        .OnDelete(DeleteBehavior.Cascade);
+                        .HasForeignKey("CustomMealId");
 
                     b.HasOne("RecipeWiki.Entities.User", null)
                         .WithMany("StoredIngredients")

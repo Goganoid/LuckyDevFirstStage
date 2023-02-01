@@ -12,9 +12,9 @@ using Microsoft.Extensions.DependencyInjection;
 using Microsoft.Extensions.Hosting;
 using Microsoft.IdentityModel.Tokens;
 using Microsoft.OpenApi.Models;
-using MyPlan.Helpers;
 using RecipeWiki.Data;
 using RecipeWiki.Extensions;
+using RecipeWiki.Helpers;
 
 var spaSrcPath = "ClientApp";
 var corsPolicyName = "AllowAll";
@@ -63,6 +63,7 @@ builder.Services.AddSwaggerGen(c =>
             new List<string>()
         }
     });
+    c.EnableAnnotations();
     var xmlFilename = $"{Assembly.GetExecutingAssembly().GetName().Name}.xml";
     c.IncludeXmlComments(Path.Combine(AppContext.BaseDirectory, xmlFilename));
 });
@@ -151,8 +152,7 @@ using (var scope = app.Services.CreateScope())
     var services = scope.ServiceProvider;
     var context = services.GetRequiredService<DataContext>();
     context.Database.Migrate();
-    context.Database.EnsureCreated();
-    // DbInitializer.Initialize(context);
+    DbInitializer.Initialize(context);
 }
 
 // Register the Swagger generator and the Swagger UI middlewares
