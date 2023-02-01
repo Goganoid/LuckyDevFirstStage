@@ -24,6 +24,26 @@ const MealsList = styled.div`
     align-items: center;
 `;
 
+const RecipeContent = styled.div`
+    display: flex;
+    flex-direction: column;
+    justify-content: space-between;
+    width: 100%;
+`;
+
+const RecipeName = styled.span`
+    font-family: 'Inter';
+    font-style: normal;
+    font-weight: 700;
+    font-size: 24px;
+    line-height: 29px;
+    display: flex;
+    align-items: center;
+    padding-left: 5px;
+    padding-top: 5px;
+    color: #000000;
+`;
+
 const TasteButton = styled.button`
     font-family: 'Inter';
     font-style: normal;
@@ -35,6 +55,16 @@ const TasteButton = styled.button`
     text-align: center;
     color: #FFFFFF;
     background: #E09822;
+    border: none;
+    border-radius: 10px;
+    pading: 5px;
+    margin: 0 30px 15px 30px;
+`;
+
+const TasteSpan = styled.span`
+    width: 100%;
+    margin: auto;
+    text-align: center;
 `;
 
 const Cards: FunctionComponent = () => {
@@ -52,10 +82,10 @@ const Cards: FunctionComponent = () => {
                 src={m.strMealThumb}
                 alt=""
             />
-            <div>
-                <h4>{m.strMeal}</h4>
-                <TasteButton>Скуштувати</TasteButton>
-            </div>
+            <RecipeContent>
+                <RecipeName>{m.strMeal}</RecipeName>
+                <TasteButton><TasteSpan>Скуштувати!</TasteSpan></TasteButton>
+            </RecipeContent>
         </Item>
     );
     return <MealsList>{meal}</MealsList>;
