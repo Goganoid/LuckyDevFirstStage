@@ -1,10 +1,11 @@
-import { Footer, Header} from './components';
+import { Footer, Header, Cards } from './components';
 import { Fragment, type FunctionComponent, type PropsWithChildren } from 'react';
 
 const Layout: FunctionComponent<PropsWithChildren> = ({ children }) => (
   <Fragment>
     <Header />
     {children}
+    <Cards />
     <Footer />
   </Fragment>
 );

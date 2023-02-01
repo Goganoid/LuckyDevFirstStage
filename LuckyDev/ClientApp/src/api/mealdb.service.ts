@@ -89,6 +89,12 @@ class MealDbService extends BaseMealDbService {
       const { data } = await this.$http.get<MealsSelection>(url);
       return data.meals;
     }
+
+    public async getMeals(): Promise<Meal[]> {
+      const url = `search.php?f=a`;
+      const { data } = await this.$http.get<MealsSelection>(url);
+      return data.meals;
+    }
   }
   
   export const MealDbApi = MealDbService.Instance;
