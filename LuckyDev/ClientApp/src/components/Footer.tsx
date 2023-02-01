@@ -1,6 +1,6 @@
 import type { FunctionComponent } from 'react';
 import styled from 'styled-components';
-import devLogo from '../assets/jpg/dev_logo.jpeg';
+import devLogo from '../assets/images/dev_logo.jpeg';
 
 const BrandContent = styled.div`
   display: flex;
