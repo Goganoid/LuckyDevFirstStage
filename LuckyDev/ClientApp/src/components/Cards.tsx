@@ -7,7 +7,7 @@ import { MealsLoader } from 'src/api/meals_loader.service';
 
 const SliderImage = styled.img`
     display: block;
-    height: 200px;
+    height: 180px;
 `;
 
 const ItemWrapper = styled.div`
@@ -59,6 +59,7 @@ const RecipeName = styled.span`
     align-items: center;
     padding-top: 5px;
     color: #000000;
+    overflow: hidden;
 `;
 
 const itemsPerLoad = 6;
@@ -87,16 +88,15 @@ const Cards: FunctionComponent = () => {
     const meal = meals.map((m, idx) =>
         <>
         <ItemWrapper>
-            <Item key={idx}>
+            <Item key={idx} className='meal'>
                 <SliderImage
                     src={m.strMealThumb}
                     alt=""
                 />
                 <RecipeContent>
                     <RecipeName>{m.strMeal}</RecipeName>
-                    <Button 
-                        variant="primary" 
-                        className='Bootstrap-Button' 
+                    <Button
+                        className='Bootstrap-Button meal-select' 
                         onClick={handleShow}>Скуштувати!</Button>
                 </RecipeContent>
             </Item>
