@@ -3,9 +3,6 @@ import {type Meal } from 'src/api/mealdb.service';
 import styled from 'styled-components';
 import Button from 'react-bootstrap/Button';
 import Modal from 'react-bootstrap/Modal';
-import Col from 'react-bootstrap/Col';
-import Row from 'react-bootstrap/Row';
-import Container from 'react-bootstrap/Container';
 import { MealsLoader } from 'src/api/meals_loader.service';
 
 const SliderImage = styled.img`
@@ -18,7 +15,7 @@ const ItemWrapper = styled.div`
      display: flex;
      justify-content: center;
      margin-bottom: 36px;
-`
+`;
 
 const Item = styled.div`
     display: flex;
