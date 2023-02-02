@@ -2,6 +2,7 @@ import React, { useEffect, useState, type FunctionComponent } from 'react'
 import {type Meal } from 'src/api/mealdb.service';
 import styled from 'styled-components';
 import Button from 'react-bootstrap/Button';
+import Modal from 'react-bootstrap/Modal';
 import { MealsLoader } from 'src/api/meals_loader.service';
 
 const SliderImage = styled.img`
@@ -67,6 +68,10 @@ const Cards: FunctionComponent = () => {
     const [meals, setMeals] = useState<Meal[]>([]);
     const [showLoadButton, setShowLoadButton] = useState(true);
 
+    const [show, setShow] = useState(false);
+    const handleClose = () => setShow(false);
+    const handleShow = () => setShow(true);
+
     const loadMoreMeals = () => {
         MealsLoader.TakeNext(itemsPerLoad).then(result => {
             setMeals([...meals, ...result]);
@@ -80,19 +85,37 @@ const Cards: FunctionComponent = () => {
         })
     }, []);
     const meal = meals.map((m, idx) =>
-
-        <ItemWrapper key={idx}>
-            <Item>
+        <>
+        <ItemWrapper>
+            <Item key={idx}>
                 <SliderImage
                     src={m.strMealThumb}
                     alt=""
                 />
                 <RecipeContent>
                     <RecipeName>{m.strMeal}</RecipeName>
-                    <Button variant="primary" className='Bootstrap-Button' onClick={() => console.log(m)} >Скуштувати!</Button>
+                    <Button 
+                        variant="primary" 
+                        className='Bootstrap-Button' 
+                        onClick={handleShow}>Скуштувати!</Button>
                 </RecipeContent>
             </Item>
         </ItemWrapper>
+        <Modal show={show} onHide={handleClose}>
+                <Modal.Header closeButton>
+                    <Modal.Title>{m.strMeal}</Modal.Title>
+                </Modal.Header>
+                <Modal.Body>Woohoo, you're reading this text in a modal!</Modal.Body>
+                <Modal.Footer>
+                    <Button variant="secondary" onClick={handleClose}>
+                        Close
+                    </Button>
+                    <Button variant="primary" onClick={handleClose}>
+                        Save Changes
+                    </Button>
+                </Modal.Footer>
+            </Modal>
+        </> 
     );
     return (
         <>
