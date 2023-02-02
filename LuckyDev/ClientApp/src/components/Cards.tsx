@@ -73,6 +73,11 @@ const ModalFirstDiv = styled.div`
     gap: 20px;
 `;
 
+const ModalSecondDiv = styled.div`
+    display: flex;
+    gap: 0 20px;
+`;
+
 const itemsPerLoad = 6;
 
 const Cards: FunctionComponent = () => {
@@ -152,14 +157,18 @@ const Cards: FunctionComponent = () => {
                             <p>Youtube: <PopupYtLink href={curMealLink}>{curMealLink || 'none'}</PopupYtLink></p>
                         </div>
                     </ModalFirstDiv>
-                    <div>
-                        {ingradientList.map((ingradient: string) => (
-                            <p>{curMeal?.[ingradient] || ''}</p>
-                        ))}
-                        {measureList.map((measure: string) => (
-                            <p>{curMeal?.[measure] || ''}</p>
-                        ))}
-                    </div>
+                    <ModalSecondDiv>
+                        <div>
+                            {ingradientList.map((ingradient: string) => (
+                                <p>{curMeal?.[ingradient] || ''}</p>
+                            ))}
+                        </div>
+                        <div>
+                            {measureList.map((measure: string) => (
+                                <p>{curMeal?.[measure] || ''}</p>
+                            ))}
+                        </div>
+                    </ModalSecondDiv>
                     <div>
                         <p>{curMeal?.strInstructions}</p>
                     </div>
