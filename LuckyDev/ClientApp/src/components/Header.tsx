@@ -16,12 +16,10 @@ const BrandContent = styled.div`
 const StyledHeader = styled(Navbar)`
   color: #fff;
   width: 100%;
-  margin: auto;
   display: block;
   font-size: 1.5rem;
   background-color: #343A40;
-  heigth: 120px;
-
+  margin-bottom: 1rem;
   @media all and (max-width: 769px) {
     font-size: 1.5rem;
   }
