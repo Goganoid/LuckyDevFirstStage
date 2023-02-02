@@ -160,6 +160,7 @@ const Cards: FunctionComponent = () => {
                                 <p>Youtube: <PopupYtLink href={curMealLink}>{curMealLink || 'none'}</PopupYtLink></p>
                             </div>
                         </ModalFirstDiv>
+                        <h3>Ingredients</h3>
                         <ModalSecondDiv>
                             <div>
                                 {ingradientList.map((ingradient: string) => (
@@ -172,6 +173,7 @@ const Cards: FunctionComponent = () => {
                                 ))}
                             </div>
                         </ModalSecondDiv>
+                        <h3>Instruction</h3>
                         <div>
                             <p>{curMeal?.strInstructions}</p>
                         </div>

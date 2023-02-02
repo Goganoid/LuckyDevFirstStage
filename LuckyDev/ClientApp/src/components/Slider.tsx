@@ -4,6 +4,7 @@ import { MealDbApi, type Meal } from 'src/api/mealdb.service';
 import styled from 'styled-components';
 import Button from 'react-bootstrap/Button';
 import dateDiffInDays from 'src/utils/dateDiff';
+import Modal from 'react-bootstrap/Modal';
 
 const SliderImage = styled.img`
     display: block;
@@ -15,6 +16,24 @@ const ItemStyle = {
     height: '500px'
 }
 
+const PopupYtLink = styled.a`
+`;
+
+const ModalFirstDiv = styled.div`
+    display: flex;
+    gap: 20px;
+`;
+
+const ModalSecondDiv = styled.div`
+    display: flex;
+    gap: 0 20px;
+`;
+
+const PopupImage = styled.img`
+    display: block;
+    height: 180px;
+`;
+
 
 type SliderStorage = {
     items: Meal[],
@@ -23,6 +42,29 @@ type SliderStorage = {
 
 
 const Slider: FunctionComponent = () => {
+
+    const [curMeal, setCurMeal] = useState<Meal>();
+    const [curMealImg, setCurMealImg] = useState('');
+    const [curMealLink, setCurMealLink] = useState('');
+
+    let ingradientList: string[] = [];
+    const findIngradients = () => {
+        for (let i = 1; i <= 20; i++) {
+            ingradientList.push(`strIngredient${i}`)
+        }
+    }
+    findIngradients();
+
+    let measureList: string[] = [];
+    const findMeasure = () => {
+        for (let i = 1; i <= 20; i++) {
+            measureList.push(`strMeasure${i}`)
+        }
+    }
+    findMeasure();
+
+    const [show, setShow] = useState(false);
+    const handleClose = () => setShow(false);
 
     const [meals, setMeals] = useState<Meal[]>([]);
     useEffect(() => {
@@ -63,12 +105,59 @@ const Slider: FunctionComponent = () => {
                             />
                             <Carousel.Caption>
                                 <h3>{meal.strMeal}</h3>
-                                <Button className='Bootstrap-Button' variant="primary">Taste!</Button>
+                                <Button className='Bootstrap-Button' variant="primary" onClick={() => {
+                                    setCurMeal(meal);
+                                    setShow(true);
+                                    setCurMealImg(meal.strMealThumb);
+                                    setCurMealLink(meal.strYoutube);
+                                }}>Taste!</Button>
                         </Carousel.Caption>
                     </Carousel.Item>
                     ))}
                 </Carousel>
             </div>
+            <Modal show={show} onHide={handleClose} size="lg">
+                    <Modal.Header closeButton>
+                        <Modal.Title>{curMeal?.strMeal}</Modal.Title>
+                    </Modal.Header>
+                    <Modal.Body className="show-grid">
+                        <ModalFirstDiv>
+                            <PopupImage src={curMealImg} alt="" />
+                            <div>
+                                <p>Category: {curMeal?.strCategory || 'none'}</p>
+                                <p>DrinkAlternate: {curMeal?.strDrinkAlternate || 'none'}</p>
+                                <p>Area: {curMeal?.strArea || 'none'}</p>
+                                <p>Tags: {curMeal?.strTags || 'none'}</p>
+                                <p>Youtube: <PopupYtLink href={curMealLink}>{curMealLink || 'none'}</PopupYtLink></p>
+                            </div>
+                        </ModalFirstDiv>
+                        <h3>Ingredients</h3>
+                        <ModalSecondDiv>
+                            <div>
+                                {ingradientList.map((ingradient: string) => (
+                                    <p>{curMeal?.[ingradient] || ''}</p>
+                                ))}
+                            </div>
+                            <div>
+                                {measureList.map((measure: string) => (
+                                    <p>{curMeal?.[measure] || ''}</p>
+                                ))}
+                            </div>
+                        </ModalSecondDiv>
+                        <h3>Instruction</h3>
+                        <div>
+                            <p>{curMeal?.strInstructions}</p>
+                        </div>
+                    </Modal.Body>
+                    <Modal.Footer>
+                        <Button variant="secondary" onClick={handleClose}>
+                            Close
+                        </Button>
+                        <Button variant="primary" onClick={handleClose}>
+                            Save Changes
+                        </Button>
+                    </Modal.Footer>
+                </Modal>
             <hr className='line'></hr>
         </>
     )
