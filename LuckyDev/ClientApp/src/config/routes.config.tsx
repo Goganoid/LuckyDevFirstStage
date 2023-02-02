@@ -4,7 +4,8 @@ import { Catalogue } from '../pages/Catalogue';
 import Layout from '../pages/Layout';
 import Login from '../pages/Login';
 import Register from '../pages/Register';
-
+import Userpage from 'src/pages/Userpage';
+import { UserComponents } from 'src/pages/UserComponents';
 
 const router = createBrowserRouter([
   // layout wrapper
@@ -30,6 +31,16 @@ const router = createBrowserRouter([
       {
         path: 'login',
         element: <Login/>
+      }
+    ]
+  },
+  {
+    path: '/userpage',
+    element: <Userpage/>,
+    children: [
+      { 
+        index: true,
+        element: <UserComponents />
       }
     ]
   }
