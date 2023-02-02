@@ -14,3 +14,12 @@ html, body, #root{
     height: 100%;
     background-color: #FAF5E1;
 }
+
+.Bootstrap-Button {
+    color: $white-text;
+    background-color: $button;
+    padding: 5px;
+}
+.Bootstrap-Button:hover {
+    color: $white-text;
+}

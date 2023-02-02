@@ -1,5 +1,12 @@
-$info: #D9D9D9;
-$danger: teal;
-$success:BlueViolet;
-$primary: #E09822;
-$danger: #ff4136;
+$background: #FAF5E1;
+$tyles: #D9D9D9;
+$button: #E09822;
+$header: #343A40;
+$black-text: #000000;
+$white-text: #FFFFFF;
+
+$info: $tyles;
+$danger: $header;
+$success: $white-text;
+$primary: $button;
+$danger: $background;
