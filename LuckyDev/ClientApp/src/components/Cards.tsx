@@ -14,7 +14,9 @@ const Item = styled.div`
     padding: 20px;
     background-color: #D6D6D6;
     border-radius: 15px;
-    box-shadow: 0px 6px 3px 1px #BEBEBE;
+    &:hover {
+        box-shadow: 0px 6px 3px 1px #BEBEBE;
+    }
 `;
 
 const MealsList = styled.div`
@@ -63,7 +65,7 @@ const Cards: FunctionComponent = () => {
             />
             <RecipeContent>
                 <RecipeName>{m.strMeal}</RecipeName>
-                <Button variant="primary">Скуштувати!</Button>
+                <Button variant="primary" onClick={() => console.log(m)}>Скуштувати!</Button>
             </RecipeContent>
         </Item>
     );
