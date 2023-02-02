@@ -76,6 +76,18 @@ const ModalSecondDiv = styled.div`
     gap: 0 20px;
 `;
 
+const FilterMenu = styled.div`
+    float: right;
+    top: 85px;
+    bottom: 18%;
+    position: sticky;
+    display: flex;
+    width: 290px;
+    background-color: #D6D6D6 !important;
+    filter: drop-shadow(0px 4px 4px rgba(0, 0, 0, 0.25));
+    border-radius: 30px;
+`;
+
 const itemsPerLoad = 6;
 
 const Cards: FunctionComponent = () => {
@@ -143,54 +155,86 @@ const Cards: FunctionComponent = () => {
         </> 
     );
     return (
-        <div className="d-flex flex-column justify-content-center">
-            <MealsList>
-                {meal}
-                <Modal show={show} onHide={handleClose} size="lg">
-                    <Modal.Header closeButton>
-                        <Modal.Title>{curMeal?.strMeal}</Modal.Title>
-                    </Modal.Header>
-                    <Modal.Body className="show-grid">
-                        <ModalFirstDiv>
-                            <SliderImage src={curMealImg} alt="" />
+        <div id='main'>
+            <div className="d-flex flex-column justify-content-center" id='left'>
+                <MealsList>
+                    {meal}
+                    <Modal show={show} onHide={handleClose} size="lg">
+                        <Modal.Header closeButton>
+                            <Modal.Title>{curMeal?.strMeal}</Modal.Title>
+                        </Modal.Header>
+                        <Modal.Body className="show-grid">
+                            <ModalFirstDiv>
+                                <SliderImage src={curMealImg} alt="" />
+                                <div>
+                                    <p>Category: {curMeal?.strCategory || 'none'}</p>
+                                    <p>DrinkAlternate: {curMeal?.strDrinkAlternate || 'none'}</p>
+                                    <p>Area: {curMeal?.strArea || 'none'}</p>
+                                    <p>Tags: {curMeal?.strTags || 'none'}</p>
+                                    <p>Youtube: <PopupYtLink href={curMealLink}>{curMealLink || 'none'}</PopupYtLink></p>
+                                </div>
+                            </ModalFirstDiv>
+                            <h3>Ingredients</h3>
+                            <ModalSecondDiv>
+                                <div>
+                                    {ingradientList.map((ingradient: string) => (
+                                        <p>{curMeal?.[ingradient] || ''}</p>
+                                    ))}
+                                </div>
+                                <div>
+                                    {measureList.map((measure: string) => (
+                                        <p>{curMeal?.[measure] || ''}</p>
+                                    ))}
+                                </div>
+                            </ModalSecondDiv>
+                            <h3>Instruction</h3>
                             <div>
-                                <p>Category: {curMeal?.strCategory || 'none'}</p>
-                                <p>DrinkAlternate: {curMeal?.strDrinkAlternate || 'none'}</p>
-                                <p>Area: {curMeal?.strArea || 'none'}</p>
-                                <p>Tags: {curMeal?.strTags || 'none'}</p>
-                                <p>Youtube: <PopupYtLink href={curMealLink}>{curMealLink || 'none'}</PopupYtLink></p>
+                                <p>{curMeal?.strInstructions}</p>
                             </div>
-                        </ModalFirstDiv>
-                        <h3>Ingredients</h3>
-                        <ModalSecondDiv>
-                            <div>
-                                {ingradientList.map((ingradient: string) => (
-                                    <p>{curMeal?.[ingradient] || ''}</p>
-                                ))}
-                            </div>
-                            <div>
-                                {measureList.map((measure: string) => (
-                                    <p>{curMeal?.[measure] || ''}</p>
-                                ))}
-                            </div>
-                        </ModalSecondDiv>
-                        <h3>Instruction</h3>
-                        <div>
-                            <p>{curMeal?.strInstructions}</p>
-                        </div>
-                    </Modal.Body>
-                    <Modal.Footer>
-                        <Button variant="secondary" onClick={handleClose}>
-                            Close
-                        </Button>
-                        <Button variant="primary" onClick={handleClose}>
-                            Save Changes
-                        </Button>
-                    </Modal.Footer>
-                </Modal>
-            </MealsList>
-            {showLoadButton &&
-                <Button variant="primary" className='Load-more-button' onClick={loadMoreMeals}>Load More</Button>}
+                        </Modal.Body>
+                        <Modal.Footer>
+                            <Button variant="secondary" onClick={handleClose}>
+                                Close
+                            </Button>
+                            <Button variant="primary" onClick={handleClose}>
+                                Save Changes
+                            </Button>
+                        </Modal.Footer>
+                    </Modal>
+                </MealsList>
+                {showLoadButton &&
+                    <Button variant="primary" className='Load-more-button' onClick={loadMoreMeals}>Load More</Button>}
+            </div>
+            <div id='right'>
+                <FilterMenu>
+                    <form className='search-form'>
+                        <input type="image" 
+                            name="search" 
+                            src='free-icon-magnifying-glass-126474.png' 
+                            alt='x'>
+                        </input>
+                        <input name="search-line" placeholder="search"></input>
+
+                        <h5>Category:</h5>
+                        <input name="filter-line" placeholder="Category"></input>
+                        <button className='filter-more'><img alt='>'></img></button>
+
+                        <h5>DrinkAlternate:</h5>
+                        <input name="filter-line" placeholder="DrinkAlternate"></input>
+                        <button className='filter-more'><img alt='>'></img></button>
+
+                        <h5>Area:</h5>
+                        <input name="filter-line" placeholder="Area"></input>
+                        <button className='filter-more'><img alt='>'></img></button>
+
+                        <h5>Tags:</h5>
+                        <input name="filter-line" placeholder="Tags"></input>
+                        <button className='filter-more'><img alt='>'></img></button>
+                        
+                        <Button type='submit' className='Bootstrap-Button d-flex mt-4 mx-auto'>What can I cook with my products...</Button>
+                    </form>
+                </FilterMenu>
+            </div>
         </div>
     );
 }

@@ -12,7 +12,7 @@ html, body, #root{
     padding: 0;
     margin: 0;
     height: 100%;
-    background-color: #FAF5E1;
+    background-color: $background;
 }
 
 .Bootstrap-Button {
@@ -66,4 +66,82 @@ html, body, #root{
 }
 .carousel-container {
     margin-bottom: 10px;
+}
+
+#main {
+    display: flex;
+    flex-direction: row;
+}
+#main > #left {
+    min-width: 75%;
+}
+
+#main > #right {
+    max-width: 25%;
+    padding-top: 40px;
+    padding-right: 4%;
+}
+@media screen and (max-width: 1000px) {
+    #main {
+        flex-direction: column-reverse;
+    }
+    #main > #right {
+        min-width: 100%;
+        display: flex;
+        justify-content: center;
+        padding: 0;
+    }
+}
+
+//filters and search
+.search-form {
+    width: 100%;
+    height: fit-content;
+    margin-bottom: 20px;
+}
+.search-form > input[name='search'] {
+    outline: 0;
+    background-color: none;
+    opacity: 0.5;
+    content: url("../../images/free-icon-magnifying-glass-126474.png");
+    width: 20px;
+    position: absolute;
+    margin: 37px 0 0 12%;
+}
+.search-form > input[name='search-line'] {
+    width: 80%;
+    border-radius: 10px;
+    padding: 4px;
+    padding-left: 28px;
+    font-size: 16px;
+    border: none;
+    background-color: $white-text;
+    margin: 30px 10%;
+}
+
+.search-form > h5 {
+    width: fit-content;
+    margin: auto;
+}
+.search-form > input[name='filter-line'] {
+    width: 80%;
+    margin: 10px 30px;
+    background-color: $white-text;
+    font-size: 16px;
+    border: none;
+    border-radius: 5px;
+    padding: 4px;
+}
+.search-form > .filter-more {
+    border: none;
+    background: none;
+    width: 20px;
+    height: 20px;
+    padding: 0;
+    margin-left: -20%;
+}
+
+.search-form > .filter-more > img {
+    content: url("../../images/arrow-down-b_icon-icons.com_50479.png");
+    max-width: 20px;
 }
