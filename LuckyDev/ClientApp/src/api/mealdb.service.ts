@@ -75,7 +75,7 @@ export abstract class BaseMealDbService {
 class MealDbService extends BaseMealDbService {
     private static _sampleService: MealDbService;
     private static _controller: string = '';
-  
+    
     private constructor(name: string) {
       super(name);
     }
@@ -90,10 +90,10 @@ class MealDbService extends BaseMealDbService {
       return data.meals;
     }
 
-    public async getMeals(): Promise<Meal[]> {
-      const url = `search.php?f=a`;
+    public async getMeals(letter:string): Promise<Meal[] | null> {
+      const url = `search.php?f=${letter}`;
       const { data } = await this.$http.get<MealsSelection>(url);
-      return data.meals;
+      return data?.meals;
     }
   }
   

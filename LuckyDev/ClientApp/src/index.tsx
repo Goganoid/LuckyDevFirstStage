@@ -1,4 +1,4 @@
-import { Fragment, StrictMode } from 'react';
+import { Fragment } from 'react';
 import { createRoot } from 'react-dom/client';
 import { ToastContainer } from 'react-toastify';
 import App from './App';
@@ -13,9 +13,9 @@ const root = createRoot(container as HTMLElement);
 function AppRenderer() {
   return (
     <Fragment>
-      <StrictMode>
+      {/* <StrictMode> */}
         <App />
-      </StrictMode>
+      {/* </StrictMode> */}
       <ToastContainer {...toastifyProps} />
     </Fragment>
   );
