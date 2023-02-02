@@ -3,6 +3,9 @@ import {type Meal } from 'src/api/mealdb.service';
 import styled from 'styled-components';
 import Button from 'react-bootstrap/Button';
 import Modal from 'react-bootstrap/Modal';
+import Col from 'react-bootstrap/Col';
+import Row from 'react-bootstrap/Row';
+import Container from 'react-bootstrap/Container';
 import { MealsLoader } from 'src/api/meals_loader.service';
 
 const SliderImage = styled.img`
@@ -62,16 +65,42 @@ const RecipeName = styled.span`
     overflow: hidden;
 `;
 
+const PopupYtLink = styled.a`
+`;
+
+const ModalFirstDiv = styled.div`
+    display: flex;
+    gap: 20px;
+`;
+
 const itemsPerLoad = 6;
 
 const Cards: FunctionComponent = () => {
 
     const [meals, setMeals] = useState<Meal[]>([]);
     const [showLoadButton, setShowLoadButton] = useState(true);
+    const [curMeal, setCurMeal] = useState<Meal>();
+    const [curMealImg, setCurMealImg] = useState('');
+    const [curMealLink, setCurMealLink] = useState('');
+
+    let ingradientList: string[] = [];
+    const findIngradients = () => {
+        for (let i = 1; i <= 20; i++) {
+            ingradientList.push(`strIngredient${i}`)
+        }
+    }
+    findIngradients();
+
+    let measureList: string[] = [];
+    const findMeasure = () => {
+        for (let i = 1; i <= 20; i++) {
+            measureList.push(`strMeasure${i}`)
+        }
+    }
+    findMeasure();
 
     const [show, setShow] = useState(false);
     const handleClose = () => setShow(false);
-    const handleShow = () => setShow(true);
 
     const loadMoreMeals = () => {
         MealsLoader.TakeNext(itemsPerLoad).then(result => {
@@ -97,15 +126,44 @@ const Cards: FunctionComponent = () => {
                     <RecipeName>{m.strMeal}</RecipeName>
                     <Button
                         className='Bootstrap-Button meal-select' 
-                        onClick={handleShow}>Скуштувати!</Button>
+                        onClick={() => {
+                            setCurMeal(m);
+                            setShow(true);
+                            setCurMealImg(m.strMealThumb);
+                            setCurMealLink(m.strYoutube);
+                        }}>
+                            Taste!
+                        </Button>
                 </RecipeContent>
             </Item>
         </ItemWrapper>
-        <Modal show={show} onHide={handleClose}>
+        <Modal show={show} onHide={handleClose} size="lg">
                 <Modal.Header closeButton>
-                    <Modal.Title>{m.strMeal}</Modal.Title>
+                    <Modal.Title>{curMeal?.strMeal}</Modal.Title>
                 </Modal.Header>
-                <Modal.Body>Woohoo, you're reading this text in a modal!</Modal.Body>
+                <Modal.Body className="show-grid">
+                    <ModalFirstDiv>
+                        <SliderImage src={curMealImg} alt="" />
+                        <div>
+                            <p>Category: {curMeal?.strCategory || 'none'}</p>
+                            <p>DrinkAlternate: {curMeal?.strDrinkAlternate || 'none'}</p>
+                            <p>Area: {curMeal?.strArea || 'none'}</p>
+                            <p>Tags: {curMeal?.strTags || 'none'}</p>
+                            <p>Youtube: <PopupYtLink href={curMealLink}>{curMealLink || 'none'}</PopupYtLink></p>
+                        </div>
+                    </ModalFirstDiv>
+                    <div>
+                        {ingradientList.map((ingradient: string) => (
+                            <p>{curMeal?.[ingradient] || ''}</p>
+                        ))}
+                        {measureList.map((measure: string) => (
+                            <p>{curMeal?.[measure] || ''}</p>
+                        ))}
+                    </div>
+                    <div>
+                        <p>{curMeal?.strInstructions}</p>
+                    </div>
+                </Modal.Body>
                 <Modal.Footer>
                     <Button variant="secondary" onClick={handleClose}>
                         Close
