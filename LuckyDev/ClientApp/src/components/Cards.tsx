@@ -139,52 +139,52 @@ const Cards: FunctionComponent = () => {
                 </RecipeContent>
             </Item>
         </ItemWrapper>
-        <Modal show={show} onHide={handleClose} size="lg">
-                <Modal.Header closeButton>
-                    <Modal.Title>{curMeal?.strMeal}</Modal.Title>
-                </Modal.Header>
-                <Modal.Body className="show-grid">
-                    <ModalFirstDiv>
-                        <SliderImage src={curMealImg} alt="" />
-                        <div>
-                            <p>Category: {curMeal?.strCategory || 'none'}</p>
-                            <p>DrinkAlternate: {curMeal?.strDrinkAlternate || 'none'}</p>
-                            <p>Area: {curMeal?.strArea || 'none'}</p>
-                            <p>Tags: {curMeal?.strTags || 'none'}</p>
-                            <p>Youtube: <PopupYtLink href={curMealLink}>{curMealLink || 'none'}</PopupYtLink></p>
-                        </div>
-                    </ModalFirstDiv>
-                    <ModalSecondDiv>
-                        <div>
-                            {ingradientList.map((ingradient: string) => (
-                                <p>{curMeal?.[ingradient] || ''}</p>
-                            ))}
-                        </div>
-                        <div>
-                            {measureList.map((measure: string) => (
-                                <p>{curMeal?.[measure] || ''}</p>
-                            ))}
-                        </div>
-                    </ModalSecondDiv>
-                    <div>
-                        <p>{curMeal?.strInstructions}</p>
-                    </div>
-                </Modal.Body>
-                <Modal.Footer>
-                    <Button variant="secondary" onClick={handleClose}>
-                        Close
-                    </Button>
-                    <Button variant="primary" onClick={handleClose}>
-                        Save Changes
-                    </Button>
-                </Modal.Footer>
-            </Modal>
         </> 
     );
     return (
         <div className="d-flex flex-column justify-content-center">
             <MealsList>
                 {meal}
+                <Modal show={show} onHide={handleClose} size="lg">
+                    <Modal.Header closeButton>
+                        <Modal.Title>{curMeal?.strMeal}</Modal.Title>
+                    </Modal.Header>
+                    <Modal.Body className="show-grid">
+                        <ModalFirstDiv>
+                            <SliderImage src={curMealImg} alt="" />
+                            <div>
+                                <p>Category: {curMeal?.strCategory || 'none'}</p>
+                                <p>DrinkAlternate: {curMeal?.strDrinkAlternate || 'none'}</p>
+                                <p>Area: {curMeal?.strArea || 'none'}</p>
+                                <p>Tags: {curMeal?.strTags || 'none'}</p>
+                                <p>Youtube: <PopupYtLink href={curMealLink}>{curMealLink || 'none'}</PopupYtLink></p>
+                            </div>
+                        </ModalFirstDiv>
+                        <ModalSecondDiv>
+                            <div>
+                                {ingradientList.map((ingradient: string) => (
+                                    <p>{curMeal?.[ingradient] || ''}</p>
+                                ))}
+                            </div>
+                            <div>
+                                {measureList.map((measure: string) => (
+                                    <p>{curMeal?.[measure] || ''}</p>
+                                ))}
+                            </div>
+                        </ModalSecondDiv>
+                        <div>
+                            <p>{curMeal?.strInstructions}</p>
+                        </div>
+                    </Modal.Body>
+                    <Modal.Footer>
+                        <Button variant="secondary" onClick={handleClose}>
+                            Close
+                        </Button>
+                        <Button variant="primary" onClick={handleClose}>
+                            Save Changes
+                        </Button>
+                    </Modal.Footer>
+                </Modal>
             </MealsList>
             {showLoadButton &&
                 <Button variant="primary" className='Load-more-button' onClick={loadMoreMeals}>Load More</Button>}
