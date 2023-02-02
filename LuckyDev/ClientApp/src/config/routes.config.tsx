@@ -1,4 +1,5 @@
 import { createBrowserRouter } from 'react-router-dom';
+import AuthWrapper from 'src/pages/AuthWrapper';
 import { Catalogue } from '../pages/Catalogue';
 import Layout from '../pages/Layout';
 import Login from '../pages/Login';
@@ -19,14 +20,19 @@ const router = createBrowserRouter([
     ]
   },
   {
-    path: '/register',
-    element: <Register/>
-  },
-  {
-    path: '/login',
-    element: <Login/>
+    path: '/auth',
+    element: <AuthWrapper />,
+    children: [
+      {
+        path: 'register',
+        element: <Register/>
+      },
+      {
+        path: 'login',
+        element: <Login/>
+      }
+    ]
   }
-
 ]);
 
 export default router;

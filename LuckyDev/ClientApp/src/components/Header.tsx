@@ -6,14 +6,14 @@ import Offcanvas from 'react-bootstrap/Offcanvas';
 import styled from 'styled-components';
 import headerLogo from '../assets/images/header_logo.png';
 
-const BrandContent = styled.div`
+export const BrandContent = styled.div`
   display: flex;
   justify-content: space-between;
   font-family: Inter;
   word-spacing: 0.05rem;
 `;
 
-const StyledHeader = styled(Navbar)`
+export const StyledHeader = styled(Navbar)`
   color: #fff;
   width: 100%;
   display: block;
@@ -26,11 +26,11 @@ const StyledHeader = styled(Navbar)`
 `;
 
 
-const LogoImg = styled.img`
+export const LogoImg = styled.img`
   width: 80px;
 `;
 
-const LogoWrapper = styled.div`
+export const LogoWrapper = styled.div`
   display: flex;
   align-items: center;
 `;
