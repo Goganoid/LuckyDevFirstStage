@@ -3,6 +3,7 @@ import {
   MDBCardBody, MDBCheckbox, MDBContainer, MDBInput
 } from 'mdb-react-ui-kit';
 import type { FunctionComponent } from 'react';
+import { Link } from 'react-router-dom';
 
 const Registermain: FunctionComponent = () => (
     <MDBContainer fluid className='d-flex align-items-center justify-content-center bg-image'>
@@ -18,7 +19,7 @@ const Registermain: FunctionComponent = () => (
           <MDBCheckbox name='flexCheck' id='flexCheckDefault' label='I agree all statements in Terms of service' />
         </div>
         <MDBBtn className='mb-4 w-100 gradient-custom-4' size='lg'>Register</MDBBtn>
-        <h6 className="text-uppercase text-center mb-5">Already have an account? <a href="/auth/login">login</a></h6>
+        <h6 className="text-uppercase text-center mb-5">Already have an account? <Link to="/auth/login">login</Link></h6>
       </MDBCardBody>
     </MDBCard>
   </MDBContainer>
