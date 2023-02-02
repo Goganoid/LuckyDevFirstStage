@@ -1,3 +1,4 @@
+//@ts-nocheck
 import React, { useEffect, useState, type FunctionComponent } from 'react'
 import Carousel from 'react-bootstrap/Carousel';
 import { MealDbApi, type Meal } from 'src/api/mealdb.service';
@@ -103,7 +104,7 @@ const Slider: FunctionComponent = () => {
                                 src={meal.strMealThumb}
                                 alt=""
                             />
-                            <Carousel.Caption>
+                            <Carousel.Caption className='carousel-container'>
                                 <h3>{meal.strMeal}</h3>
                                 <Button className='Bootstrap-Button' variant="primary" onClick={() => {
                                     setCurMeal(meal);

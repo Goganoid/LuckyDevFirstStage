@@ -1,3 +1,4 @@
+//@ts-nocheck
 import React, { useEffect, useState, type FunctionComponent } from 'react'
 import {type Meal } from 'src/api/mealdb.service';
 import styled from 'styled-components';
@@ -53,7 +54,7 @@ const RecipeName = styled.span`
     font-family: 'Inter';
     font-style: normal;
     font-weight: 700;
-    font-size: 24px;
+    font-size: 20px;
     line-height: 29px;
     display: flex;
     align-items: center;
