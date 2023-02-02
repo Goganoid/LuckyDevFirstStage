@@ -1,1 +1,0 @@
-export { SampleApi } from './sample.service';
