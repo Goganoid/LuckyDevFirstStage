@@ -1,14 +1,8 @@
-import type { FunctionComponent } from 'react';
-import styled from 'styled-components';
 import {
-    MDBBtn,
-    MDBContainer,
-    MDBCard,
-    MDBCardBody,
-    MDBInput,
-    MDBCheckbox
-  }
-from 'mdb-react-ui-kit';
+  MDBBtn, MDBCard,
+  MDBCardBody, MDBCheckbox, MDBContainer, MDBInput
+} from 'mdb-react-ui-kit';
+import type { FunctionComponent } from 'react';
 
 const Registermain: FunctionComponent = () => (
     <MDBContainer fluid className='d-flex align-items-center justify-content-center bg-image'>
