@@ -81,8 +81,8 @@ const Cards: FunctionComponent = () => {
     }, []);
     const meal = meals.map((m, idx) =>
 
-        <ItemWrapper>
-            <Item key={idx}>
+        <ItemWrapper key={idx}>
+            <Item>
                 <SliderImage
                     src={m.strMealThumb}
                     alt=""
