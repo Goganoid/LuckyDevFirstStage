@@ -1,6 +1,6 @@
 import type { ComponentType } from 'react';
 import type { Params } from 'react-router-dom';
-import { Catalogue }  from '../containers';
+import { Catalogue }  from '../pages/Catalogue';
 
 export type RouteComponent = ComponentType<any>;
 

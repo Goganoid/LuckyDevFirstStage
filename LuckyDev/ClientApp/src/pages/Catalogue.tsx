@@ -1,9 +1,11 @@
 import type { FunctionComponent } from 'react';
-import { useState } from 'react';
-import { Slider } from './Slider';
+import { Cards, Slider } from '../components';
 
 export const Catalogue: FunctionComponent = () => {
     return (
-       <Slider/>
+        <>
+            <Slider />
+            <Cards />
+        </>
     );
 }

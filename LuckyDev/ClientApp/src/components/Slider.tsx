@@ -16,7 +16,7 @@ const ItemStyle = {
 }
 
 
-export const Slider: FunctionComponent = () => {
+const Slider: FunctionComponent = () => {
 
     const [meals, setMeals] = useState<Meal[]>([]);
     useEffect(() => {
@@ -46,3 +46,5 @@ export const Slider: FunctionComponent = () => {
         </>
     )
 }
+
+export default Slider;
