@@ -1,11 +1,9 @@
-import { Footer, Header, Registermain } from '../components';
 import { Fragment, type FunctionComponent, type PropsWithChildren } from 'react';
+import { Registermain } from '../components';
 
 const Register: FunctionComponent<PropsWithChildren> = () => (
   <Fragment>
-    <Header />
     <Registermain />
-    <Footer />
   </Fragment>
 );
 

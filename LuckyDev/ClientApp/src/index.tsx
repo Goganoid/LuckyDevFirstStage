@@ -1,6 +1,5 @@
 import { Fragment, StrictMode } from 'react';
 import { createRoot } from 'react-dom/client';
-import { BrowserRouter } from 'react-router-dom';
 import { ToastContainer } from 'react-toastify';
 import App from './App';
 import './assets/style/scss/site.scss';
@@ -12,14 +11,11 @@ const container = document.getElementById('root');
 const root = createRoot(container as HTMLElement);
 
 function AppRenderer() {
-
   return (
     <Fragment>
-      <BrowserRouter>
-          <StrictMode>
-            <App />
-          </StrictMode>
-      </BrowserRouter>
+      <StrictMode>
+        <App />
+      </StrictMode>
       <ToastContainer {...toastifyProps} />
     </Fragment>
   );

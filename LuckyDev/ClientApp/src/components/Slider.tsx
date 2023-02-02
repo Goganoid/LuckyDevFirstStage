@@ -28,7 +28,7 @@ const Slider: FunctionComponent = () => {
     return (
         <>
             <div className='d-flex justify-content-center'>
-                <Carousel className='w-50 h-25'>
+                <Carousel className='w-50 h-100'>
                     {meals.map((meal, idx) => (
                         <Carousel.Item key={idx} style={ItemStyle}>
                         <SliderImage
