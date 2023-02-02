@@ -18,6 +18,7 @@ const Registermain: FunctionComponent = () => (
           <MDBCheckbox name='flexCheck' id='flexCheckDefault' label='I agree all statements in Terms of service' />
         </div>
         <MDBBtn className='mb-4 w-100 gradient-custom-4' size='lg'>Register</MDBBtn>
+        <h6 className="text-uppercase text-center mb-5">Already have an account? <a href="/auth/login">login</a></h6>
       </MDBCardBody>
     </MDBCard>
   </MDBContainer>
