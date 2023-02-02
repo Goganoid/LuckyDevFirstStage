@@ -63,7 +63,7 @@ const Slider: FunctionComponent = () => {
                             />
                             <Carousel.Caption>
                                 <h3>{meal.strMeal}</h3>
-                                <Button className='Bootstrap-Button' variant="primary">Скуштувати!</Button>
+                                <Button className='Bootstrap-Button' variant="primary">Taste!</Button>
                         </Carousel.Caption>
                     </Carousel.Item>
                     ))}
