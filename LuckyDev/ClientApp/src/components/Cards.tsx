@@ -100,7 +100,7 @@ const Cards: FunctionComponent = () => {
                 {meal}
             </MealsList>
             {showLoadButton &&
-                <Button variant="primary" className='Bootstrap-Button' onClick={loadMoreMeals}>Load More</Button>}
+                <Button variant="primary" className='Load-more-button' onClick={loadMoreMeals}>Load More</Button>}
         </>
     );
 }

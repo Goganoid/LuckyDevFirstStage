@@ -23,3 +23,33 @@ html, body, #root{
 .Bootstrap-Button:hover {
     color: $white-text;
 }
+.button-on-slick :where(h3, .Bootstrap-Button) {
+    transform: translateY(100%);
+    transition: 0.2s;
+}
+.button-on-slick:hover :where(h3, .Bootstrap-Button) {
+    transform: translateY(0);
+}
+.button-on-slick .Bootstrap-Button {
+    opacity: 0;
+}
+.button-on-slick:hover .Bootstrap-Button {
+    opacity: 1;
+}
+
+.Load-more-button {
+    color: $white-text;
+    background-color: $button;
+    width: 65%;
+    margin: auto;
+    margin-bottom: 30px;
+    padding: 5px;
+    border-radius: 10px;
+    border: none;
+}
+
+.line {
+    width: 84%;
+    border: 2px solid black;
+    margin: 40px 8%;
+}
