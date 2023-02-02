@@ -52,4 +52,13 @@ class AuthService extends BaseService {
     }
   }
   
-  export const AuthApi = AuthService.Instance;
+export const AuthApi = AuthService.Instance;
+  
+// Usage Example
+
+// AuthApi.Register("Test1","Test2","john_doe1111@gmail.com", "123456").then(response => {
+//     console.log(response);
+// })
+// AuthApi.Login("john_doe1111@gmail.com", "123456").then(response => {
+//     console.log(response);
+// })
