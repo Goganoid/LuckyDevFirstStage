@@ -49,24 +49,24 @@ interface Props {
 
 const Header: React.FC<Props> = ({ className }) => {
   const [scrollClass, setScrollClass] = useState<string>(className || '');
-  let scrollPosition = 0;
   
   useEffect(() => {
     window.onscroll = function() { handleScroll(); };
+
+    let scrollPosition = 0;
+    async function  handleScroll() {
+      if (document.documentElement.scrollTop > scrollPosition) {
+        setScrollClass('header-scrolling');
+      } else {
+        setScrollClass('');
+      }
+      scrollPosition = document.documentElement.scrollTop;
+    }
 
     return () => {
       window.onscroll = null;
     };
   }, []);
-
-  const handleScroll = () => {
-    if (document.documentElement.scrollTop > scrollPosition) {
-      setScrollClass('header-scrolling');
-    } else {
-      setScrollClass('');
-    }
-    scrollPosition = document.documentElement.scrollTop;
-  };
   
   return (
   <StyledHeader expand={expand} variant="dark" className={scrollClass}>

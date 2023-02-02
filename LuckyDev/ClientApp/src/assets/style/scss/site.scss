@@ -24,7 +24,7 @@ html, body, #root{
     color: $white-text;
 }
 .button-on-slick :where(h3, .Bootstrap-Button) {
-    transform: translateY(100%);
+    transform: translateY(50px);
     transition: 0.2s;
 }
 .button-on-slick:hover :where(h3, .Bootstrap-Button) {
@@ -62,5 +62,8 @@ html, body, #root{
     transform: translateY(-100%);
 }
 .margin-for-first {
-    margin-top: 100px;
+    margin-top: 90px;
+}
+.carousel-container {
+    margin-bottom: 10px;
 }
