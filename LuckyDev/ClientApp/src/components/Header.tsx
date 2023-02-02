@@ -5,7 +5,7 @@ import Navbar from 'react-bootstrap/Navbar';
 import Offcanvas from 'react-bootstrap/Offcanvas';
 import styled from 'styled-components';
 import headerLogo from '../assets/images/header_logo.png';
-
+import { LinkContainer } from 'react-router-bootstrap';
 export const BrandContent = styled.div`
   display: flex;
   justify-content: space-between;
@@ -17,7 +17,7 @@ export const StyledHeader = styled(Navbar)`
   color: #fff;
   width: 100%;
   display: block;
-  font-size: 1.5rem;
+  font-size: 1rem;
   background-color: #343A40;
   margin-bottom: 1rem;
   @media all and (max-width: 769px) {
@@ -36,7 +36,7 @@ export const LogoWrapper = styled.div`
 `;
 // false - menu is always collapsed
 // 'sm', 'md', 'lg', 'xl', 'xxl' - determines collapse point
-const expand = false;
+const expand = 'lg';
 
 const Header: FunctionComponent = () => (
   <StyledHeader expand={expand} variant="dark">
@@ -63,8 +63,9 @@ const Header: FunctionComponent = () => (
         </Offcanvas.Header>
         <Offcanvas.Body>
           <Nav className="justify-content-end flex-grow-1 pe-3">
-            <Nav.Link href="#action1">Home</Nav.Link>
-            <Nav.Link href="#action2">Link</Nav.Link>
+              <LinkContainer to='/auth/login'><Nav.Link>Login</Nav.Link></LinkContainer>
+              <LinkContainer to='/auth/register'><Nav.Link href='/auth/register'>Register</Nav.Link></LinkContainer>
+            
           </Nav>
         </Offcanvas.Body>
       </Navbar.Offcanvas>
