@@ -118,13 +118,13 @@ const Cards: FunctionComponent = () => {
         </> 
     );
     return (
-        <>
+        <div className="d-flex flex-column justify-content-center">
             <MealsList>
                 {meal}
             </MealsList>
             {showLoadButton &&
                 <Button variant="primary" className='Load-more-button' onClick={loadMoreMeals}>Load More</Button>}
-        </>
+        </div>
     );
 }
 
