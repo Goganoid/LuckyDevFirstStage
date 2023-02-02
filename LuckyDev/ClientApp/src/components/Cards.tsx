@@ -185,7 +185,7 @@ const Cards: FunctionComponent = () => {
                     </div>
                 </div>
             <MealsList>
-                {meal}
+                {meal.length ? meal : <h3>No Matches</h3>}
                 <Modal show={show} onHide={handleClose} size="lg">
                     <Modal.Header closeButton>
                         <Modal.Title>{curMeal?.strMeal}</Modal.Title>
