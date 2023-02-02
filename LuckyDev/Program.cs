@@ -37,7 +37,7 @@ builder.Services.AddMvc(opt => opt.SuppressAsyncSuffixInActionNames = false);
 // builder.Services.AddSpaStaticFiles(opt => opt.RootPath = $"{spaSrcPath}/dist");
 builder.Services.AddSwaggerGen(c =>
 {
-    c.SwaggerDoc("v1", new OpenApiInfo {Title = "RecipeWiki", Version = "v1"});
+    c.SwaggerDoc("v1", new OpenApiInfo { Title = "RecipeWiki", Version = "v1" });
 
 
     c.AddSecurityDefinition(JwtAuthenticationDefaults.AuthenticationScheme,
@@ -77,7 +77,13 @@ builder.Services.Configure<AppSettings>(appSettingsSection);
 var appSettings = appSettingsSection.Get<AppSettings>()!;
 var key = Encoding.ASCII.GetBytes(appSettings.Secret);
 
-
+builder.Services.AddCors(options =>
+{
+options.AddDefaultPolicy(policyBuilder => policyBuilder
+                    .AllowAnyHeader()
+                    .AllowAnyMethod()
+                    .AllowAnyOrigin());
+});
 builder.Services.AddAuthentication(JwtBearerDefaults.AuthenticationScheme).AddJwtBearer(options =>
 {
     options.TokenValidationParameters = new TokenValidationParameters()
@@ -152,7 +158,7 @@ else
     app.UseHsts();
 }
 
-app.UseCors(corsPolicyName);
+// app.UseCors(corsPolicyName);
 using (var scope = app.Services.CreateScope())
 {
     var services = scope.ServiceProvider;
@@ -171,6 +177,9 @@ if (app.Environment.IsDevelopment())
 }
 
 app.UseHttpsRedirection();
+
+app.UseCors();
+
 app.UseRouting();
 app.UseAuthentication();
 app.UseAuthorization();
