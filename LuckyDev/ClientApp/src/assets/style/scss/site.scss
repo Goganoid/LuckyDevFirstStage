@@ -58,3 +58,9 @@ html, body, #root{
     min-width: 200px;
     margin-left: auto;
 }
+.header-scrolling {
+    transform: translateY(-100%);
+}
+.margin-for-first {
+    margin-top: 100px;
+}

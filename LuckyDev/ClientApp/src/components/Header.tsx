@@ -1,4 +1,4 @@
-import type { FunctionComponent } from 'react';
+import React, { useState, useEffect } from 'react';
 import Container from 'react-bootstrap/Container';
 import Nav from 'react-bootstrap/Nav';
 import Navbar from 'react-bootstrap/Navbar';
@@ -6,6 +6,7 @@ import Offcanvas from 'react-bootstrap/Offcanvas';
 import styled from 'styled-components';
 import headerLogo from '../assets/images/header_logo.png';
 import { LinkContainer } from 'react-router-bootstrap';
+
 export const BrandContent = styled.div`
   display: flex;
   justify-content: space-between;
@@ -13,7 +14,11 @@ export const BrandContent = styled.div`
   word-spacing: 0.05rem;
 `;
 
-export const StyledHeader = styled(Navbar)`
+export let StyledHeader = styled(Navbar)`
+  transition: 0.2s;
+  position:fixed;
+  z-index: 10;
+
   color: #fff;
   width: 100%;
   display: block;
@@ -38,8 +43,33 @@ export const LogoWrapper = styled.div`
 // 'sm', 'md', 'lg', 'xl', 'xxl' - determines collapse point
 const expand = 'lg';
 
-const Header: FunctionComponent = () => (
-  <StyledHeader expand={expand} variant="dark">
+interface Props {
+  className?: string;
+}
+
+const Header: React.FC<Props> = ({ className }) => {
+  const [scrollClass, setScrollClass] = useState<string>(className || '');
+  let scrollPosition = 0;
+  
+  useEffect(() => {
+    window.onscroll = function() { handleScroll(); };
+
+    return () => {
+      window.onscroll = null;
+    };
+  }, []);
+
+  const handleScroll = () => {
+    if (document.documentElement.scrollTop > scrollPosition) {
+      setScrollClass('header-scrolling');
+    } else {
+      setScrollClass('');
+    }
+    scrollPosition = document.documentElement.scrollTop;
+  };
+  
+  return (
+  <StyledHeader expand={expand} variant="dark" className={scrollClass}>
     <Container fluid>
       <Navbar.Brand href="#">
         <BrandContent>
@@ -71,6 +101,7 @@ const Header: FunctionComponent = () => (
       </Navbar.Offcanvas>
     </Container>
   </StyledHeader>
-);
+  )
+};
 
 export default Header;
