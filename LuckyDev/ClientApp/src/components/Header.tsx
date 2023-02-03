@@ -71,7 +71,7 @@ const Header: React.FC<Props> = ({ className }) => {
   return (
   <StyledHeader expand={expand} variant="dark" className={scrollClass}>
     <Container fluid>
-      <Navbar.Brand href="#">
+      <Navbar.Brand href="/">
         <BrandContent>
           <LogoWrapper>
             <LogoImg src={headerLogo} alt="logo" />

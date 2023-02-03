@@ -1,10 +1,10 @@
 import type { FunctionComponent } from 'react';
 import styled from 'styled-components';
 
-const MyRecipes: FunctionComponent = () => (
+const SavedRecipes: FunctionComponent = () => (
   <>
-    <h2>MyRecipes</h2>
+    <h2>SavedRecipes: </h2>
   </>
 );
 
-export default MyRecipes;
+export default SavedRecipes;
