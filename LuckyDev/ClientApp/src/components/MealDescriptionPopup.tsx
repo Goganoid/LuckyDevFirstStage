@@ -13,6 +13,10 @@ export type MealDescriptionPopupProps = {
     curMeal: Meal | undefined,
 }
 
+const Instructions = styled.span`
+    white-space: pre-wrap;
+`
+
 const IngredientSpan = styled.span`
     padding-left: 3%;
 `;
@@ -58,9 +62,9 @@ export function MealDescriptionPopup(
             <Container className='modal-div info'>
                 {ingredients}
             </Container>
-            <h3>Instruction</h3>
+            <h3>Instructions</h3>
             <div className='info'>
-                <span>{curMeal?.strInstructions}</span>
+                <Instructions>{curMeal?.strInstructions}</Instructions>
             </div>
         </Modal.Body>
         <Modal.Footer>
