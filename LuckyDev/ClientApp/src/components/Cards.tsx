@@ -13,21 +13,23 @@ import { MealDescriptionPopup } from './MealDescriptionPopup';
 const ItemWrapper = styled.div`
      flex: 30%;
      display: flex;
-     justify-content: center;
+     /* justify-content: center; */
      margin-bottom: 36px;
-`;
-
-const Item = styled.div`
-    display: flex;
-    width:100%;
-    padding: 20px;
-    background-color: #D6D6D6;
-    border-radius: 15px;
-    transition: 0.2s;
+     padding: 20px;
+     background-color: #D6D6D6;
+     border-radius: 15px;
+     transition: 0.2s;
     &:hover {
         transform: translateY(-6px);
         box-shadow: 0px 6px 3px 1px #BEBEBE;
     }
+`;
+
+const Item = styled.div`
+    display: flex;
+    justify-content: space-between;
+    width: 100%;
+    
 `;
 
 const MealsList = styled.div`
@@ -45,10 +47,14 @@ const RecipeContent = styled.div`
     display: flex;
     flex-direction: column;
     justify-content: space-between;
-    padding-left: 20px;
-    width: 100%;
+    align-items: center;
+    flex-basis: 50%;
+    /* padding-left: 20px; */
+    /* width: 100%; */
 `;
-
+const ImageWrapper = styled.div`
+    flex-basis: 50%;
+`
 const RecipeName = styled.span`
     font-family: 'Inter';
     font-style: normal;
@@ -80,7 +86,7 @@ const Cards: FunctionComponent = () => {
     })
 
 
-    
+
 
     const [show, setShow] = useState(false);
     const handleClose = () => setShow(false);
@@ -101,28 +107,28 @@ const Cards: FunctionComponent = () => {
         })
     }, []);
     const meal = meals.map((m, idx) =>
-        <>
-            <ItemWrapper>
-                <Item key={idx} className='meal'>
+        <ItemWrapper key={idx}>
+            <Item className='meal'>
+                <ImageWrapper>
                     <img
                         src={m.strMealThumb}
                         alt=""
                         height={180}
                     />
-                    <RecipeContent>
-                        <RecipeName>{m.strMeal}</RecipeName>
-                        <Button
-                            className='Bootstrap-Button meal-select'
-                            onClick={() => {
-                                setCurMeal(m);
-                                setShow(true);
-                            }}>
-                            Taste!
-                        </Button>
-                    </RecipeContent>
-                </Item>
-            </ItemWrapper>
-        </>
+                </ImageWrapper>
+                <RecipeContent>
+                    <RecipeName>{m.strMeal}</RecipeName>
+                    <Button
+                        className='Bootstrap-Button meal-select'
+                        onClick={() => {
+                            setCurMeal(m);
+                            setShow(true);
+                        }}>
+                        Taste!
+                    </Button>
+                </RecipeContent>
+            </Item>
+        </ItemWrapper>
     );
     return (
         <div id='main'>
