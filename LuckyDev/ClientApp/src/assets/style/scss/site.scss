@@ -23,6 +23,16 @@ html, body, #root{
 .Bootstrap-Button:hover {
     color: $white-text;
 }
+
+.Bootstrap-Button-white {
+    color: $black-text;
+    background-color: $white-text;
+    padding: 5px;
+}
+.Bootstrap-Button-white:hover {
+    color: $black-text;
+    background-color: $white-text-hover;
+}
 .button-on-slick :where(h3, .Bootstrap-Button) {
     transform: translateY(50px);
     transition: 0.2s;
@@ -91,6 +101,9 @@ html, body, #root{
         justify-content: center;
         padding: 0;
     }
+    .popup .modal-div {
+        flex-direction: column;
+    }
 }
 
 //filters and search
@@ -144,4 +157,31 @@ html, body, #root{
 .search-form > .filter-more > img {
     content: url("../../images/arrow-down-b_icon-icons.com_50479.png");
     max-width: 20px;
+}
+
+//Popups
+.popup > * > div {
+    background-color: $background;
+}
+.popup .popup-image {
+    display: block;
+    width: 250px;
+    height: 250px;
+    border-radius: 20px;
+}
+.popup .modal-div {
+    flex-direction: row;
+    display: flex;
+    gap: 20px;
+}
+.popup .info {
+    background-color: $tyles;
+    border-radius: 15px;
+    padding: 9px;
+    margin-bottom: 10px;
+}
+.popup .info > div {
+    display: flex;
+    flex-direction: column;
+    padding-left: 3%;
 }
