@@ -136,14 +136,9 @@ html, body, #root{
     width: fit-content;
     margin: auto;
 }
-.search-form > input[name='filter-line'] {
-    width: 80%;
-    margin: 10px 30px;
+.filter-item {
     background-color: $white-text;
     font-size: 16px;
-    border: none;
-    border-radius: 5px;
-    padding: 4px;
 }
 .search-form > .filter-more {
     border: none;
