@@ -9,7 +9,7 @@ export type Meal = {
     strInstructions: string;
     strMealThumb: string;
     strTags: string;
-    strYoutube: string;
+    strYoutube?: string;
     strIngredient1: string;
     strIngredient2: string;
     strIngredient3: string;

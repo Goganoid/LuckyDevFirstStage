@@ -6,6 +6,7 @@ import styled from 'styled-components';
 import Button from 'react-bootstrap/Button';
 import dateDiffInDays from 'src/utils/dateDiff';
 import Modal from 'react-bootstrap/Modal';
+import { MealDescriptionPopup } from './MealDescriptionPopup';
 
 const SliderImage = styled.img`
     display: block;
@@ -45,8 +46,6 @@ type SliderStorage = {
 const Slider: FunctionComponent = () => {
 
     const [curMeal, setCurMeal] = useState<Meal>();
-    const [curMealImg, setCurMealImg] = useState('');
-    const [curMealLink, setCurMealLink] = useState('');
 
     let ingradientList: string[] = [];
     const findIngradients = () => {
@@ -117,48 +116,11 @@ const Slider: FunctionComponent = () => {
                     ))}
                 </Carousel>
             </div>
-            <Modal show={show} onHide={handleClose} size="lg">
-                    <Modal.Header closeButton>
-                        <Modal.Title>{curMeal?.strMeal}</Modal.Title>
-                    </Modal.Header>
-                    <Modal.Body className="show-grid">
-                        <ModalFirstDiv>
-                            <PopupImage src={curMealImg} alt="" />
-                            <div>
-                                <p>Category: {curMeal?.strCategory || 'none'}</p>
-                                <p>DrinkAlternate: {curMeal?.strDrinkAlternate || 'none'}</p>
-                                <p>Area: {curMeal?.strArea || 'none'}</p>
-                                <p>Tags: {curMeal?.strTags || 'none'}</p>
-                                <p>Youtube: <PopupYtLink href={curMealLink}>{curMealLink || 'none'}</PopupYtLink></p>
-                            </div>
-                        </ModalFirstDiv>
-                        <h3>Ingredients</h3>
-                        <ModalSecondDiv>
-                            <div>
-                                {ingradientList.map((ingradient: string) => (
-                                    <p>{curMeal?.[ingradient] || ''}</p>
-                                ))}
-                            </div>
-                            <div>
-                                {measureList.map((measure: string) => (
-                                    <p>{curMeal?.[measure] || ''}</p>
-                                ))}
-                            </div>
-                        </ModalSecondDiv>
-                        <h3>Instruction</h3>
-                        <div>
-                            <p>{curMeal?.strInstructions}</p>
-                        </div>
-                    </Modal.Body>
-                    <Modal.Footer>
-                        <Button variant="secondary" onClick={handleClose}>
-                            Close
-                        </Button>
-                        <Button variant="primary" onClick={handleClose}>
-                            Save Changes
-                        </Button>
-                    </Modal.Footer>
-                </Modal>
+            <MealDescriptionPopup
+                curMeal={curMeal}
+                handleClose={handleClose}
+                show={show}
+            />
             <hr className='line'></hr>
         </>
     )
