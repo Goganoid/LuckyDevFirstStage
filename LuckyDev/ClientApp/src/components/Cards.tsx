@@ -1,5 +1,5 @@
 //@ts-nocheck
-import React, { useEffect, useState, type FunctionComponent } from 'react'
+import React, { useEffect, useState, useMemo, type FunctionComponent } from 'react'
 import {type Meal } from 'src/api/mealdb.service';
 import styled from 'styled-components';
 import Button from 'react-bootstrap/Button';
@@ -97,6 +97,20 @@ const Cards: FunctionComponent = () => {
     const [curMeal, setCurMeal] = useState<Meal>();
     const [curMealImg, setCurMealImg] = useState('');
     const [curMealLink, setCurMealLink] = useState('');
+    const [selectedCategory, setSelectedCategory] = useState();
+
+    function handleCategoryChange(event: any) {
+        setSelectedCategory(event.target.value);
+    };
+
+    function getFilteredList() {
+        if (!selectedCategory) {
+          return meals;
+        }
+        return meals.filter((item) => item.strCategory === selectedCategory);
+    }
+
+    let filteredList = useMemo(getFilteredList, [selectedCategory, meals]);
 
     let ingradientList: string[] = [];
     const findIngradients = () => {
@@ -129,7 +143,7 @@ const Cards: FunctionComponent = () => {
             if (result != null) setMeals(result)
         })
     }, []);
-    const meal = meals.map((m, idx) =>
+    const meal = filteredList.map((m, idx) =>
         <>
         <ItemWrapper>
             <Item key={idx} className='meal'>
@@ -158,7 +172,7 @@ const Cards: FunctionComponent = () => {
         <div id='main'>
             <div className="d-flex flex-column justify-content-center" id='left'>
                 <MealsList>
-                    {meal}
+                {meal.length ? meal : <h3>No Matches</h3>}
                     <Modal show={show} onHide={handleClose} size="lg">
                         <Modal.Header closeButton>
                             <Modal.Title>{curMeal?.strMeal}</Modal.Title>
@@ -218,6 +232,29 @@ const Cards: FunctionComponent = () => {
                         <h5>Category:</h5>
                         <input name="filter-line" placeholder="Category"></input>
                         <button className='filter-more'><img alt='>'></img></button>
+                        <div>
+                            <select
+                                name="category-list"
+                                id="category-list"
+                                onChange={handleCategoryChange}
+                            >
+                                <option value="">All</option>
+                                <option value="Beef">Beef</option>
+                                <option value="Breakfast">Breakfast</option>
+                                <option value="Chicken">Chicken</option>
+                                <option value="Dessert">Dessert</option>
+                                <option value="Goat">Goat</option>
+                                <option value="Lamb">Lamb</option>
+                                <option value="Miscellaneous">Miscellaneous</option>
+                                <option value="Pasta">Pasta</option>
+                                <option value="Pork">Pork</option>
+                                <option value="Seafood">Seafood</option>
+                                <option value="Side">Side</option>
+                                <option value="Starter">Starter</option>
+                                <option value="Vegan">Vegan</option>
+                                <option value="Vegetarian">Vegetarian</option>
+                            </select>
+                        </div>
 
                         <h5>DrinkAlternate:</h5>
                         <input name="filter-line" placeholder="DrinkAlternate"></input>
