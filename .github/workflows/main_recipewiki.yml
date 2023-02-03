@@ -42,6 +42,7 @@ jobs:
       - name: dotnet bundle migration
         run: dotnet ef migrations bundle -p LuckyDev/LuckyDev.csproj -o ${{env.DOTNET_ROOT}}/myapp/migrate --verbose --context SqlServerContext
 
+
       - name: Upload artifact for deployment job
         uses: actions/upload-artifact@v2
         with:
