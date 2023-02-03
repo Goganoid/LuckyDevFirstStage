@@ -177,3 +177,10 @@ html, body, #root{
     display: flex;
     flex-direction: column;
 }
+
+//Profile
+.profile-image {
+    content: url("../../images/chef-hat.jpg");
+    width: 100%;
+    border-radius: 100%;
+}

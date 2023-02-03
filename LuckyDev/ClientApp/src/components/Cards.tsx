@@ -99,7 +99,7 @@ const Cards: FunctionComponent = () => {
             if (result != null) setMeals(result)
             setLoading(false);
         })
-    }, []);
+    }, [searchFilters]);
     const meal = meals.map((m, idx) =>
         <>
             <ItemWrapper>

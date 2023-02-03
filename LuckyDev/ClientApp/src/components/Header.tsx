@@ -94,7 +94,8 @@ const Header: React.FC<Props> = ({ className }) => {
         <Offcanvas.Body>
           <Nav className="justify-content-end flex-grow-1 pe-3">
               <LinkContainer to='/auth/login'><Nav.Link>Login</Nav.Link></LinkContainer>
-              <LinkContainer to='/auth/register'><Nav.Link href='/auth/register'>Register</Nav.Link></LinkContainer>
+              <LinkContainer to='/auth/register'><Nav.Link>Register</Nav.Link></LinkContainer>
+              <LinkContainer to='/user'><Nav.Link>Profile</Nav.Link></LinkContainer>
             
           </Nav>
         </Offcanvas.Body>
