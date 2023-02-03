@@ -1,6 +1,6 @@
 import {
   MDBBtn, MDBCard,
-  MDBCardBody, MDBCheckbox, MDBContainer, MDBInput
+  MDBCardBody, MDBContainer, MDBInput
 } from 'mdb-react-ui-kit';
 import { Alert } from 'react-bootstrap';
 import { useState } from 'react';
@@ -52,16 +52,21 @@ export default function Registermain() {
   // Handling the form submission
   const handleSubmit = (e: any) => {
     e.preventDefault()
-    if (name1 === '' || name2 === '' || email === '' || password1 === '' || password2 === '') {
-      setError(true)
-    } else if (password1 !== password2) {
+    if (password1 !== password2) {
       setError(true)
     } else {
       AuthApi.Register(name1, name2, email, password1).then(response => {
-        console.log(response);
+          setFirstName('');
+          setSecondName('');
+          setEmail('');
+          setPassword1('');
+          setPassword2('');
+          setSubmitted(true);
+          setError(false);
+      }).catch(error => {
+        setSubmitted(false);
+        setError(true);
       })
-      setSubmitted(true)
-      setError(false)
     }
   };
   
@@ -86,7 +91,7 @@ export default function Registermain() {
         style={{
           display: error ? '' : 'none',
         }}>
-        <Alert key={'danger'} variant={'danger'}>Error! Please enter all the fields or check the password</Alert>
+        <Alert key={'danger'} variant={'danger'}>Error! Incorrect email or password</Alert>
       </div>
     );
   };
@@ -98,14 +103,11 @@ export default function Registermain() {
     <MDBCard className='m-5' style={{maxWidth: '600px'}}>
       <MDBCardBody className='px-5'>
         <h2 className="text-uppercase text-center mb-5">Create an account</h2>
-        <MDBInput onChange={handleFirstName} wrapperClass='mb-4' label='Your first name' size='lg' id='form1' type='text'/>
-        <MDBInput onChange={handleSecondName} wrapperClass='mb-4' label='Your last name' size='lg' id='form2' type='text'/>
-        <MDBInput onChange={handleEmail} wrapperClass='mb-4' label='Your Email' size='lg' id='form3' type='email'/>
-        <MDBInput onChange={handlePassword1} wrapperClass='mb-4' label='Password' size='lg' id='form4' type='password'/>
-        <MDBInput onChange={handlePassword2} wrapperClass='mb-4' label='Repeat your password' size='lg' id='form5' type='password'/>
-        <div className='d-flex flex-row justify-content-center mb-4'>
-          <MDBCheckbox name='flexCheck' id='flexCheckDefault' label='I agree all statements in Terms of service' />
-        </div>
+        <MDBInput onChange={handleFirstName} value={name1} wrapperClass='mb-4' label='Your first name' size='lg' id='form1' type='text'/>
+        <MDBInput onChange={handleSecondName} value={name2} wrapperClass='mb-4' label='Your last name' size='lg' id='form2' type='text'/>
+        <MDBInput onChange={handleEmail} value={email} wrapperClass='mb-4' label='Your Email' size='lg' id='form3' type='email'/>
+        <MDBInput onChange={handlePassword1} value={password1} wrapperClass='mb-4' label='Password' size='lg' id='form4' type='password'/>
+        <MDBInput onChange={handlePassword2} value={password2} wrapperClass='mb-4' label='Repeat your password' size='lg' id='form5' type='password'/>
         <MDBBtn onClick={handleSubmit} className='mb-4 w-100 gradient-custom-4' size='lg'>Register</MDBBtn>
         <h6 className="text-uppercase text-center mb-5">Already have an account? <Link to="/auth/login">login</Link></h6>
         <div>
