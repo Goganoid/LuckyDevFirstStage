@@ -22,7 +22,7 @@ var builder = WebApplication.CreateBuilder(args);
 var configuration = builder.Configuration;
 
 var provider = configuration.GetValue<string>("Provider", "SqlServer");
-Console.WriteLine($"Provider: {provider}")
+Console.WriteLine($"Provider: {provider}");
 switch (provider)
 {
     case "Sqlite":
