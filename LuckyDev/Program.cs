@@ -22,7 +22,7 @@ var builder = WebApplication.CreateBuilder(args);
 var configuration = builder.Configuration;
 
 var provider = configuration.GetValue<string>("Provider", "SqlServer");
-
+Console.WriteLine($"Provider: {provider}")
 switch (provider)
 {
     case "Sqlite":
@@ -184,12 +184,12 @@ using (var scope = app.Services.CreateScope())
 
 // Register the Swagger generator and the Swagger UI middlewares
 // Configure the HTTP request pipeline.
-if (app.Environment.IsDevelopment())
-{
+// if (app.Environment.IsDevelopment())
+// {
     app.UseSwagger();
     // app.UseSwaggerUI();
     app.UseSwaggerUI(c => { c.SwaggerEndpoint("/swagger/v1/swagger.json", "TestWebApi"); });
-}
+// }
 
 app.UseHttpsRedirection();
 
