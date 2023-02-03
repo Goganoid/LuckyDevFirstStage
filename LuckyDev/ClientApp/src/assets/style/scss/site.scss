@@ -66,7 +66,6 @@ html, body, #root{
 .meal-select {
     width: 20%;
     min-width: 200px;
-    margin-left: auto;
 }
 .header-scrolling {
     transform: translateY(-100%);
@@ -111,6 +110,7 @@ html, body, #root{
     width: 100%;
     height: fit-content;
     margin-bottom: 20px;
+    padding: 10px;
 }
 .search-form > input[name='search'] {
     outline: 0;

@@ -31,7 +31,7 @@ export function MealDescriptionPopup(
         if (ingredient !== null && ingredient!=="") {
             const measure: string = (curMeal as any)[`strMeasure${i}`];
             ingredients.push(
-                <Row>
+                <Row key={i}>
                     <Col>
                         <IngredientSpan>{ingredient}</IngredientSpan>
                     </Col>
