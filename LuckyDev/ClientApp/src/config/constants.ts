@@ -1,1 +1,50 @@
 export const someConstant = 'test';
+
+
+export const categoryOptions = [
+    { name: 'Beef', id: 1 },
+    { name: 'Breakfast', id: 2 },
+    { name: 'Chicken', id: 3 },
+    { name: 'Dessert', id: 4 },
+    { name: 'Goat', id: 5 },
+    { name: 'Lamb', id: 6 },
+    { name: 'Miscellaneous', id: 7 },
+    { name: 'Pasta', id: 8 },
+    { name: 'Pork', id: 9 },
+    { name: 'Seafood', id: 10 },
+    { name: 'Side', id: 11 },
+    { name: 'Starter', id: 12 },
+    { name: 'Vegan', id: 13 },
+    { name: 'Vegeterian', id: 14 },
+]
+
+
+export const areaOptions = [
+    { id: 1, name:'American' },
+    { id: 2, name:'British' },
+    { id: 3, name:'Canadian' },
+    { id: 4, name:'Chinese' },
+    { id: 5, name:'Croatian' },
+    { id: 6, name:'Dutch' },
+    { id: 7, name:'Egyptian' },
+    { id: 8, name:'French' },
+    { id: 9, name:'Greek' },
+    { id: 10, name:'Indian' },
+    { id: 11, name:'Irish' },
+    { id: 12, name:'Italian' },
+    { id: 13, name:'Jamaican' },
+    { id: 14, name:'Japanese' },
+    { id: 15, name:'Kenyan' },
+    { id: 16, name:'Malaysian' },
+    { id: 17, name:'Mexican' },
+    { id: 18, name:'Morrocan' },
+    { id: 19, name:'Polish' },
+    { id: 20, name:'Portuguese' },
+    { id: 21, name:'Russian' },
+    { id: 22, name:'Spanish' },
+    { id: 23, name:'Thai' },
+    { id: 24, name:'Tunisian' },
+    { id: 25, name:'Turkish' },
+    { id: 26, name:'Unknown' },
+    { id: 27, name:'Vietnamese' },
+]

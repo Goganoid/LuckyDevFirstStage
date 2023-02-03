@@ -5,7 +5,7 @@ import styled from 'styled-components';
 import Button from 'react-bootstrap/Button';
 import Modal from 'react-bootstrap/Modal';
 import { MealsLoader } from 'src/api/meals_loader.service';
-
+import { Multiselect } from 'multiselect-react-dropdown';
 const SliderImage = styled.img`
     display: block;
     height: 180px;
@@ -89,6 +89,10 @@ const FilterMenu = styled.div`
 `;
 
 const itemsPerLoad = 6;
+
+
+
+
 
 const Cards: FunctionComponent = () => {
 
@@ -214,170 +218,54 @@ const Cards: FunctionComponent = () => {
         </> 
     );
     return (
-        <div id='main'>
-            <div className="d-flex flex-column justify-content-center" id='left'>
-                <MealsList>
+        <div className="d-flex flex-column justify-content-center">
+            <MealsList>
                 {meal.length ? meal : <h3>No Matches</h3>}
-                    <Modal show={show} onHide={handleClose} size="lg">
-                        <Modal.Header closeButton>
-                            <Modal.Title>{curMeal?.strMeal}</Modal.Title>
-                        </Modal.Header>
-                        <Modal.Body className="show-grid">
-                            <ModalFirstDiv>
-                                <SliderImage src={curMealImg} alt="" />
-                                <div>
-                                    <p>Category: {curMeal?.strCategory || 'none'}</p>
-                                    <p>DrinkAlternate: {curMeal?.strDrinkAlternate || 'none'}</p>
-                                    <p>Area: {curMeal?.strArea || 'none'}</p>
-                                    <p>Tags: {curMeal?.strTags || 'none'}</p>
-                                    <p>Youtube: <PopupYtLink href={curMealLink}>{curMealLink || 'none'}</PopupYtLink></p>
-                                </div>
-                            </ModalFirstDiv>
-                            <h3>Ingredients</h3>
-                            <ModalSecondDiv>
-                                <div>
-                                    {ingradientList.map((ingradient: string) => (
-                                        <p>{curMeal?.[ingradient] || ''}</p>
-                                    ))}
-                                </div>
-                                <div>
-                                    {measureList.map((measure: string) => (
-                                        <p>{curMeal?.[measure] || ''}</p>
-                                    ))}
-                                </div>
-                            </ModalSecondDiv>
-                            <h3>Instruction</h3>
+                <Modal show={show} onHide={handleClose} size="lg">
+                    <Modal.Header closeButton>
+                        <Modal.Title>{curMeal?.strMeal}</Modal.Title>
+                    </Modal.Header>
+                    <Modal.Body className="show-grid">
+                        <ModalFirstDiv>
+                            <SliderImage src={curMealImg} alt="" />
                             <div>
-                                <p>{curMeal?.strInstructions}</p>
+                                <p>Category: {curMeal?.strCategory || 'none'}</p>
+                                <p>DrinkAlternate: {curMeal?.strDrinkAlternate || 'none'}</p>
+                                <p>Area: {curMeal?.strArea || 'none'}</p>
+                                <p>Tags: {curMeal?.strTags || 'none'}</p>
+                                <p>Youtube: <PopupYtLink href={curMealLink}>{curMealLink || 'none'}</PopupYtLink></p>
                             </div>
-                        </Modal.Body>
-                        <Modal.Footer>
-                            <Button variant="secondary" onClick={handleClose}>
-                                Close
-                            </Button>
-                            <Button variant="primary" onClick={handleClose}>
-                                Save Changes
-                            </Button>
-                        </Modal.Footer>
-                    </Modal>
-                </MealsList>
-                {showLoadButton &&
-                    <Button variant="primary" className='Load-more-button' onClick={loadMoreMeals}>Load More</Button>}
-            </div>
-            <div id='right'>
-                <FilterMenu>
-                    <form className='search-form'>
-                        <input type="image" 
-                            name="search" 
-                            src='free-icon-magnifying-glass-126474.png' 
-                            alt='x'>
-                        </input>
-                        <input name="search-line" placeholder="search"></input>
-
-                        <h5>Category:</h5>
-                        <input name="filter-line" placeholder="Category"></input>
-                        <button className='filter-more'><img alt='>'></img></button>
+                        </ModalFirstDiv>
+                        <h3>Ingredients</h3>
+                        <ModalSecondDiv>
+                            <div>
+                                {ingradientList.map((ingradient: string) => (
+                                    <p>{curMeal?.[ingradient] || ''}</p>
+                                ))}
+                            </div>
+                            <div>
+                                {measureList.map((measure: string) => (
+                                    <p>{curMeal?.[measure] || ''}</p>
+                                ))}
+                            </div>
+                        </ModalSecondDiv>
+                        <h3>Instruction</h3>
                         <div>
-                            <select
-                                name="category-list"
-                                id="category-list"
-                                onChange={handleCategoryChange}
-                            >
-                                <option value="">All</option>
-                                <option value="Beef">Beef</option>
-                                <option value="Breakfast">Breakfast</option>
-                                <option value="Chicken">Chicken</option>
-                                <option value="Dessert">Dessert</option>
-                                <option value="Goat">Goat</option>
-                                <option value="Lamb">Lamb</option>
-                                <option value="Miscellaneous">Miscellaneous</option>
-                                <option value="Pasta">Pasta</option>
-                                <option value="Pork">Pork</option>
-                                <option value="Seafood">Seafood</option>
-                                <option value="Side">Side</option>
-                                <option value="Starter">Starter</option>
-                                <option value="Vegan">Vegan</option>
-                                <option value="Vegetarian">Vegetarian</option>
-                            </select>
+                            <p>{curMeal?.strInstructions}</p>
                         </div>
-                        <div>Filter by Category:</div>
-                    <div>
-                        <select
-                            name="category-list"
-                            id="category-list"
-                            onChange={handleCategoryChange}
-                        >
-                            <option value="">All</option>
-                            <option value="Beef">Beef</option>
-                            <option value="Breakfast">Breakfast</option>
-                            <option value="Chicken">Chicken</option>
-                            <option value="Dessert">Dessert</option>
-                            <option value="Goat">Goat</option>
-                            <option value="Lamb">Lamb</option>
-                            <option value="Miscellaneous">Miscellaneous</option>
-                            <option value="Pasta">Pasta</option>
-                            <option value="Pork">Pork</option>
-                            <option value="Seafood">Seafood</option>
-                            <option value="Side">Side</option>
-                            <option value="Starter">Starter</option>
-                            <option value="Vegan">Vegan</option>
-                            <option value="Vegetarian">Vegetarian</option>
-                        </select>
-                    </div>
-                    <div>Filter by Area:</div>
-                    <div>
-                        <select
-                            name="area-list"
-                            id="area-list"
-                            onChange={handleAreaChange}
-                        >
-                            <option value="">All</option>
-                            <option value="American">American</option>
-                            <option value="British">British</option>
-                            <option value="Canadian">Canadian</option>
-                            <option value="Chinese">Chinese</option>
-                            <option value="Croatian">Croatian</option>
-                            <option value="Dutch">Dutch</option>
-                            <option value="Egyptian">Egyptian</option>
-                            <option value="French">French</option>
-                            <option value="Greek">Greek</option>
-                            <option value="Indian">Indian</option>
-                            <option value="Irish">Irish</option>
-                            <option value="Italian">Italian</option>
-                            <option value="Jamaican">Jamaican</option>
-                            <option value="Japanese">Japanese</option>
-                            <option value="Kenyan">Kenyan</option>
-                            <option value="Malaysian">Malaysian</option>
-                            <option value="Mexican">Mexican</option>
-                            <option value="Moroccan">Moroccan</option>
-                            <option value="Polish">Polish</option>
-                            <option value="Portuguese">Portuguese</option>
-                            <option value="Russian">Russian</option>
-                            <option value="Spanish">Spanish</option>
-                            <option value="Thai">Thai</option>
-                            <option value="Tunisian">Tunisian</option>
-                            <option value="Turkish">Turkish</option>
-                            <option value="Unknown">Unknown</option>
-                            <option value="Vietnamese">Vietnamese</option>
-                        </select>
-                    </div>
-
-                        <h5>DrinkAlternate:</h5>
-                        <input name="filter-line" placeholder="DrinkAlternate"></input>
-                        <button className='filter-more'><img alt='>'></img></button>
-
-                        <h5>Area:</h5>
-                        <input name="filter-line" placeholder="Area"></input>
-                        <button className='filter-more'><img alt='>'></img></button>
-
-                        <h5>Tags:</h5>
-                        <input name="filter-line" placeholder="Tags"></input>
-                        <button className='filter-more'><img alt='>'></img></button>
-                        
-                        <Button type='submit' className='Bootstrap-Button d-flex mt-4 mx-auto'>What can I cook with my products...</Button>
-                    </form>
-                </FilterMenu>
-            </div>
+                    </Modal.Body>
+                    <Modal.Footer>
+                        <Button variant="secondary" onClick={handleClose}>
+                            Close
+                        </Button>
+                        <Button variant="primary" onClick={handleClose}>
+                            Save Changes
+                        </Button>
+                    </Modal.Footer>
+                </Modal>
+            </MealsList>
+            {showLoadButton &&
+                <Button variant="primary" className='Load-more-button' onClick={loadMoreMeals}>Load More</Button>}
         </div>
     );
 }
