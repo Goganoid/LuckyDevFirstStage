@@ -8,10 +8,10 @@ using RecipeWiki.Data;
 
 #nullable disable
 
-namespace RecipeWiki.Migrations
+namespace RecipeWiki.Migrations.SqlServer
 {
-    [DbContext(typeof(DataContext))]
-    partial class DataContextModelSnapshot : ModelSnapshot
+    [DbContext(typeof(SqlServerContext))]
+    partial class SqlServerContextModelSnapshot : ModelSnapshot
     {
         protected override void BuildModel(ModelBuilder modelBuilder)
         {

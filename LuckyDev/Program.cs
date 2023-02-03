@@ -21,7 +21,21 @@ var corsPolicyName = "AllowAll";
 var builder = WebApplication.CreateBuilder(args);
 var configuration = builder.Configuration;
 
-builder.Services.AddDbContext<DataContext>();
+var provider = configuration.GetValue<string>("Provider", "SqlServer");
+
+switch (provider)
+{
+    case "Sqlite":
+        builder.Services.AddDbContext<DataContext, SqliteContext>();
+        break;
+    case "SqlServer":
+        builder.Services.AddDbContext<DataContext, SqlServerContext>();
+        break;
+    default:
+        throw new Exception($"Unknown provider '{provider}'");
+}
+
+// builder.Services.AddDbContext<DataContext>();
 builder.Services.AddAutoMapper(AppDomain.CurrentDomain.GetAssemblies());
 builder.Services.AddCorsConfig(corsPolicyName);
 builder.Services.AddControllers();
@@ -37,7 +51,7 @@ builder.Services.AddMvc(opt => opt.SuppressAsyncSuffixInActionNames = false);
 // builder.Services.AddSpaStaticFiles(opt => opt.RootPath = $"{spaSrcPath}/dist");
 builder.Services.AddSwaggerGen(c =>
 {
-    c.SwaggerDoc("v1", new OpenApiInfo { Title = "RecipeWiki", Version = "v1" });
+    c.SwaggerDoc("v1", new OpenApiInfo {Title = "RecipeWiki", Version = "v1"});
 
 
     c.AddSecurityDefinition(JwtAuthenticationDefaults.AuthenticationScheme,
@@ -79,10 +93,10 @@ var key = Encoding.ASCII.GetBytes(appSettings.Secret);
 
 builder.Services.AddCors(options =>
 {
-options.AddDefaultPolicy(policyBuilder => policyBuilder
-                    .AllowAnyHeader()
-                    .AllowAnyMethod()
-                    .AllowAnyOrigin());
+    options.AddDefaultPolicy(policyBuilder => policyBuilder
+        .AllowAnyHeader()
+        .AllowAnyMethod()
+        .AllowAnyOrigin());
 });
 builder.Services.AddAuthentication(JwtBearerDefaults.AuthenticationScheme).AddJwtBearer(options =>
 {
@@ -163,6 +177,7 @@ using (var scope = app.Services.CreateScope())
 {
     var services = scope.ServiceProvider;
     var context = services.GetRequiredService<DataContext>();
+    context.Database.EnsureDeleted();
     context.Database.Migrate();
     DbInitializer.Initialize(context);
 }

@@ -15,12 +15,12 @@ public class DataContext : DbContext
         Configuration = configuration;
     }
 
-    protected override void OnConfiguring(DbContextOptionsBuilder options)
-    {
-        // connect to sql server database
-        // options.UseSqlite(Configuration.GetConnectionString("ConnStr"));
-        options.UseSqlServer(Configuration.GetConnectionString("ConnStr"));
-    }
+    // protected override void OnConfiguring(DbContextOptionsBuilder options)
+    // {
+    //     // connect to sql server database
+    //     // options.UseSqlite(Configuration.GetConnectionString("ConnStr"));
+    //     options.UseSqlServer(Configuration.GetConnectionString("ConnStr"));
+    // }
 
     protected override void OnModelCreating(ModelBuilder modelBuilder)
     {
