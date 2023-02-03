@@ -108,8 +108,6 @@ const Slider: FunctionComponent = () => {
                                 <Button className='Bootstrap-Button' variant="primary" onClick={() => {
                                     setCurMeal(meal);
                                     setShow(true);
-                                    setCurMealImg(meal.strMealThumb);
-                                    setCurMealLink(meal.strYoutube);
                                 }}>Taste!</Button>
                         </Carousel.Caption>
                     </Carousel.Item>

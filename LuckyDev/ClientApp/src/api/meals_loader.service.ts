@@ -37,7 +37,7 @@ class MealsLoaderService {
             var new_meals = await MealDbApi.getMeals(alphabet[this.last_letter]) ?? [];
             if (filters !== undefined) {
                 if (filters.name !== '') {
-                    new_meals = new_meals.filter(meal => meal.strMeal.toLowerCase().startsWith(filters.name.toLowerCase()!));
+                    new_meals = new_meals.filter(meal => meal.strMeal.toLowerCase().includes(filters.name.toLowerCase()!));
                 }
                 if (filters.category !== '') {
                     new_meals = new_meals.filter(meal => meal.strCategory === filters.category);

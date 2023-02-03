@@ -116,8 +116,6 @@ const Cards: FunctionComponent = () => {
                             onClick={() => {
                                 setCurMeal(m);
                                 setShow(true);
-                                setCurMealImg(m.strMealThumb);
-                                setCurMealLink(m.strYoutube);
                             }}>
                             Taste!
                         </Button>

@@ -2,10 +2,11 @@ import React from 'react';
 import { type Meal } from 'src/api/mealdb.service';
 import Button from 'react-bootstrap/Button';
 import { MealsLoader, type MealsFilter } from 'src/api/meals_loader.service';
-import Select from 'react-select';
-import { areaOptions, categoryOptions, convertToFilterList } from 'src/config/constants';
-import {itemsPerLoad } from '../config/constants';
+import Select, { type MultiValue } from 'react-select';
+import { areaOptions, categoryOptions, convertToFilterList, ingredientOptions, type FilterItem } from 'src/config/constants';
+import { itemsPerLoad } from '../config/constants';
 import styled from 'styled-components';
+import axios from 'axios';
 
 export const FilterMenu = styled.div`
     float: right;
@@ -27,7 +28,7 @@ export type FilterProps = {
     setLoading: React.Dispatch<React.SetStateAction<boolean>>,
 }
 
-export function Filter({setSearchFilters,searchFilters, setMeals,setLoading}:FilterProps) {
+export function Filter({ setSearchFilters, searchFilters, setMeals, setLoading }: FilterProps) {
     return <FilterMenu>
         <form className='search-form'>
             <input type="image"
@@ -35,7 +36,14 @@ export function Filter({setSearchFilters,searchFilters, setMeals,setLoading}:Fil
                 src='free-icon-magnifying-glass-126474.png'
                 alt='x'>
             </input>
-            <input name="search-line" placeholder="search"></input>
+            <input name="search-line"
+                placeholder="search"
+                value={searchFilters.name} onChange={(event) => {
+                    setSearchFilters({
+                        ...searchFilters,
+                        name: event.target.value
+                    })
+                }}></input>
 
             <h5>Category:</h5>
             <Select
@@ -73,9 +81,26 @@ export function Filter({setSearchFilters,searchFilters, setMeals,setLoading}:Fil
                         });
                 }} />
 
-            <h5>Tags:</h5>
-            <input name="filter-line" placeholder="Tags"></input>
-            <button className='filter-more'><img alt='>'></img></button>
+            <h5>Ingredients:</h5>
+            <Select
+                options={convertToFilterList(ingredientOptions)}
+                isMulti
+                isClearable={true}
+                isSearchable={true}
+                onChange={(newValue:MultiValue<FilterItem>, { action }) => {
+                    console.log(newValue, action);
+                    if (action === 'select-option' || action==='remove-value')
+                        setSearchFilters({
+                            ...searchFilters,
+                            ingredients: [...newValue.map(v=>v.value)]
+                        });
+                    if (action === 'clear') {
+                        setSearchFilters({
+                            ...searchFilters,
+                            ingredients: []
+                        });
+                    }
+                }} />
 
             <Button className='Bootstrap-Button d-flex mt-4 mx-auto'>What can I cook with my products...</Button>
             <Button className='Bootstrap-Button d-flex mt-4 mx-auto' onClick={() => {
