@@ -46,7 +46,7 @@ export default function Loginmain() {
           <h2 className="text-uppercase text-center mb-5">Sign in your account</h2>
           <MDBInput onChange={handleEmail} value={email} wrapperClass='mb-4' label='Your Email' size='lg' id='form2' type='email' />
           <MDBInput onChange={handlePassword} value={password} wrapperClass='mb-4' label='Password' size='lg' id='form3' type='password' />
-          <Button onClick={handleSubmit} className='mb-4 w-100 gradient-custom-4' size='lg' variant='primary'>Sign in</Button>
+          <Button onClick={handleSubmit} className='mb-4 w-100 Auth-Button' size='lg' variant='primary'>Sign in</Button>
           <h6 className="text-uppercase text-center mb-5">Don't have an account? <Link to="/auth/register">register</Link></h6>
         </MDBCardBody>
       </MDBCard>

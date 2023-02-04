@@ -5,6 +5,7 @@ import { Catalogue } from '../pages/Catalogue';
 import Layout from '../pages/Layout';
 import Login from '../pages/Login';
 import Register from '../pages/Register';
+import Logout from 'src/pages/Logout';
 
 const router = createBrowserRouter([
   // layout wrapper
@@ -34,7 +35,11 @@ const router = createBrowserRouter([
       {
         path: 'login',
         element: <Login/>
-      }
+      },
+      {
+        path: 'logout',
+        element: <Logout/>
+      },
     ]
   },
 ]);

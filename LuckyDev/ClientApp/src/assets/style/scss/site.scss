@@ -70,6 +70,19 @@ body{
     border: none;
 }
 
+.Logout-Button {
+    border-color: $button;
+    background-color: $white-text;
+}
+
+.Logout-Button:hover {
+    background-color: $white-text-hover;
+}
+
+.Auth-Button, .Auth-Button:hover {
+    color: $white-text;
+}
+
 .line {
     width: 84%;
     border: 2px solid black;

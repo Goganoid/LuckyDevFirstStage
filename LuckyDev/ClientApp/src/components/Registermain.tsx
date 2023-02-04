@@ -75,7 +75,7 @@ export default function Registermain() {
           <MDBInput onChange={handleEmail} value={email} wrapperClass='mb-4' label='Your Email' size='lg' id='form3' type='email' />
           <MDBInput onChange={handlePassword1} value={password1} wrapperClass='mb-4' label='Password' size='lg' id='form4' type='password' />
           <MDBInput onChange={handlePassword2} value={password2} wrapperClass='mb-4' label='Repeat your password' size='lg' id='form5' type='password' />
-          <Button onClick={handleSubmit} className='mb-4' size='lg' variant="primary">Register</Button>
+          <Button onClick={handleSubmit} className='mb-4 w-100 Auth-Button' size='lg' variant="primary">Register</Button>
           <h6 className="text-uppercase text-center mb-5">Already have an account? <Link to="/auth/login">login</Link></h6>
         </MDBCardBody>
       </MDBCard>

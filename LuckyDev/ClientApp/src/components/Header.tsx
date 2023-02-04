@@ -102,7 +102,10 @@ const Header: React.FC<Props> = ({ className }) => {
                     <LinkContainer to='/auth/register'><Nav.Link>Register</Nav.Link></LinkContainer>
                   </>
                   :
+                  <>
                   <LinkContainer to='/user'><Nav.Link>Profile</Nav.Link></LinkContainer>
+                  <LinkContainer to='/auth/logout'><Nav.Link>Logout</Nav.Link></LinkContainer>
+                  </>
               }
 
 
