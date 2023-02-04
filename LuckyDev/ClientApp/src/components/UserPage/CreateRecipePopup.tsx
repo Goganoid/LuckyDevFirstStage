@@ -1,5 +1,4 @@
-import { useEffect, useState, type FunctionComponent } from 'react';
-import { type Meal } from 'src/api/mealdb.service';
+import { useState } from 'react';
 import { Col, Row } from 'react-bootstrap';
 import Button from 'react-bootstrap/Button';
 import Container from 'react-bootstrap/Container';
@@ -16,10 +15,6 @@ export type MealDescriptionPopupProps = {
 const Instructions = styled.span`
     white-space: pre-wrap;
 `
-
-const IngredientSpan = styled.span`
-    padding-left: 3%;
-`;
 
 export function CreateRecipePopup({ show, handleClose }: MealDescriptionPopupProps) {
 

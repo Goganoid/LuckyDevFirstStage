@@ -8,7 +8,6 @@ import { areaOptions, categoryOptions, convertToFilterList, ingredientOptions, t
 import { isLoggedIn } from 'src/utils/storage';
 import styled from 'styled-components';
 import { itemsPerLoad } from '../config/constants';
-import axios from 'axios';
 
 export const FilterMenu = styled.div`
     float: right;
