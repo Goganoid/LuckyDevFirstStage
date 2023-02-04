@@ -16,7 +16,6 @@ using RecipeWiki.Data;
 using RecipeWiki.Extensions;
 using RecipeWiki.Helpers;
 
-var spaSrcPath = "ClientApp";
 var corsPolicyName = "AllowAll";
 var builder = WebApplication.CreateBuilder(args);
 var configuration = builder.Configuration;
