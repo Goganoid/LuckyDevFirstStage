@@ -49,8 +49,8 @@ export function MealDescriptionPopup(
         </Modal.Header>
         <Modal.Body className='show-grid'>
             <div className='modal-div'>
-                <img src={curMeal.strMealThumb} alt="" className='popup-image' />
-                <div style={{ width: 'calc(100% - 300px)' }}>
+                <div><img src={curMeal.strMealThumb} alt="" className='popup-image' /></div>
+                <div>
                     <div className='info'><span>Category: {curMeal?.strCategory || 'none'}</span></div>
                     <div className='info'><span>Area: {curMeal?.strArea || 'none'}</span></div>
                     <div className='info'><span>Tags: {curMeal?.strTags || 'none'}</span></div>
@@ -58,7 +58,7 @@ export function MealDescriptionPopup(
                 </div>
             </div>
             <h3>Ingredients</h3>
-            <Container className='modal-div info'>
+            <Container className='modal-ingredients info'>
                 {ingredients}
             </Container>
             <h3>Instructions</h3>

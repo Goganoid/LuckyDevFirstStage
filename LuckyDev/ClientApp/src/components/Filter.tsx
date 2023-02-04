@@ -4,11 +4,11 @@ import Select, { type MultiValue } from 'react-select';
 import { type Meal } from 'src/api/mealdb.service';
 import { MealsLoader, type MealsFilter } from 'src/api/meals_loader.service';
 import { UserApi } from 'src/api/user.service';
-import { areaOptions, categoryOptions, convertToFilterItem, convertToFilterList, ingredientOptions, type FilterItem } from 'src/config/constants';
+import { areaOptions, categoryOptions, convertToFilterList, ingredientOptions, type FilterItem } from 'src/config/constants';
 import { isLoggedIn } from 'src/utils/storage';
 import styled from 'styled-components';
 import { itemsPerLoad } from '../config/constants';
-import axios from 'axios';
+// import axios from 'axios';
 
 export const FilterMenu = styled.div`
     float: right;
