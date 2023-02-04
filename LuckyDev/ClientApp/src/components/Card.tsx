@@ -9,8 +9,6 @@ export const RecipeContent = styled.div`
     justify-content: space-between;
     align-items: center;
     flex-basis: 50%;
-    /* padding-left: 20px; */
-    /* width: 100%; */
 `;
 export const ImageWrapper = styled.div`
     flex-basis: 50%;

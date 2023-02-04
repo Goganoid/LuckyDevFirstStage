@@ -1,7 +1,7 @@
 import { useContext, useEffect, useState, type FunctionComponent } from 'react';
 import { Container } from 'react-bootstrap';
 import { MealDbApi, type Meal } from 'src/api/mealdb.service';
-import { LoadingSpinner } from 'src/pages/LoadingSpinner';
+import { LoadingSpinner } from 'src/components/LoadingSpinner';
 import { UserContext } from 'src/pages/Userpage';
 import styled from 'styled-components';
 import { MealCard } from '../Card';

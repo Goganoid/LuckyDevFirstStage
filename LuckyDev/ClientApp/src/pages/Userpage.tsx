@@ -2,7 +2,7 @@ import { createContext, Fragment, useEffect, useState, type FunctionComponent, t
 import { UserApi, type Ingredient, type UserInformation, type UserMeals } from 'src/api/user.service';
 import styled from 'styled-components';
 import { MyIngradients as MyIngredients, MyRecipes, SavedRecipes, TitleUser } from '../components/UserPage';
-import { LoadingSpinner } from './LoadingSpinner';
+import { LoadingSpinner } from '../components/LoadingSpinner';
 
 
 const Profile = styled.div`

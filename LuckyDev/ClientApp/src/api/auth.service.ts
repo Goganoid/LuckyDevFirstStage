@@ -1,6 +1,7 @@
 import type { AxiosResponse } from "axios";
 import { BaseService } from "./base.service";
 
+// This service is responsible for Login and Register actions
 
 export type LoginResponse = {
     id: number;

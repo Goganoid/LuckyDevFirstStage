@@ -7,8 +7,7 @@ export interface Ingredient {
     name: string;
     measure?: string;
 }
-
-
+// Describes meals that our database stores
 export interface UserCustomMeal {
     id: number;
     name: string;
@@ -17,7 +16,6 @@ export interface UserCustomMeal {
     ingredients: Ingredient[];
     instructions: string;
 }
-
 export interface UserMeals {
     savedMealsIds: string[];
     userMeals: UserCustomMeal[];
