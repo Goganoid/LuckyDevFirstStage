@@ -9,7 +9,8 @@ public class CustomMealResponseDTO
     /// </summary>
     /// <example>1</example>
     public int Id { get; set; }
-
+    
+    public required string Image { get; set; }
     /// <example>Cake</example>
     public required string Name { get; set; }
 

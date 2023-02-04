@@ -9,7 +9,7 @@ public class CustomMeal
     /// </summary>
     /// <example>1</example>
     public int Id { get; set; }
-
+    public required string Image { get; set; }
     public required User User { get; set; }
 
     /// <example>Cake</example>

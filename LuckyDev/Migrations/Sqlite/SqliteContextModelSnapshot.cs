@@ -31,6 +31,10 @@ namespace RecipeWiki.Migrations.Sqlite
                         .IsRequired()
                         .HasColumnType("TEXT");
 
+                    b.Property<string>("Image")
+                        .IsRequired()
+                        .HasColumnType("TEXT");
+
                     b.Property<string>("Instructions")
                         .IsRequired()
                         .HasColumnType("TEXT");
