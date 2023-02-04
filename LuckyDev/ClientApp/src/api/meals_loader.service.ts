@@ -69,7 +69,6 @@ class MealsLoaderService {
             }
         }
         const result = this._meals.slice(this.last_meal, this.last_meal + n);
-        console.log(result.length);
         this.last_meal += n;
         return Promise.resolve(result);
     }

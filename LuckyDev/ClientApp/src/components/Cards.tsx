@@ -101,7 +101,6 @@ const Cards: FunctionComponent = () => {
     }, [meals, loading])
     useEffect(() => {
         MealsLoader.TakeNext(itemsPerLoad, searchFilters).then(result => {
-            console.log(result);
             if (result != null) setMeals(result)
             setLoading(false);
         })
