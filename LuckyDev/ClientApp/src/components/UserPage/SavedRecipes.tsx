@@ -34,7 +34,6 @@ const SavedRecipes: FunctionComponent = () => {
   const [curMeal, setCurMeal] = useState<Meal>();
   const [show, setShow] = useState(false);
   const handleClose = () => setShow(false);
-  console.log(userContext?.meals.savedMealsIds);
 
   useEffect(() => {
     let promises: Promise<Meal | null>[] = [];
@@ -53,7 +52,7 @@ const SavedRecipes: FunctionComponent = () => {
   if (!userContext) return <></>;
   return (
     <>
-      <h2>SavedRecipes: </h2>
+      <h2>Saved Recipes: </h2>
       <MealDescriptionPopup
                         show={show}
                         handleClose={handleClose}

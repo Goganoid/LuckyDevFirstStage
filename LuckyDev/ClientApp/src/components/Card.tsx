@@ -44,7 +44,7 @@ export const RecipeName = styled.span`
     overflow: hidden;
     @media screen and (max-width:1050px) {
         &{
-            font-size: 14px;
+            font-size: 18px;
         }
     }
 `;
