@@ -1,9 +1,8 @@
 import { createContext, Fragment, useEffect, useState, type FunctionComponent, type PropsWithChildren } from 'react';
-import { Container } from 'react-bootstrap';
-import BounceLoader from 'react-spinners/BounceLoader';
 import { UserApi, type Ingredient, type UserInformation, type UserMeals } from 'src/api/user.service';
 import styled from 'styled-components';
 import { MyIngradients, MyRecipes, SavedRecipes, TitleUser } from '../components/UserPage';
+import { LoadingSpinner } from './LoadingSpinner';
 
 
 const Profile = styled.div`
@@ -56,15 +55,7 @@ const Userpage: FunctionComponent<PropsWithChildren> = () => {
       <Profile>
         {loading
           ?
-          <Container className='d-flex align-items-center justify-content-center h-100'>
-            <BounceLoader
-              color={"#36d7b7"}
-              loading={loading}
-              size={60}
-              aria-label="Loading Spinner"
-              data-testid="loader"
-            />
-          </Container>
+          LoadingSpinner()
           :
           <UserContext.Provider value={{ ...userProfile!, setUserProfile }}>
             <Wrapper>
@@ -81,3 +72,5 @@ const Userpage: FunctionComponent<PropsWithChildren> = () => {
 }
 
 export default Userpage;
+
+

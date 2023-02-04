@@ -8,11 +8,19 @@
 @import 'react-toastify/dist/ReactToastify.css';
 
 /* local styles */
-html, body, #root{
+html, body{
     padding: 0;
     margin: 0;
-    height: 100%;
+    width: 100%;
     background-color: $background;
+}
+#root{
+    width: 100%;
+}
+body{
+    display: flex;
+    flex-direction: column;
+    align-items: center;
 }
 
 .user-button {
@@ -86,11 +94,13 @@ html, body, #root{
     flex-direction: row;
 }
 #main > #left {
-    min-width: 75%;
+    flex-basis: 75%;
+    // min-width: 75%;
 }
 
 #main > #right {
-    max-width: 25%;
+    flex-basis: 25%;
+    // max-width: 25%;
     padding-top: 40px;
     padding-right: 4%;
 }

@@ -17,7 +17,7 @@ const StyledFooter = styled.footer`
   font-size: 1.5rem;
   padding: 1rem 1.75rem;
   background-color: #343A40;
-
+  position: relative;
   @media all and (max-width: 769px) {
     font-size: 1.5rem;
   }

@@ -9,63 +9,18 @@ import { Filter } from './Filter';
 import { itemsPerLoad } from '../config/constants';
 import BounceLoader from "react-spinners/BounceLoader";
 import { MealDescriptionPopup } from './MealDescriptionPopup';
+import { MealCard } from './Card';
 
-const ItemWrapper = styled.div`
-     flex: 30%;
-     display: flex;
-     /* justify-content: center; */
-     margin-bottom: 36px;
-     padding: 20px;
-     background-color: #D6D6D6;
-     border-radius: 15px;
-     transition: 0.2s;
-    &:hover {
-        transform: translateY(-6px);
-        box-shadow: 0px 6px 3px 1px #BEBEBE;
-    }
-`;
 
-const Item = styled.div`
-    display: flex;
-    justify-content: space-between;
-    width: 100%;
-    
-`;
 
 const MealsList = styled.div`
     margin-top: 35px;
-    width:75%;
     gap: 2%;
     margin: 35px auto 0;
     display: flex;
     flex-wrap: wrap;
     justify-content: space-around;
     align-items: center;
-`;
-
-const RecipeContent = styled.div`
-    display: flex;
-    flex-direction: column;
-    justify-content: space-between;
-    align-items: center;
-    flex-basis: 50%;
-    /* padding-left: 20px; */
-    /* width: 100%; */
-`;
-const ImageWrapper = styled.div`
-    flex-basis: 50%;
-`
-const RecipeName = styled.span`
-    font-family: 'Inter';
-    font-style: normal;
-    font-weight: 700;
-    font-size: 20px;
-    line-height: 29px;
-    display: flex;
-    align-items: center;
-    padding-top: 5px;
-    color: #000000;
-    overflow: hidden;
 `;
 
 export const PopupYtLink = styled.a`
@@ -106,28 +61,12 @@ const Cards: FunctionComponent = () => {
         })
     }, [searchFilters]);
     const meal = meals.map((m, idx) =>
-        <ItemWrapper key={idx}>
-            <Item className='meal'>
-                <ImageWrapper>
-                    <img
-                        src={m.strMealThumb}
-                        alt=""
-                        height={180}
-                    />
-                </ImageWrapper>
-                <RecipeContent>
-                    <RecipeName>{m.strMeal}</RecipeName>
-                    <Button
-                        className='Bootstrap-Button meal-select'
-                        onClick={() => {
-                            setCurMeal(m);
-                            setShow(true);
-                        }}>
-                        Taste!
-                    </Button>
-                </RecipeContent>
-            </Item>
-        </ItemWrapper>
+        <MealCard
+            key={idx}
+            meal={m}
+            setCurMeal={setCurMeal}
+            setShow={setShow}
+        />
     );
     return (
         <div id='main'>
@@ -166,6 +105,7 @@ const Cards: FunctionComponent = () => {
 }
 
 export default Cards;
+
 
 
 
