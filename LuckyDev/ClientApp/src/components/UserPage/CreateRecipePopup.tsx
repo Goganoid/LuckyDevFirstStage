@@ -19,12 +19,13 @@ const Instructions = styled.span`
 export function CreateRecipePopup({ show, handleClose }: MealDescriptionPopupProps) {
 
     const [newRecipe, setNewRecipe] = useState({
+        name: '',
         imgSource: '',
         linkSource: '',
         area: '',
         category: '',
         ingredients: [] as any[],
-        recipe: ''
+        instructions: ''
     });
 
     function handleInputsChange(e: any) {
@@ -66,6 +67,14 @@ export function CreateRecipePopup({ show, handleClose }: MealDescriptionPopupPro
         <Modal.Body className='show-grid'>
             <div className='modal-div'>
                 <div>
+                    <div className='info'><span>Give your recipe a name.</span>
+                        <input
+                            name="name"
+                            defaultValue={newRecipe.name}
+                            type="text"
+                            onChange={handleInputsChange}>
+                        </input>
+                    </div>
                     <div className='info'><span>Include a link to a photo of your dish.</span>
                         <input
                             name="imgSource"
@@ -131,8 +140,8 @@ export function CreateRecipePopup({ show, handleClose }: MealDescriptionPopupPro
             <div className='info'>
                 <Instructions>
                     <textarea
-                        name='recipe'
-                        defaultValue={newRecipe.recipe}
+                        name='instructions'
+                        defaultValue={newRecipe.instructions}
                         onChange={handleInputsChange}>
                     </textarea>
                 </Instructions>
