@@ -8,6 +8,7 @@
     "@fortawesome/free-solid-svg-icons": "^6.2.1",
     "@fortawesome/react-fontawesome": "^0.2.0",
     "@microsoft/signalr": "^7.0.2",
+    "@nadavshaar/react-grid-table": "^1.1.2",
     "@reduxjs/toolkit": "^1.9.2",
     "axios": "^1.2.6",
     "bootstrap": "^5.2.3",

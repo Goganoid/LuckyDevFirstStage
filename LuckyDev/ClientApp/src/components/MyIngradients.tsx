@@ -1,6 +1,7 @@
 import type { FunctionComponent } from 'react';
 import styled from 'styled-components';
 import Button from 'react-bootstrap/Button';
+import IngredientsTable from './IngredientsTable/IngredientsTable';
 
 const ButtonsWrapper = styled.div`
   display: flex;
@@ -25,8 +26,12 @@ const MyIngradients: FunctionComponent = () => (
         <Button className='Bootstrap-Button user-button'>Name</Button>
         <Button className='Bootstrap-Button user-button'>Count</Button>
       </ButtonsWrapper>
+      
+      <IngredientsTable></IngredientsTable>
+      
       <Button className='Bootstrap-Button Load-more-button'>Add new ingradients</Button>
     </AllButtonsWrapper>
+
     <hr />
   </>
 );
