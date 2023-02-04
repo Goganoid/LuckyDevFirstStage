@@ -1,11 +1,10 @@
 import { createBrowserRouter } from 'react-router-dom';
 import AuthWrapper from 'src/pages/AuthWrapper';
+import Userpage from 'src/pages/Userpage';
 import { Catalogue } from '../pages/Catalogue';
 import Layout from '../pages/Layout';
 import Login from '../pages/Login';
 import Register from '../pages/Register';
-import Userpage from 'src/pages/Userpage';
-import { UserComponents } from 'src/pages/UserComponents';
 
 const router = createBrowserRouter([
   // layout wrapper
@@ -16,7 +15,11 @@ const router = createBrowserRouter([
     children: [
       {
         index: true,
-        element:<Catalogue/>
+        element: <Catalogue />
+      },
+      { 
+        path:'user',
+        element: <Userpage />
       }
     ]
   },
@@ -34,16 +37,6 @@ const router = createBrowserRouter([
       }
     ]
   },
-  {
-    path: '/user',
-    element: <Userpage/>,
-    children: [
-      { 
-        index: true,
-        element: <UserComponents />
-      }
-    ]
-  }
 ]);
 
 export default router;
