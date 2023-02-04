@@ -1,5 +1,5 @@
 import { useEffect, useState, type FunctionComponent } from 'react';
-import { type Meal } from 'src/api/mealdb.service';
+import type { Meal } from 'src/api/mealdb.service';
 import Button from 'react-bootstrap/Button';
 import Container from 'react-bootstrap/Container';
 import Modal from 'react-bootstrap/Modal';
@@ -27,7 +27,7 @@ export function CreateRecipePopup({ show, handleClose }: MealDescriptionPopupPro
         linkSource: '',
         area: '',
         category: '',
-        ingredients: [],
+        ingredients: [] as any[],
         recipe: ''
     });
 
@@ -134,7 +134,7 @@ export function CreateRecipePopup({ show, handleClose }: MealDescriptionPopupPro
             <Button
             variant="primary"
             onClick={() => {
-                handleClose;
+                handleClose();
                 console.log(newRecipe);
             }} 
             className='Bootstrap-Button'>

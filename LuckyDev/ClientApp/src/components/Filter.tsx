@@ -6,7 +6,7 @@ import Select, { type MultiValue } from 'react-select';
 import { areaOptions, categoryOptions, convertToFilterList, ingredientOptions, type FilterItem } from 'src/config/constants';
 import { itemsPerLoad } from '../config/constants';
 import styled from 'styled-components';
-import axios from 'axios';
+// import axios from 'axios';
 
 export const FilterMenu = styled.div`
     float: right;
@@ -14,7 +14,8 @@ export const FilterMenu = styled.div`
     bottom: 18%;
     position: sticky;
     display: flex;
-    width: 290px;
+    width: 90%;
+    max-width: 350px;
     background-color: #D6D6D6 !important;
     filter: drop-shadow(0px 4px 4px rgba(0, 0, 0, 0.25));
     border-radius: 30px;
@@ -29,12 +30,22 @@ export type FilterProps = {
 }
 
 export function Filter({ setSearchFilters, searchFilters, setMeals, setLoading }: FilterProps) {
-    return <FilterMenu>
+    return (
+    <FilterMenu>
         <form className='search-form'>
             <input type="image"
                 name="search"
                 src='free-icon-magnifying-glass-126474.png'
-                alt='x'>
+                alt='x'
+                onClick={() => {
+                    console.log(searchFilters);
+                    setLoading(true);
+                    MealsLoader.Reset();
+                    MealsLoader.TakeNext(itemsPerLoad, searchFilters).then(result => {
+                        setMeals(result);
+                        setLoading(false);
+                    });
+                }}>
             </input>
             <input name="search-line"
                 placeholder="search"
@@ -47,6 +58,7 @@ export function Filter({ setSearchFilters, searchFilters, setMeals, setLoading }
 
             <h5>Category:</h5>
             <Select
+                className='filter-item'
                 options={convertToFilterList(categoryOptions)}
                 isClearable={true}
                 isSearchable={true}
@@ -65,6 +77,7 @@ export function Filter({ setSearchFilters, searchFilters, setMeals, setLoading }
 
             <h5>Area:</h5>
             <Select
+                className='filter-item'
                 options={convertToFilterList(areaOptions)}
                 isClearable={true}
                 isSearchable={true}
@@ -83,6 +96,7 @@ export function Filter({ setSearchFilters, searchFilters, setMeals, setLoading }
 
             <h5>Ingredients:</h5>
             <Select
+                className='filter-item'
                 options={convertToFilterList(ingredientOptions)}
                 isMulti
                 isClearable={true}
@@ -101,9 +115,7 @@ export function Filter({ setSearchFilters, searchFilters, setMeals, setLoading }
                         });
                     }
                 }} />
-
-            <Button className='Bootstrap-Button d-flex mt-4 mx-auto'>What can I cook with my products...</Button>
-            <Button className='Bootstrap-Button d-flex mt-4 mx-auto' onClick={() => {
+            <Button className='Bootstrap-Button d-flex mt-4 mx-auto w-90%' onClick={() => {
                 console.log(searchFilters);
                 setLoading(true);
                 MealsLoader.Reset();
@@ -111,7 +123,10 @@ export function Filter({ setSearchFilters, searchFilters, setMeals, setLoading }
                     setMeals(result);
                     setLoading(false);
                 });
-            }}>Apply</Button>
+            }}><span className='w-90%'>Apply</span></Button>
+
+            <Button className='Bootstrap-Button-white d-flex mt-4 mx-auto'><span className='w-90%'>What can I cook with my products...</span></Button>
         </form>
-    </FilterMenu>;
+    </FilterMenu>
+    )
 }

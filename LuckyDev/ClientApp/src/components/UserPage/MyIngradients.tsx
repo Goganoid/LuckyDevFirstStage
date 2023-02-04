@@ -1,7 +1,7 @@
 import type { FunctionComponent } from 'react';
 import styled from 'styled-components';
 import Button from 'react-bootstrap/Button';
-import IngredientsTable from './IngredientsTable/IngredientsTable';
+import IngredientsTable from '../IngredientsTable/IngredientsTable';
 
 const ButtonsWrapper = styled.div`
   display: flex;
