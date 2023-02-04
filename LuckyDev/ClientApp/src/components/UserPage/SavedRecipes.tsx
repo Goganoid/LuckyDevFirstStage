@@ -1,4 +1,5 @@
 import { useContext, useEffect, useState, type FunctionComponent } from 'react';
+import { Container } from 'react-bootstrap';
 import { MealDbApi, type Meal } from 'src/api/mealdb.service';
 import { LoadingSpinner } from 'src/pages/LoadingSpinner';
 import { UserContext } from 'src/pages/Userpage';
@@ -58,21 +59,25 @@ const SavedRecipes: FunctionComponent = () => {
                         handleClose={handleClose}
                         curMeal={curMeal}
                     />
-      <SavedMealList>
-        {loading
-          ? <LoadingSpinner />
-          : savedMeals.map(m => {
-            return <ItemWrapper>
-              <MealCard
-                key={m.idMeal}
-                meal={m}
-                setCurMeal={setCurMeal}
-                setShow={setShow}
-              />
-            </ItemWrapper>
-          })
-        }
-      </SavedMealList>
+      <Container>
+        <SavedMealList>
+          {loading
+            ? <LoadingSpinner />
+            : savedMeals.length === 0
+              ? <p>Empty :(</p>
+              : savedMeals.map(m => {
+              return <ItemWrapper>
+                <MealCard
+                  key={m.idMeal}
+                  meal={m}
+                  setCurMeal={setCurMeal}
+                  setShow={setShow}
+                />
+              </ItemWrapper>
+            })
+          }
+        </SavedMealList>
+      </Container>
     </>
   )
 };
