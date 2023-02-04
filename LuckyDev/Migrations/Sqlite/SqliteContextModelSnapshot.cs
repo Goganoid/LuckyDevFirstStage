@@ -23,6 +23,18 @@ namespace RecipeWiki.Migrations.Sqlite
                         .ValueGeneratedOnAdd()
                         .HasColumnType("INTEGER");
 
+                    b.Property<string>("Area")
+                        .IsRequired()
+                        .HasColumnType("TEXT");
+
+                    b.Property<string>("Category")
+                        .IsRequired()
+                        .HasColumnType("TEXT");
+
+                    b.Property<string>("Image")
+                        .IsRequired()
+                        .HasColumnType("TEXT");
+
                     b.Property<string>("Instructions")
                         .IsRequired()
                         .HasColumnType("TEXT");
@@ -50,11 +62,11 @@ namespace RecipeWiki.Migrations.Sqlite
                     b.Property<int?>("CustomMealId")
                         .HasColumnType("INTEGER");
 
-                    b.Property<string>("IngredientInfoId")
-                        .IsRequired()
+                    b.Property<string>("Measure")
                         .HasColumnType("TEXT");
 
-                    b.Property<string>("Measure")
+                    b.Property<string>("Name")
+                        .IsRequired()
                         .HasColumnType("TEXT");
 
                     b.Property<int?>("UserId")

@@ -1,6 +1,5 @@
 import type { FunctionComponent } from 'react';
 import styled from 'styled-components';
-import devLogo from '../assets/images/dev_logo.jpeg';
 
 const BrandContent = styled.div`
   display: flex;
@@ -14,29 +13,22 @@ const StyledFooter = styled.footer`
   color: #fff;
   width: 100%;
   display: block;
-  font-size: 1.5rem;
-  padding: 1rem 1.75rem;
+  font-size: 1rem;
+  padding: 1.5rem 1.75rem;
   background-color: #343A40;
   position: relative;
   @media all and (max-width: 769px) {
-    font-size: 1.5rem;
+    font-size: 1rem;
   }
 `;
-
-const LogoImg = styled.img`
-  width: 100px;
-  height: 100px;
-`;
-
 const Footer: FunctionComponent = () => (
   <StyledFooter>
     <BrandContent>
     <div>
       <p>Проект для хакатону INT20H.
         <br />
-        Над проектом працювали команда LuckyDev.</p> 
+        Над проектом працювала команда LuckyDev.</p> 
     </div>
-    <LogoImg src={devLogo} alt="LuckyDev logo" />
     </BrandContent>
   </StyledFooter>
 );

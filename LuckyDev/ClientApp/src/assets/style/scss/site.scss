@@ -45,6 +45,49 @@ body{
     color: $black-text;
     background-color: $white-text-hover;
 }
+
+
+//Header
+.BrandContent {
+  display: flex;
+  justify-content: space-between;
+  font-family: Inter;
+  word-spacing: 0.05rem;
+}
+.StyledHeader {
+  transition: 0.2s;
+  position:fixed;
+  z-index: 10;
+
+  color: #fff;
+  width: 100%;
+  display: block;
+  font-size: 1rem;
+  background-color: #343A40;
+  margin-bottom: 1rem;
+  @media all and (max-width: 769px) {
+    font-size: 0.5rem;
+  }
+}
+.LogoImg {
+  width: 80px;
+}
+.LogoWrapper {
+  display: flex;
+  align-items: center;
+}
+
+
+//Slick-carousel
+.slider {
+    width: 100%;
+    margin: 3%;
+    aspect-ratio: 16 / 9;
+    background-color: $background;
+}
+.slider img {
+    aspect-ratio: 16 / 9;
+}
 .button-on-slick :where(h3, .Bootstrap-Button) {
     transform: translateY(50px);
     transition: 0.2s;
@@ -89,7 +132,7 @@ body{
     margin: 40px 8%;
 }
 .meal-select {
-    width: 20%;
+    max-width: 20%;
     min-width: 200px;
 }
 .header-scrolling {
@@ -117,27 +160,13 @@ body{
     padding-top: 40px;
     padding-right: 4%;
 }
-@media screen and (max-width: 1050px) {
-    #main {
-        flex-direction: column-reverse;
-    }
-    #main > #right {
-        min-width: 100%;
-        display: flex;
-        justify-content: center;
-        padding: 0;
-    }
-    .popup .modal-div {
-        flex-direction: column;
-    }
-}
 
 //filters and search
 .search-form {
     width: 100%;
     height: fit-content;
     margin-bottom: 20px;
-    padding: 10px;
+    padding: 3%;
 }
 .search-form > input[name='search'] {
     outline: 0;
@@ -146,17 +175,17 @@ body{
     content: url("../../images/free-icon-magnifying-glass-126474.png");
     width: 20px;
     position: absolute;
-    margin: 37px 0 0 12%;
+    margin: 37px 0 0 3%;
 }
 .search-form > input[name='search-line'] {
-    width: 80%;
+    width: 98%;
     border-radius: 10px;
     padding: 4px;
     padding-left: 28px;
     font-size: 16px;
     border: none;
     background-color: $white-text;
-    margin: 30px 10%;
+    margin: 30px 1%;
 }
 
 .search-form > h5 {
@@ -166,6 +195,9 @@ body{
 .filter-item {
     background-color: $white-text;
     font-size: 16px;
+    width: 98%;
+    margin: 0 auto;
+    border-radius: 10px;
 }
 .search-form > .filter-more {
     border: none;
@@ -181,20 +213,23 @@ body{
     max-width: 20px;
 }
 
+
 //Popups
 .popup > * > div {
     background-color: $background;
 }
 .popup .popup-image {
-    display: block;
     width: 250px;
     height: 250px;
     border-radius: 20px;
 }
-.popup .modal-div {
+.popup :where(.modal-div, .modal-ingredients) {
     flex-direction: row;
     display: flex;
     gap: 20px;
+}
+.popup .modal-div > .short-info {
+    width: 100%;
 }
 .popup .info {
     background-color: $tyles;
@@ -210,4 +245,59 @@ body{
     content: url("../../images/chef-hat.jpg");
     width: 100%;
     border-radius: 100%;
+}
+
+.rgt-cell:not(.rgt-row-edit):not(.rgt-row-not-selectable) {
+    cursor: pointer;
+}
+  
+.rgt-row-selected {
+    background: #f3f6f9;
+}
+  
+.rgt-row-hover {
+  background: #f7f7f7;
+}
+
+.olb {
+    outline: 3px solid black;
+}
+
+
+
+@media screen and (max-width: 992px) {
+    #main {
+        flex-direction: column-reverse;
+    }
+    #main > #right {
+        min-width: 100%;
+        display: flex;
+        justify-content: center;
+        padding: 0;
+    }
+    .popup .modal-div {
+        flex-direction: column;
+        justify-content: space-between;
+        > div {
+            align-items: center;
+            display: flex;
+            flex-direction: column;
+            width: 100%;
+            img {
+                display: block;
+            }
+        }
+    }
+    .slider {
+        height: 200px;
+    }
+    .slider img {
+        height: 200px;
+    }
+}
+
+@media screen and (max-width: 420px) {
+    .LogoImg {
+        width: 40px;
+    }
 }

@@ -131,14 +131,14 @@ public class UsersController : ControllerBase
     /// </summary>
     /// <response code="200">Request successful</response>
     /// <response code="401">Unauthorized</response>
-    [HttpPost("stored-ingredients/add/{ingredientId}")]
-    public async Task<IActionResult> AddStoredIngredient(string ingredientId)
+    [HttpPost("stored-ingredients/add/{IngredientName}")]
+    public async Task<IActionResult> AddStoredIngredient(string IngredientName)
     {
         var id = AuthController.GetUserId(HttpContext.User.Identity as ClaimsIdentity);
         var user = await _context.Users.Include(u => u.StoredIngredients).FirstOrDefaultAsync(u => u.Id == id);
-        if (user!.StoredIngredients.Find(i => i.IngredientInfoId == ingredientId) != null)
+        if (user!.StoredIngredients.Find(i => i.Name == IngredientName) != null)
             return Conflict("This ingredient is already stored");
-        var ingredient = new Ingredient() {IngredientInfoId = ingredientId};
+        var ingredient = new Ingredient() {Name = IngredientName};
         user.StoredIngredients.Add(ingredient);
         await _context.SaveChangesAsync();
         return Ok();
@@ -157,7 +157,7 @@ public class UsersController : ControllerBase
         var id = AuthController.GetUserId(HttpContext.User.Identity as ClaimsIdentity);
         var user = await _context.Users.Include(u => u.StoredIngredients)
             .FirstAsync(u => u.Id == id);
-        return Ok(user.StoredIngredients.Select(i => i.IngredientInfoId));
+        return Ok(user.StoredIngredients.Select(i => _mapper.Map<IngredientDTO>(i)));
     }
 
     /// <summary>
@@ -165,12 +165,12 @@ public class UsersController : ControllerBase
     /// </summary>
     /// <response code="200">Request successful</response>
     /// <response code="401">Unauthorized</response>
-    [HttpDelete("stored-ingredients/delete/{ingredientId}")]
-    public async Task<IActionResult> DeleteStoredIngredient(string ingredientId)
+    [HttpDelete("stored-ingredients/delete/{ingredientName}")]
+    public async Task<IActionResult> DeleteStoredIngredient(string ingredientName)
     {
         var id = AuthController.GetUserId(HttpContext.User.Identity as ClaimsIdentity);
         var user = await _context.Users.Include(u => u.StoredIngredients).FirstAsync(u => u.Id == id);
-        var ingredient = user.StoredIngredients.FirstOrDefault(i => i.IngredientInfoId == ingredientId);
+        var ingredient = user.StoredIngredients.FirstOrDefault(i => i.Name == ingredientName);
         if (ingredient != null) _context.Ingredients.Remove(ingredient);
         await _context.SaveChangesAsync();
         return Ok();

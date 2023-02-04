@@ -4,18 +4,18 @@ import { BaseService } from "./base.service";
 
 
 export interface Ingredient {
-    ingredientInfoId: string;
-    measure: string;
+    name: string;
+    measure?: string;
 }
-
-
+// Describes meals that our database stores
 export interface UserCustomMeal {
     id: number;
     name: string;
+    area: string;
+    category: string;
     ingredients: Ingredient[];
     instructions: string;
 }
-
 export interface UserMeals {
     savedMealsIds: string[];
     userMeals: UserCustomMeal[];
@@ -46,6 +46,7 @@ class UserService extends BaseService {
         const data = await this.$http.get<Ingredient[]>(url);
         return data;
     }
+
     public async GetUserInfo(): Promise<AxiosResponse<UserInformation>>{
         const url = `info/`;
         const data = await this.$http.get<UserInformation>(url);
@@ -60,6 +61,50 @@ class UserService extends BaseService {
         const url = `meals/saved/add/${mealId}`;
         try {
             const data = await this.$http.post(url);
+            return data;
+        }
+        catch (error: any | AxiosError) {
+            const err = error as AxiosError;
+            return err.response
+        }
+    }
+    public async DeleteSavedMeal(mealId: string): Promise<AxiosResponse<any>|undefined> {
+        const url = `meals/saved/delete/${mealId}`;
+        try {
+            const data = await this.$http.delete(url);
+            return data;
+        }
+        catch (error: any | AxiosError) {
+            const err = error as AxiosError;
+            return err.response
+        }
+    }
+    public async AddCustomMeal(name: string): Promise<AxiosResponse<any>|undefined> {
+        const url = `stored-ingredients/add/${name}`;
+        try {
+            const data = await this.$http.post(url);
+            return data;
+        }
+        catch (error: any | AxiosError) {
+            const err = error as AxiosError;
+            return err.response
+        }
+    }
+    public async AddIngredient(name: string): Promise<AxiosResponse<any>|undefined> {
+        const url = `stored-ingredients/add/${name}`;
+        try {
+            const data = await this.$http.post(url);
+            return data;
+        }
+        catch (error: any | AxiosError) {
+            const err = error as AxiosError;
+            return err.response
+        }
+    }
+    public async DeleteIngredient(name: string): Promise<AxiosResponse<any>|undefined> {
+        const url = `stored-ingredients/delete/${name}`;
+        try {
+            const data = await this.$http.delete(url);
             return data;
         }
         catch (error: any | AxiosError) {

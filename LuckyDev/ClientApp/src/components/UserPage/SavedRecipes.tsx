@@ -1,6 +1,8 @@
 import { useContext, useEffect, useState, type FunctionComponent } from 'react';
+import { Container } from 'react-bootstrap';
 import { MealDbApi, type Meal } from 'src/api/mealdb.service';
-import { LoadingSpinner } from 'src/pages/LoadingSpinner';
+import { UserApi } from 'src/api/user.service';
+import { LoadingSpinner } from 'src/components/LoadingSpinner';
 import { UserContext } from 'src/pages/Userpage';
 import styled from 'styled-components';
 import { MealCard } from '../Card';
@@ -34,11 +36,10 @@ const SavedRecipes: FunctionComponent = () => {
   const [curMeal, setCurMeal] = useState<Meal>();
   const [show, setShow] = useState(false);
   const handleClose = () => setShow(false);
-  console.log(userContext?.meals.savedMealsIds);
 
   useEffect(() => {
     let promises: Promise<Meal | null>[] = [];
-    userContext?.meals.savedMealsIds.map((id) => {
+    userContext?.meals.savedMealsIds.forEach((id) => {
       promises.push(MealDbApi.getMeal(id));
     });
     Promise.all(promises).then(values => {
@@ -53,27 +54,45 @@ const SavedRecipes: FunctionComponent = () => {
   if (!userContext) return <></>;
   return (
     <>
-      <h2>SavedRecipes: </h2>
+      <h2>Saved Recipes: </h2>
       <MealDescriptionPopup
                         show={show}
                         handleClose={handleClose}
                         curMeal={curMeal}
                     />
-      <SavedMealList>
-        {loading
-          ? <LoadingSpinner />
-          : savedMeals.map(m => {
-            return <ItemWrapper>
-              <MealCard
-                key={m.idMeal}
-                meal={m}
-                setCurMeal={setCurMeal}
-                setShow={setShow}
-              />
-            </ItemWrapper>
-          })
-        }
-      </SavedMealList>
+      <Container>
+        <SavedMealList>
+          {loading
+            ? <LoadingSpinner />
+            : savedMeals.length === 0
+              ? <p>Empty :(</p>
+              : savedMeals.map((m,idx) => {
+              return <ItemWrapper key={idx}>
+                <MealCard
+                  key={m.idMeal}
+                  meal={m}
+                  setCurMeal={setCurMeal}
+                  setShow={setShow}
+                  onRemove={(meal) => {
+                    console.log(meal.idMeal);
+                    UserApi.DeleteSavedMeal(meal.idMeal).then(result => {
+                      console.log(result);
+                      if(result?.status===200) userContext.setUserProfile({
+                        info: userContext.info,
+                        ingredients: userContext.ingredients,
+                        meals: {
+                          userMeals: userContext.meals.userMeals,
+                          savedMealsIds:userContext.meals.savedMealsIds.filter(id=>id!==meal.idMeal)
+                        }
+                      })
+                    })
+                  }}
+                />
+              </ItemWrapper>
+            })
+          }
+        </SavedMealList>
+      </Container>
     </>
   )
 };

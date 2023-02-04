@@ -1,8 +1,8 @@
 import { createContext, Fragment, useEffect, useState, type FunctionComponent, type PropsWithChildren } from 'react';
 import { UserApi, type Ingredient, type UserInformation, type UserMeals } from 'src/api/user.service';
 import styled from 'styled-components';
-import { MyIngradients, MyRecipes, SavedRecipes, TitleUser } from '../components/UserPage';
-import { LoadingSpinner } from './LoadingSpinner';
+import { MyIngradients as MyIngredients, MyRecipes, SavedRecipes, TitleUser } from '../components/UserPage';
+import { LoadingSpinner } from '../components/LoadingSpinner';
 
 
 const Profile = styled.div`
@@ -11,6 +11,7 @@ const Profile = styled.div`
   justify-content: space-between;
   align-items: stretch;
   height: 100%;
+  margin-bottom: 50px;
 `;
 
 const Wrapper = styled.div`
@@ -60,7 +61,7 @@ const Userpage: FunctionComponent<PropsWithChildren> = () => {
           <UserContext.Provider value={{ ...userProfile!, setUserProfile }}>
             <Wrapper>
               <TitleUser />
-              <MyIngradients />
+              <MyIngredients />
               <MyRecipes />
               <SavedRecipes />
             </Wrapper>

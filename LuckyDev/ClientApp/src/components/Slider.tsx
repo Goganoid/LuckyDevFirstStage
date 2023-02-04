@@ -72,7 +72,7 @@ const Slider: FunctionComponent = () => {
     return (
         <>
             <div className='d-flex justify-content-center margin-for-first'>
-                <Carousel className='w-50 h-100 button-on-slick'>
+                <Carousel className='slider button-on-slick'>
                     {meals.map((meal, idx) => (
                         <Carousel.Item key={idx} style={ItemStyle}>
                             <SliderImage

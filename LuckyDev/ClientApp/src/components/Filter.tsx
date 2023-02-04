@@ -1,12 +1,13 @@
 import React from 'react';
-import { type Meal } from 'src/api/mealdb.service';
 import Button from 'react-bootstrap/Button';
-import { MealsLoader, type MealsFilter } from 'src/api/meals_loader.service';
 import Select, { type MultiValue } from 'react-select';
+import { type Meal } from 'src/api/mealdb.service';
+import { MealsLoader, type MealsFilter } from 'src/api/meals_loader.service';
+import { UserApi } from 'src/api/user.service';
 import { areaOptions, categoryOptions, convertToFilterList, ingredientOptions, type FilterItem } from 'src/config/constants';
-import { itemsPerLoad } from '../config/constants';
+import { isLoggedIn } from 'src/utils/storage';
 import styled from 'styled-components';
-import axios from 'axios';
+import { itemsPerLoad } from '../config/constants';
 
 export const FilterMenu = styled.div`
     float: right;
@@ -14,7 +15,8 @@ export const FilterMenu = styled.div`
     bottom: 18%;
     position: sticky;
     display: flex;
-    width: 290px;
+    width: 90%;
+    max-width: 350px;
     background-color: #D6D6D6 !important;
     filter: drop-shadow(0px 4px 4px rgba(0, 0, 0, 0.25));
     border-radius: 30px;
@@ -29,12 +31,22 @@ export type FilterProps = {
 }
 
 export function Filter({ setSearchFilters, searchFilters, setMeals, setLoading }: FilterProps) {
-    return <FilterMenu>
+    return (
+    <FilterMenu>
         <form className='search-form'>
             <input type="image"
                 name="search"
                 src='free-icon-magnifying-glass-126474.png'
-                alt='x'>
+                alt='x'
+                onClick={() => {
+                    console.log(searchFilters);
+                    setLoading(true);
+                    MealsLoader.Reset();
+                    MealsLoader.TakeNext(itemsPerLoad, searchFilters).then(result => {
+                        setMeals(result);
+                        setLoading(false);
+                    });
+                }}>
             </input>
             <input name="search-line"
                 placeholder="search"
@@ -47,6 +59,7 @@ export function Filter({ setSearchFilters, searchFilters, setMeals, setLoading }
 
             <h5>Category:</h5>
             <Select
+                className='filter-item'
                 options={convertToFilterList(categoryOptions)}
                 isClearable={true}
                 isSearchable={true}
@@ -65,6 +78,7 @@ export function Filter({ setSearchFilters, searchFilters, setMeals, setLoading }
 
             <h5>Area:</h5>
             <Select
+                className='filter-item'
                 options={convertToFilterList(areaOptions)}
                 isClearable={true}
                 isSearchable={true}
@@ -83,16 +97,18 @@ export function Filter({ setSearchFilters, searchFilters, setMeals, setLoading }
 
             <h5>Ingredients:</h5>
             <Select
+                className='filter-item'
+                value={searchFilters.ingredients.length !== 0 ? convertToFilterList(searchFilters.ingredients) : null}
                 options={convertToFilterList(ingredientOptions)}
                 isMulti
                 isClearable={true}
                 isSearchable={true}
-                onChange={(newValue:MultiValue<FilterItem>, { action }) => {
+                onChange={(newValue: MultiValue<FilterItem>, { action }) => {
                     console.log(newValue, action);
-                    if (action === 'select-option' || action==='remove-value')
+                    if (action === 'select-option' || action === 'remove-value')
                         setSearchFilters({
                             ...searchFilters,
-                            ingredients: [...newValue.map(v=>v.value)]
+                            ingredients: [...newValue.map(v => v.value)]
                         });
                     if (action === 'clear') {
                         setSearchFilters({
@@ -102,8 +118,7 @@ export function Filter({ setSearchFilters, searchFilters, setMeals, setLoading }
                     }
                 }} />
 
-            <Button className='Bootstrap-Button d-flex mt-4 mx-auto'>What can I cook with my products...</Button>
-            <Button className='Bootstrap-Button d-flex mt-4 mx-auto' onClick={() => {
+            <Button className='Bootstrap-Button d-flex mt-4 mx-auto w-90%' onClick={() => {
                 console.log(searchFilters);
                 setLoading(true);
                 MealsLoader.Reset();
@@ -112,6 +127,16 @@ export function Filter({ setSearchFilters, searchFilters, setMeals, setLoading }
                     setLoading(false);
                 });
             }}>Apply</Button>
+             {isLoggedIn() && <Button className='Bootstrap-Button d-flex mt-4 mx-auto'
+                onClick={() => {
+                    UserApi.GetUserIngredients().then(result => {
+                        console.log(result);
+                        const ingredients = result.data.map(i => i.name);
+                        setSearchFilters({ ...searchFilters, ingredients:ingredients });
+                    })
+                }}
+            ><span className='w-90%'>What can I cook with my products...</span></Button>}
         </form>
-    </FilterMenu>;
+    </FilterMenu>
+    )
 }

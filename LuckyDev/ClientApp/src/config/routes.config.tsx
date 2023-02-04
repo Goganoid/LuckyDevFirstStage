@@ -24,6 +24,10 @@ const router = createBrowserRouter([
       }
     ]
   },
+  { 
+    path:'/user',
+    element: <Userpage />
+  },
   {
     path: '/auth',
     element: <AuthWrapper />,

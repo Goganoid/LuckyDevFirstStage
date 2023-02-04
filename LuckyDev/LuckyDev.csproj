@@ -21,52 +21,49 @@
   </ItemGroup>
 
   <ItemGroup>
-    <PackageReference Include="AspNetCore.HealthChecks.UI" Version="6.0.5" />
-    <PackageReference Include="AspNetCore.HealthChecks.UI.Client" Version="6.0.5" />
-    <PackageReference Include="AspNetCore.HealthChecks.UI.InMemory.Storage" Version="6.0.5" />
     <PackageReference Include="AutoMapper" Version="12.0.1" />
     <PackageReference Include="AutoMapper.Extensions.Microsoft.DependencyInjection" Version="12.0.0" />
     <PackageReference Include="Microsoft.AspNetCore.Authentication.JwtBearer" Version="7.0.2" />
     <PackageReference Include="Microsoft.AspNetCore.SpaServices.Extensions" Version="7.0.2" />
-    <PackageReference Include="Microsoft.EntityFrameworkCore" Version="7.0.2"/>
+    <PackageReference Include="Microsoft.EntityFrameworkCore" Version="7.0.2" />
     <PackageReference Include="Microsoft.EntityFrameworkCore.Design" Version="7.0.2">
       <PrivateAssets>all</PrivateAssets>
       <IncludeAssets>runtime; build; native; contentfiles; analyzers; buildtransitive</IncludeAssets>
     </PackageReference>
     <PackageReference Include="Microsoft.EntityFrameworkCore.Sqlite" Version="7.0.2" />
-    <PackageReference Include="Microsoft.EntityFrameworkCore.SqlServer" Version="7.0.2"/>
+    <PackageReference Include="Microsoft.EntityFrameworkCore.SqlServer" Version="7.0.2" />
     <PackageReference Include="Swashbuckle.AspNetCore" Version="6.5.0" />
-    <PackageReference Include="Swashbuckle.AspNetCore.Annotations" Version="6.5.0"/>
+    <PackageReference Include="Swashbuckle.AspNetCore.Annotations" Version="6.5.0" />
   </ItemGroup>
 
   <ItemGroup>
-    <Folder Include="ClientApp\src\assets\image"/>
-    <Folder Include="ClientApp\src\assets\style\scss\components"/>
-    <Folder Include="Migrations"/>
-    <Folder Include="Migrations\Sqlite"/>
-    <Folder Include="wwwroot\"/>
+    <Folder Include="ClientApp\src\assets\image" />
+    <Folder Include="ClientApp\src\assets\style\scss\components" />
+    <Folder Include="Migrations" />
+    <Folder Include="Migrations\Sqlite" />
+    <Folder Include="wwwroot\" />
   </ItemGroup>
 
   <ItemGroup>
-    <_ContentIncludedByDefault Remove="Migrations\Migrations.Sqlite\bin\Debug\net7.0\Migrations.Sqlite.deps.json"/>
-    <_ContentIncludedByDefault Remove="Migrations\Migrations.Sqlite\obj\Migrations.Sqlite.csproj.nuget.dgspec.json"/>
-    <_ContentIncludedByDefault Remove="Migrations\Migrations.Sqlite\obj\project.assets.json"/>
-    <_ContentIncludedByDefault Remove="Migrations\Migrations.Sqlite\obj\project.packagespec.json"/>
-    <_ContentIncludedByDefault Remove="Data\obj\Data.csproj.nuget.dgspec.json"/>
-    <_ContentIncludedByDefault Remove="Data\obj\project.assets.json"/>
-    <_ContentIncludedByDefault Remove="Data\obj\project.packagespec.json"/>
-    <_ContentIncludedByDefault Remove="Helpers\obj\Helpers.csproj.nuget.dgspec.json"/>
-    <_ContentIncludedByDefault Remove="Helpers\obj\project.assets.json"/>
-    <_ContentIncludedByDefault Remove="Helpers\obj\project.packagespec.json"/>
+    <_ContentIncludedByDefault Remove="Migrations\Migrations.Sqlite\bin\Debug\net7.0\Migrations.Sqlite.deps.json" />
+    <_ContentIncludedByDefault Remove="Migrations\Migrations.Sqlite\obj\Migrations.Sqlite.csproj.nuget.dgspec.json" />
+    <_ContentIncludedByDefault Remove="Migrations\Migrations.Sqlite\obj\project.assets.json" />
+    <_ContentIncludedByDefault Remove="Migrations\Migrations.Sqlite\obj\project.packagespec.json" />
+    <_ContentIncludedByDefault Remove="Data\obj\Data.csproj.nuget.dgspec.json" />
+    <_ContentIncludedByDefault Remove="Data\obj\project.assets.json" />
+    <_ContentIncludedByDefault Remove="Data\obj\project.packagespec.json" />
+    <_ContentIncludedByDefault Remove="Helpers\obj\Helpers.csproj.nuget.dgspec.json" />
+    <_ContentIncludedByDefault Remove="Helpers\obj\project.assets.json" />
+    <_ContentIncludedByDefault Remove="Helpers\obj\project.packagespec.json" />
   </ItemGroup>
   <Target Name="DebugEnsureNodeEnv" BeforeTargets="Build" Condition=" '$(Configuration)' == 'Debug' And !Exists('$(SpaRoot)node_modules') ">
     <!-- Ensure Node.js is installed -->
     <Exec Command="node --version" ContinueOnError="true">
-      <Output TaskParameter="ExitCode" PropertyName="ErrorCode"/>
+      <Output TaskParameter="ExitCode" PropertyName="ErrorCode" />
     </Exec>
-    <Error Condition="'$(ErrorCode)' != '0'" Text="Node.js is required to build and run this project. To continue, please install Node.js from https://nodejs.org/, and then restart your command prompt or IDE."/>
-    <Message Importance="high" Text="Restoring dependencies using 'npm'. This may take several minutes..."/>
-    <Exec WorkingDirectory="$(SpaRoot)" Command="npm install"/>
+    <Error Condition="'$(ErrorCode)' != '0'" Text="Node.js is required to build and run this project. To continue, please install Node.js from https://nodejs.org/, and then restart your command prompt or IDE." />
+    <Message Importance="high" Text="Restoring dependencies using 'npm'. This may take several minutes..." />
+    <Exec WorkingDirectory="$(SpaRoot)" Command="npm install" />
   </Target>
 
   <Target Name="PublishRunWebpack" AfterTargets="ComputeFilesToPublish">

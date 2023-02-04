@@ -1,7 +1,7 @@
 import { Fragment, type FunctionComponent, type PropsWithChildren } from 'react';
 import Navbar from 'react-bootstrap/esm/Navbar';
 import { Outlet, Link} from "react-router-dom";
-import { BrandContent, LogoImg, LogoWrapper } from 'src/components/Header';
+
 import headerLogo from '../assets/images/header_logo.png';
 
 const AuthWrapper: FunctionComponent<PropsWithChildren> = () => (
@@ -9,11 +9,11 @@ const AuthWrapper: FunctionComponent<PropsWithChildren> = () => (
         <Navbar>
             <Link to="/">
                 <Navbar.Brand>
-                    <BrandContent>
-                        <LogoWrapper>
-                            <LogoImg src={headerLogo} alt="logo" />
-                        </LogoWrapper>
-                    </BrandContent>
+                    <div className='BrandContent'>
+                        <div className='LogoWrapper'>
+                            <img className='LogoImg' src={headerLogo} alt="logo" />
+                        </div>
+                    </div>
                 </Navbar.Brand>
             </Link>
         </Navbar>
