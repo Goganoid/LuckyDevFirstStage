@@ -16,8 +16,44 @@ const Instructions = styled.span`
     white-space: pre-wrap;
 `
 
+const Input = ({name}) => {
+
+    const [measure, setMeasure] = useState('');
+
+    function measureChange(e: any) {
+        setMeasure(e.target.value);
+    }
+
+    return (
+    <div className='ingredient-wrapper'>
+        <span>{name}</span>
+        <input placeholder="Your quantities here" defaultValue={measure} onChange={measureChange} />;
+    </div>
+    )
+};
+
 export function CreateRecipePopup({ show, handleClose }: MealDescriptionPopupProps) {
 
+    function getAllI() {
+        const allWithClass = Array.from(
+            document.getElementsByClassName('ingredient-wrapper')
+        );
+        console.log(allWithClass);
+        allWithClass.forEach(e => {
+            console.log(`name: ${e.children[0].innerHTML}; measure: ${e.children[1].defaultValue}`);
+            // setNewRecipe({
+            //     ...newRecipe,
+            //     ...ingredients, [{name: e.children[0].innerHTML, measure: e.children[1].defaultValue}]
+            // });
+        });
+    };
+
+    const [inputList, setInputList] = useState([]);
+    const onAddBtnClick = (event: any) => {
+        setInputList(inputList.concat(<Input key={inputList.length} name={curIngredient} />));
+    };
+
+    const [curIngredient, setCurIngredient] = useState('');
     const [newRecipe, setNewRecipe] = useState({
         name: '',
         imgSource: '',
@@ -50,14 +86,15 @@ export function CreateRecipePopup({ show, handleClose }: MealDescriptionPopupPro
         });
     };
     function handleIngradientsChange(e: any) {
-        const newIngradients = [];
-        for (let i = 0; i < e.length; i++) {
-            newIngradients.push(e[i].value);
-        }
+        // const newIngradients = [];
+        // for (let i = 0; i < e.length; i++) {
+        //     newIngradients.push(e[i].value);
+        // }
         // setNewRecipe({
         //     ...newRecipe,
         //     ingredients: newIngradients
         // });
+        setCurIngredient(e.value);
     }
 
     return <Modal show={show} onHide={handleClose} size="lg" className='popup'>
@@ -123,6 +160,7 @@ export function CreateRecipePopup({ show, handleClose }: MealDescriptionPopupPro
                             <Col><input type="text" value="450g" /> </Col>
                             <Col>X</Col>
                         </Row>
+                        {inputList}
                     </Container>
                     <div className='d-flex w-100'>
                         <Select
@@ -131,7 +169,7 @@ export function CreateRecipePopup({ show, handleClose }: MealDescriptionPopupPro
                             isSearchable={true}
                             onChange={handleIngradientsChange}
                         />
-                        <Button>Add</Button>
+                        <Button onClick={onAddBtnClick}>Add</Button>
                     </div>
                 </div>
 
@@ -154,8 +192,9 @@ export function CreateRecipePopup({ show, handleClose }: MealDescriptionPopupPro
             <Button
             variant="primary"
             onClick={() => {
-                handleClose();
+                getAllI();
                 console.log(newRecipe);
+                handleClose();
             }} 
             className='Bootstrap-Button'>
                 Save Changes
