@@ -47,15 +47,16 @@ class MealsLoaderService {
                 }
                 if (filters.ingredients.length !== 0) {
                     new_meals = new_meals.filter(meal => {
+                        let occured = false;
                         for (let filterIngredient of filters.ingredients) {
-                            let occured = false;
+                            
                             for (let i = 1; i <= 20; i++) {
                                 if ((meal as any)[`strIngredient${i}`] === filterIngredient)
                                     occured = true;
                             }
-                            if (!occured) return false;
+                            
                         }
-                        return true;
+                        return occured;
                     });
                 }
             }
