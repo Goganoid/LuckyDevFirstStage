@@ -11,6 +11,7 @@ const Profile = styled.div`
   justify-content: space-between;
   align-items: stretch;
   height: 100%;
+  margin-bottom: 50px;
 `;
 
 const Wrapper = styled.div`

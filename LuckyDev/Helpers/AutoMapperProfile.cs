@@ -16,8 +16,7 @@ public class AutoMapperProfile : Profile
 
         CreateMap<User, UserMealsResponseDTO>();
         CreateMap<IngredientDTO, Ingredient>();
-        CreateMap<StoredIngredientDTO, Ingredient>();
-        CreateMap<Ingredient, StoredIngredientDTO>();
+        CreateMap<Ingredient, IngredientDTO>();
         CreateMap<MealRequestDTO, CustomMeal>();
         CreateMap<CustomMeal, CustomMealResponseDTO>();
     }

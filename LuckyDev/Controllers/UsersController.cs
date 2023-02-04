@@ -157,7 +157,7 @@ public class UsersController : ControllerBase
         var id = AuthController.GetUserId(HttpContext.User.Identity as ClaimsIdentity);
         var user = await _context.Users.Include(u => u.StoredIngredients)
             .FirstAsync(u => u.Id == id);
-        return Ok(user.StoredIngredients.Select(i => i.Name));
+        return Ok(user.StoredIngredients.Select(i => _mapper.Map<IngredientDTO>(i)));
     }
 
     /// <summary>

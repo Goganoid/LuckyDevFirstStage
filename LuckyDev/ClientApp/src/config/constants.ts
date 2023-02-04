@@ -5,6 +5,10 @@ export type FilterItem = {
     label: string;
 }
 
+export function convertToFilterItem(item: string): FilterItem{
+    return { value: item, label: item }
+}
+
 export function convertToFilterList(items: string[]): FilterItem[] {
     var list: FilterItem[] = [];
     for (let item of items) {
