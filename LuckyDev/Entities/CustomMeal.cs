@@ -15,6 +15,9 @@ public class CustomMeal
     /// <example>Cake</example>
     public required string Name { get; set; }
 
+    public required string Area { get; set; }
+
+    public required string Category { get; set; }
     public List<Ingredient> Ingredients { get; set; } = new();
 
     /// <example>Add eggs, flour and water...</example>

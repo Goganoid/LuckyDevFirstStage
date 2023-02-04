@@ -4,14 +4,16 @@ import { BaseService } from "./base.service";
 
 
 export interface Ingredient {
-    ingredientInfoId: string;
-    measure: string;
+    name: string;
+    measure?: string;
 }
 
 
 export interface UserCustomMeal {
     id: number;
     name: string;
+    area: string;
+    category: string;
     ingredients: Ingredient[];
     instructions: string;
 }
@@ -93,7 +95,7 @@ class UserService extends BaseService {
     public async DeleteIngredient(name: string): Promise<AxiosResponse<any>|undefined> {
         const url = `stored-ingredients/delete/${name}`;
         try {
-            const data = await this.$http.post(url);
+            const data = await this.$http.delete(url);
             return data;
         }
         catch (error: any | AxiosError) {
