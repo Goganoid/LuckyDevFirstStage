@@ -7,6 +7,7 @@ import styled from 'styled-components';
 import headerLogo from '../assets/images/header_logo.png';
 import { LinkContainer } from 'react-router-bootstrap';
 import { NUGET_URL_CONFIG } from 'src/config/constants';
+import { isLoggedIn } from 'src/utils/storage';
 
 export const BrandContent = styled.div`
   display: flex;
@@ -94,9 +95,17 @@ const Header: React.FC<Props> = ({ className }) => {
           </Offcanvas.Header>
           <Offcanvas.Body>
             <Nav className="justify-content-end flex-grow-1 pe-3">
-              <LinkContainer to='/auth/login'><Nav.Link>Login</Nav.Link></LinkContainer>
-              <LinkContainer to='/auth/register'><Nav.Link>Register</Nav.Link></LinkContainer>
-              <LinkContainer to='/user'><Nav.Link>Profile</Nav.Link></LinkContainer>
+              {
+                !isLoggedIn() ?
+                  <>
+                    <LinkContainer to='/auth/login'><Nav.Link>Login</Nav.Link></LinkContainer>
+                    <LinkContainer to='/auth/register'><Nav.Link>Register</Nav.Link></LinkContainer>
+                  </>
+                  :
+                  <LinkContainer to='/user'><Nav.Link>Profile</Nav.Link></LinkContainer>
+              }
+
+
               <Nav.Link href={NUGET_URL_CONFIG.SwaggerDocs}>API</Nav.Link>
             </Nav>
           </Offcanvas.Body>
