@@ -59,6 +59,7 @@ const Cards: FunctionComponent = () => {
             if (result != null) setMeals(result)
             setLoading(false);
         })
+    // eslint-disable-next-line react-hooks/exhaustive-deps
     }, []);
     const meal = meals.map((m, idx) =>
         <MealCard

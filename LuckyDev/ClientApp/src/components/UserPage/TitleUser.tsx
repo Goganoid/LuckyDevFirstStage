@@ -11,7 +11,17 @@ const Wrapper = styled.div`
 `;
 
 const ImgWrapper = styled.img`
-
+  width: 300px;
+  @media screen and (max-width:800px) {   
+    & {
+      width:200px
+    }
+  }
+  @media screen and (max-width:525px) {   
+    & {
+      width:150px
+    }
+  }
 `;
 
 const TitleWrapper = styled.div`

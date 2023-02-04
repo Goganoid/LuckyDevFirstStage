@@ -1,7 +1,7 @@
 import { createContext, Fragment, useEffect, useState, type FunctionComponent, type PropsWithChildren } from 'react';
 import { UserApi, type Ingredient, type UserInformation, type UserMeals } from 'src/api/user.service';
 import styled from 'styled-components';
-import { MyIngradients, MyRecipes, SavedRecipes, TitleUser } from '../components/UserPage';
+import { MyIngradients as MyIngredients, MyRecipes, SavedRecipes, TitleUser } from '../components/UserPage';
 import { LoadingSpinner } from './LoadingSpinner';
 
 
@@ -60,7 +60,7 @@ const Userpage: FunctionComponent<PropsWithChildren> = () => {
           <UserContext.Provider value={{ ...userProfile!, setUserProfile }}>
             <Wrapper>
               <TitleUser />
-              <MyIngradients />
+              <MyIngredients />
               <MyRecipes />
               <SavedRecipes />
             </Wrapper>

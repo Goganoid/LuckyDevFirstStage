@@ -37,7 +37,7 @@ const SavedRecipes: FunctionComponent = () => {
 
   useEffect(() => {
     let promises: Promise<Meal | null>[] = [];
-    userContext?.meals.savedMealsIds.map((id) => {
+    userContext?.meals.savedMealsIds.forEach((id) => {
       promises.push(MealDbApi.getMeal(id));
     });
     Promise.all(promises).then(values => {
