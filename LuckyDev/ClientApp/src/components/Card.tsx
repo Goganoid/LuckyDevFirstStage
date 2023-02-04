@@ -24,6 +24,12 @@ export const ImageWrapper = styled.div`
         width: 140px;
         }
     }
+    @media screen and (max-width:1110px) {
+        & img{
+        height: 100px;
+        width: 100px;
+        }
+    }
     `
 export const RecipeName = styled.span`
     font-family: 'Inter';
@@ -36,6 +42,11 @@ export const RecipeName = styled.span`
     padding-top: 5px;
     color: #000000;
     overflow: hidden;
+    @media screen and (max-width:1050px) {
+        &{
+            font-size: 14px;
+        }
+    }
 `;
 
 
@@ -58,6 +69,7 @@ export const ItemWrapper = styled.div`
 export const Item = styled.div`
     display: flex;
     justify-content: space-between;
+    gap: 20px;
     width: 100%;
     
 `;

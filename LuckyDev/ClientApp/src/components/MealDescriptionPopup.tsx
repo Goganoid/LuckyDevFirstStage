@@ -24,8 +24,7 @@ const IngredientSpan = styled.span`
 
 export function MealDescriptionPopup(
     { show, handleClose, curMeal }: MealDescriptionPopupProps) {
-    
-    if (curMeal === undefined) return;
+    if (curMeal === undefined) return null;
     var ingredients = [];
     for (let i = 1; i <= 20; i++){
         const ingredient: string = (curMeal as any)[`strIngredient${i}`];
