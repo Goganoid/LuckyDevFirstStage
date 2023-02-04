@@ -21,11 +21,11 @@ export const IngredientsTable = () => {
     }
 
     return (
-        <Container>
+        <Container className='mt-3' >
             {userContext?.ingredients.length===0 && <p>Empty :(</p> }
             {userContext?.ingredients.map((ingredient,idx) => {
                 return (
-                    <Row key={idx}>
+                    <Row key={idx} className='mb-3'>
                         <Col>{ingredient.name}</Col>
                         <Col><Button variant='primary' onClick={()=>handleRemove(ingredient.name)}>Remove</Button></Col>
                     </Row>

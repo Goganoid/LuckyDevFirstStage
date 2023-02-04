@@ -8,10 +8,10 @@ import styled from 'styled-components';
 import { IngredientsTable } from '../IngredientsTable/IngredientsTable';
 
 
-const AllButtonsWrapper = styled.div`
+const IngredientsWrapper = styled.div`
   display: flex;
   flex-direction: column;
-  justify-content: center;
+  align-items: center;
   gap: 20px;
 `;
 
@@ -33,32 +33,34 @@ const MyIngredients: FunctionComponent = () => {
     });
   }
   
+  
+  const Selector = <div className='d-inline-flex ms-3'>
+    <Select
+      options={convertToFilterList(ingredientOptions)}
+      isClearable={true}
+      isSearchable={true}
+      onChange={(newValue, { action }) => {
+        if (action === 'select-option')
+          setSelectedIngredient(newValue?.value!);
+        if (action === 'deselect-option' || action === 'clear')
+          setSelectedIngredient('');
+      } } />
+    <Button disabled={selectedIngredient === '' || userContext.ingredients.some(i => i.name === selectedIngredient)} onClick={handleAddIngredient}>Add</Button>
+  </div>;
   return (
-  <>
-    <h2>My ingredients:</h2>
-    <AllButtonsWrapper>
-
+    <>
+      <div className='d-flex align-items-center'>
+        <h2>My ingredients: </h2>
+        {Selector}
+      </div>
       
-      <IngredientsTable/>
-      <div className='d-flex w-100'>
-                        <Select
-                            options={convertToFilterList(ingredientOptions)}
-                            isClearable={true}
-                            isSearchable={true}
-                            onChange={(newValue, { action }) => {
-                              if (action === 'select-option')
-                                setSelectedIngredient(newValue?.value!);
-                              if (action === 'deselect-option' || action === 'clear')
-                                setSelectedIngredient('');
-                          }} />
-          <Button disabled={
-            selectedIngredient === '' || userContext.ingredients.some(i=>i.name===selectedIngredient)
-          } onClick={handleAddIngredient}>Add</Button>
-                    </div>
-    </AllButtonsWrapper>
+      <IngredientsWrapper>
+        <IngredientsTable />
+      </IngredientsWrapper>
 
-    <hr />
-  </>
-)};
+      <hr />
+    </>
+  )
+};
 
 export default MyIngredients;

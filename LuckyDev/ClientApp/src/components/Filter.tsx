@@ -1,12 +1,11 @@
 import React from 'react';
-import { type Meal } from 'src/api/mealdb.service';
 import Button from 'react-bootstrap/Button';
-import { MealsLoader, type MealsFilter } from 'src/api/meals_loader.service';
 import Select, { type MultiValue } from 'react-select';
+import { type Meal } from 'src/api/mealdb.service';
+import { MealsLoader, type MealsFilter } from 'src/api/meals_loader.service';
 import { areaOptions, categoryOptions, convertToFilterList, ingredientOptions, type FilterItem } from 'src/config/constants';
-import { itemsPerLoad } from '../config/constants';
 import styled from 'styled-components';
-import axios from 'axios';
+import { itemsPerLoad } from '../config/constants';
 
 export const FilterMenu = styled.div`
     float: right;
