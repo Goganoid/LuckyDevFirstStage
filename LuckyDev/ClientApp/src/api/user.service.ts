@@ -68,6 +68,17 @@ class UserService extends BaseService {
             return err.response
         }
     }
+    public async DeleteSavedMeal(mealId: string): Promise<AxiosResponse<any>|undefined> {
+        const url = `meals/saved/delete/${mealId}`;
+        try {
+            const data = await this.$http.delete(url);
+            return data;
+        }
+        catch (error: any | AxiosError) {
+            const err = error as AxiosError;
+            return err.response
+        }
+    }
     public async AddCustomMeal(name: string): Promise<AxiosResponse<any>|undefined> {
         const url = `stored-ingredients/add/${name}`;
         try {
