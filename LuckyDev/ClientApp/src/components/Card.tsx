@@ -1,4 +1,4 @@
-import { faMinus, faTrash } from '@fortawesome/free-solid-svg-icons';
+import { faTrash } from '@fortawesome/free-solid-svg-icons';
 import Button from 'react-bootstrap/Button';
 import { type Meal } from 'src/api/mealdb.service';
 import styled from 'styled-components';

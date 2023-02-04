@@ -46,8 +46,48 @@ body{
     background-color: $white-text-hover;
 }
 
-//Slick-carousel
 
+//Header
+.BrandContent {
+  display: flex;
+  justify-content: space-between;
+  font-family: Inter;
+  word-spacing: 0.05rem;
+}
+.StyledHeader {
+  transition: 0.2s;
+  position:fixed;
+  z-index: 10;
+
+  color: #fff;
+  width: 100%;
+  display: block;
+  font-size: 1rem;
+  background-color: #343A40;
+  margin-bottom: 1rem;
+  @media all and (max-width: 769px) {
+    font-size: 0.5rem;
+  }
+}
+.LogoImg {
+  width: 80px;
+}
+.LogoWrapper {
+  display: flex;
+  align-items: center;
+}
+
+
+//Slick-carousel
+.slider {
+    width: 100%;
+    margin: 3%;
+    aspect-ratio: 16 / 9;
+    background-color: $background;
+}
+.slider img {
+    aspect-ratio: 16 / 9;
+}
 .button-on-slick :where(h3, .Bootstrap-Button) {
     transform: translateY(50px);
     transition: 0.2s;
@@ -107,30 +147,6 @@ body{
     padding-top: 40px;
     padding-right: 4%;
 }
-@media screen and (max-width: 992px) {
-    #main {
-        flex-direction: column-reverse;
-    }
-    #main > #right {
-        min-width: 100%;
-        display: flex;
-        justify-content: center;
-        padding: 0;
-    }
-    .popup .modal-div {
-        flex-direction: column;
-        justify-content: space-between;
-        > div {
-            align-items: center;
-            display: flex;
-            flex-direction: column;
-            width: 100%;
-            img {
-                display: block;
-            }
-        }
-    }
-}
 
 //filters and search
 .search-form {
@@ -184,6 +200,7 @@ body{
     max-width: 20px;
 }
 
+
 //Popups
 .popup > * > div {
     background-color: $background;
@@ -199,7 +216,7 @@ body{
     gap: 20px;
 }
 .popup .modal-div > .short-info {
-    width: calc(100% - 300px);
+    width: 100%;
 }
 .popup .info {
     background-color: $tyles;
@@ -231,4 +248,43 @@ body{
 
 .olb {
     outline: 3px solid black;
+}
+
+
+
+@media screen and (max-width: 992px) {
+    #main {
+        flex-direction: column-reverse;
+    }
+    #main > #right {
+        min-width: 100%;
+        display: flex;
+        justify-content: center;
+        padding: 0;
+    }
+    .popup .modal-div {
+        flex-direction: column;
+        justify-content: space-between;
+        > div {
+            align-items: center;
+            display: flex;
+            flex-direction: column;
+            width: 100%;
+            img {
+                display: block;
+            }
+        }
+    }
+    .slider {
+        height: 200px;
+    }
+    .slider img {
+        height: 200px;
+    }
+}
+
+@media screen and (max-width: 420px) {
+    .LogoImg {
+        width: 40px;
+    }
 }

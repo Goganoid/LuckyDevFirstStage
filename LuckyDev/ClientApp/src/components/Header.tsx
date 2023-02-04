@@ -3,44 +3,11 @@ import Container from 'react-bootstrap/Container';
 import Nav from 'react-bootstrap/Nav';
 import Navbar from 'react-bootstrap/Navbar';
 import Offcanvas from 'react-bootstrap/Offcanvas';
-import styled from 'styled-components';
 import headerLogo from '../assets/images/header_logo.png';
 import { LinkContainer } from 'react-router-bootstrap';
 import { NUGET_URL_CONFIG } from 'src/config/constants';
 import { isLoggedIn } from 'src/utils/storage';
 
-export const BrandContent = styled.div`
-  display: flex;
-  justify-content: space-between;
-  font-family: Inter;
-  word-spacing: 0.05rem;
-`;
-
-export let StyledHeader = styled(Navbar)`
-  transition: 0.2s;
-  position:fixed;
-  z-index: 10;
-
-  color: #fff;
-  width: 100%;
-  display: block;
-  font-size: 1rem;
-  background-color: #343A40;
-  margin-bottom: 1rem;
-  @media all and (max-width: 769px) {
-    font-size: 1.5rem;
-  }
-`;
-
-
-export const LogoImg = styled.img`
-  width: 80px;
-`;
-
-export const LogoWrapper = styled.div`
-  display: flex;
-  align-items: center;
-`;
 // false - menu is always collapsed
 // 'sm', 'md', 'lg', 'xl', 'xxl' - determines collapse point
 const expand = 'lg';
@@ -58,9 +25,9 @@ const Header: React.FC<Props> = ({ className }) => {
     let scrollPosition = 0;
     async function handleScroll() {
       if (document.documentElement.scrollTop > scrollPosition) {
-        setScrollClass('header-scrolling');
+        setScrollClass('StyledHeader header-scrolling');
       } else {
-        setScrollClass('');
+        setScrollClass('StyledHeader');
       }
       scrollPosition = document.documentElement.scrollTop;
     }
@@ -71,15 +38,15 @@ const Header: React.FC<Props> = ({ className }) => {
   }, []);
 
   return (
-    <StyledHeader expand={expand} variant="dark" className={scrollClass}>
+    <Navbar expand={expand} variant="dark" className={scrollClass}>
       <Container fluid>
         <Navbar.Brand href="/">
-          <BrandContent>
-            <LogoWrapper>
-              <LogoImg src={headerLogo} alt="logo" />
+          <div className='BrandContent'>
+            <div className='LogoWrapper'>
+              <img className='LogoImg' src={headerLogo} alt="logo" />
               <h1>RecipeWiki</h1>
-            </LogoWrapper>
-          </BrandContent>
+            </div>
+          </div>
         </Navbar.Brand>
         <Navbar.Toggle aria-controls={`offcanvasNavbar-expand-${expand}`} />
         <Navbar.Offcanvas
@@ -111,7 +78,7 @@ const Header: React.FC<Props> = ({ className }) => {
           </Offcanvas.Body>
         </Navbar.Offcanvas>
       </Container>
-    </StyledHeader>
+    </Navbar>
   )
 };
 
