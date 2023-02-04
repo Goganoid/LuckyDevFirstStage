@@ -1,6 +1,6 @@
-import { useEffect, useState, type FunctionComponent } from 'react';
-import styled from 'styled-components';
+import { useState, type FunctionComponent } from 'react';
 import Button from 'react-bootstrap/Button';
+import styled from 'styled-components';
 import { CreateRecipePopup } from './CreateRecipePopup';
 
 const Wrapper = styled.div`

@@ -1,5 +1,6 @@
 import axios, { type AxiosInstance } from 'axios';
 
+// Meal format served by the MealDB
 export type Meal = {
     idMeal: string;
     strMeal: string;

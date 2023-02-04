@@ -3,7 +3,7 @@ import { createRoot } from 'react-dom/client';
 import { ToastContainer } from 'react-toastify';
 import App from './App';
 import './assets/style/scss/site.scss';
-import { registerIcons} from './config';
+import registerIcons from './config/fa.config';
 import { toastifyProps } from './config/toastify.config';
 import reportWebVitals from './reportWebVitals';
 

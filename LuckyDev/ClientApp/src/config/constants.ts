@@ -1,9 +1,19 @@
+
+// how many meals to load when clicking 'Load More' button
 export const itemsPerLoad = 6;
+
+
+export const NUGET_URL_CONFIG = {
+    SwaggerDocs: 'https://localhost:5001/swagger'
+  };
 
 export type FilterItem = {
     value: string;
     label: string;
 }
+
+
+// helper functions for select-react
 
 export function convertToFilterItem(item: string): FilterItem{
     return { value: item, label: item }
@@ -642,6 +652,3 @@ export const ingredientOptions = [
     "Buckwheat"
 ]
 
-export const NUGET_URL_CONFIG = {
-    SwaggerDocs: 'https://localhost:5001/swagger'
-  };
