@@ -15,7 +15,7 @@ const AllButtonsWrapper = styled.div`
   gap: 20px;
 `;
 
-const MyIngradients: FunctionComponent = () => (
+const MyIngredients: FunctionComponent = () => (
   <>
     <h2>My ingradients:</h2>
     <AllButtonsWrapper>
@@ -31,4 +31,4 @@ const MyIngradients: FunctionComponent = () => (
   </>
 );
 
-export default MyIngradients;
+export default MyIngredients;

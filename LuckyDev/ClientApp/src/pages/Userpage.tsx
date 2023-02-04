@@ -1,11 +1,9 @@
-import { Footer, Header, MyIngradients, MyRecipes, SavedRecipes, TitleUser } from '../components';
 import { createContext, Fragment, useEffect, useState, type FunctionComponent, type PropsWithChildren } from 'react';
-import styled from 'styled-components';
-import { Outlet } from "react-router-dom";
-import { UserApi, type Ingredient, type UserInformation, type UserMeals } from 'src/api/user.service';
-import { userInfo } from 'os';
 import { Container } from 'react-bootstrap';
 import BounceLoader from 'react-spinners/BounceLoader';
+import { UserApi, type Ingredient, type UserInformation, type UserMeals } from 'src/api/user.service';
+import styled from 'styled-components';
+import { MyIngradients, MyRecipes, SavedRecipes, TitleUser } from '../components/UserPage';
 
 
 const Profile = styled.div`

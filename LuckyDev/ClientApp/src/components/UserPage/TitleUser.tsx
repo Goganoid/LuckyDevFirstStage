@@ -1,55 +1,36 @@
-import { type FunctionComponent } from 'react';
+import { useContext, type FunctionComponent } from 'react';
+import { UserContext } from 'src/pages/Userpage';
 import styled from 'styled-components';
+import userTag from '../../assets/images/user_tag.png';
 
 const Wrapper = styled.div`
-  margin-top: 120px;
-`;
-const UserInfo = styled.div`
-  margin: 100px 5% 20px;
   display: flex;
-  gap: 5%;
-  vertical-align: middle;
-`;
-const ProfileImageBlock = styled.div`
-  display: flex;
-  justify-content: center;
-  max-width: 200px;
-  width: 20%;
-  height: fit-content;
-  max-height: 200px;
-`;
-const UserNameSpace = styled.div`
-  padding: fit-content 0;
-  min-width: calc(100% - 200px);
-`;
-const UserName = styled.span`
-  font-size: 40px;
-  font-weight: bold;
-  margin: 0 10%;
-`;
-const BottomLine = styled.hr`
-  width: 80%;
-  min-width: 180px;
-  height: 3px;
-  background-color: black;
-  margin: 20px 5% 0 5%;
+  margin: 120px auto 40px;
+  align-items: center;
+  gap: 5vw;
 `;
 
-const TitleUser: FunctionComponent = () => (
-  <Wrapper>
-    <UserInfo>
-          <ProfileImageBlock><img alt='' className='profile-image'></img></ProfileImageBlock>
-          <UserNameSpace>
-            <UserName>Userpage</UserName>
-            <BottomLine></BottomLine>
-          </UserNameSpace>
-        </UserInfo>
+const ImgWrapper = styled.img`
 
-        <div>
-          <h1>My ingredients:</h1>
-          <div><span>Sort by:</span>{/*<Button></Button>*/}</div>
-        </div>
-  </Wrapper>
-);
+`;
+
+const TitleWrapper = styled.div`
+  width: 60vw;
+`;
+
+const TitleUser: FunctionComponent = () => {
+
+  const userContext = useContext(UserContext);
+  if (userContext == null) return <></>;
+  return (
+    <Wrapper>
+      <ImgWrapper src={userTag} alt="user tag" />
+      <TitleWrapper>
+        <h2 className='mb-4'>{`${userContext.info.firstName} ${userContext.info.lastName}`}</h2>
+        <hr />
+      </TitleWrapper>
+    </Wrapper>
+  )
+};
 
 export default TitleUser;

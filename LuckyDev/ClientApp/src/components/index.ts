@@ -4,7 +4,3 @@ export { default as Cards } from './Cards';
 export { default as Registermain } from './Registermain';
 export { default as Loginmain } from './Loginmain';
 export { default as Slider } from './Slider';
-export { default as TitleUser } from './TitleUser';
-export { default as MyIngradients } from './MyIngradients';
-export { default as MyRecipes } from './MyRecipes';
-export { default as SavedRecipes } from './SavedRecipes';
