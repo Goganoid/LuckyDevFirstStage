@@ -1,4 +1,5 @@
 import { AxiosError, type AxiosResponse } from "axios";
+import { isLoggedIn, getToken } from "src/utils/storage";
 import { BaseService } from "./base.service";
 
 
@@ -6,6 +7,7 @@ export interface Ingredient {
     ingredientInfoId: string;
     measure: string;
 }
+
 
 export interface UserCustomMeal {
     id: number;
@@ -19,24 +21,36 @@ export interface UserMeals {
     userMeals: UserCustomMeal[];
 }
 
+export interface UserInformation{
+        id: number,
+        firstName: string,
+        lastName: string,
+        email: string
+}
+
 
 class UserService extends BaseService {
     private static _sampleService: UserService;
     private static _controller: string = 'Users';
-    private _tokenIsSet = false;
     private constructor(name: string) {
         super(name);
+        if (isLoggedIn())
+            this.$http.defaults.headers.common['Authorization'] = `bearer ${getToken()}`;
     }
 
     public static get Instance(): UserService {
         return this._sampleService || (this._sampleService = new this(this._controller));
     }
-
-    public SetToken(token: string) {
-        this.$http.defaults.headers.common['Authorization'] = `bearer ${token}`;
-        this._tokenIsSet = true;
+    public async GetUserIngredients(): Promise<AxiosResponse<Ingredient[]>>{
+        const url = `stored-ingredients/get`;
+        const data = await this.$http.get<Ingredient[]>(url);
+        return data;
     }
-
+    public async GetUserInfo(): Promise<AxiosResponse<UserInformation>>{
+        const url = `info/`;
+        const data = await this.$http.get<UserInformation>(url);
+        return data;
+    }
     public async GetMeals(): Promise<AxiosResponse<UserMeals>> {
         const url = `meals/get`;
         const data = await this.$http.get<UserMeals>(url);

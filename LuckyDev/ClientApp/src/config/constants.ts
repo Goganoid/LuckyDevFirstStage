@@ -1,13 +1,9 @@
 export const itemsPerLoad = 6;
 
-
-
-
 export type FilterItem = {
     value: string;
     label: string;
 }
-
 
 export function convertToFilterList(items: string[]): FilterItem[] {
     var list: FilterItem[] = [];
@@ -16,7 +12,6 @@ export function convertToFilterList(items: string[]): FilterItem[] {
     }
     return list;
 }
-
 
 export const categoryOptions = [
     'Beef',
@@ -34,7 +29,6 @@ export const categoryOptions = [
     'Vegan',
     'Vegeterian',
 ]
-
 
 export const areaOptions = [
     'American',
@@ -643,3 +637,7 @@ export const ingredientOptions = [
     "Ciabatta",
     "Buckwheat"
 ]
+
+export const NUGET_URL_CONFIG = {
+    SwaggerDocs: 'https://localhost:5001/swagger'
+  };

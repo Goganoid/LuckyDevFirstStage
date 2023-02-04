@@ -1,4 +1,5 @@
 using System.Collections.Generic;
+using System.ComponentModel.DataAnnotations;
 using System.Diagnostics.CodeAnalysis;
 using RecipeWiki.Helpers;
 
@@ -25,7 +26,7 @@ public class User
     public int Id { get; set; }
     public required string FirstName { get; set; }
     public required string LastName { get; set; }
-    public required string Email { get; set; }
+    [EmailAddress] public required string Email { get; set; }
     public required byte[] PasswordHash { get; set; }
     public required byte[] PasswordSalt { get; set; }
 

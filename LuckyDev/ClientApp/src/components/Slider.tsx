@@ -1,11 +1,10 @@
 //@ts-nocheck
-import React, { useEffect, useState, type FunctionComponent } from 'react'
+import { useEffect, useState, type FunctionComponent } from 'react';
+import Button from 'react-bootstrap/Button';
 import Carousel from 'react-bootstrap/Carousel';
 import { MealDbApi, type Meal } from 'src/api/mealdb.service';
-import styled from 'styled-components';
-import Button from 'react-bootstrap/Button';
 import dateDiffInDays from 'src/utils/dateDiff';
-import Modal from 'react-bootstrap/Modal';
+import styled from 'styled-components';
 import { MealDescriptionPopup } from './MealDescriptionPopup';
 
 const SliderImage = styled.img`
@@ -17,26 +16,6 @@ const SliderImage = styled.img`
 const ItemStyle = {
     height: '500px'
 }
-
-const PopupYtLink = styled.a`
-`;
-
-const ModalFirstDiv = styled.div`
-    display: flex;
-    gap: 20px;
-`;
-
-const ModalSecondDiv = styled.div`
-    display: flex;
-    gap: 0 20px;
-`;
-
-const PopupImage = styled.img`
-    display: block;
-    height: 180px;
-`;
-
-
 type SliderStorage = {
     items: Meal[],
     last_update: string
@@ -69,11 +48,9 @@ const Slider: FunctionComponent = () => {
     const [meals, setMeals] = useState<Meal[]>([]);
     useEffect(() => {
         const stored_slider_str: string | null = window.localStorage.getItem('slider_items');
-        console.log(stored_slider_str);
         if (stored_slider_str != null) {
             const stored_slider = JSON.parse(stored_slider_str) as SliderStorage;
             const daysSinceUpdate = dateDiffInDays(new Date(stored_slider.last_update), new Date());
-            console.log(daysSinceUpdate);
             if (daysSinceUpdate < 7) {
                 setMeals(stored_slider.items);
                 return;
@@ -81,10 +58,9 @@ const Slider: FunctionComponent = () => {
         }
 
         MealDbApi.getRandomSelection().then(result => {
-            console.log(result);
             setMeals(result);
             var date = new Date();
-            date.setDate(date.getDate() - 10);
+            date.setDate(date.getDate());
             var storage_item: SliderStorage = {
                 items: result,
                 last_update: date.toString()

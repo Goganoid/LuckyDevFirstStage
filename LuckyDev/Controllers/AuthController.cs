@@ -102,7 +102,7 @@ public class AuthController : ControllerBase
             if (string.IsNullOrWhiteSpace(requestDTO.Email))
                 throw new Exception("Email is required");
             if (_context.Users.Any(x => x.Email == user.Email))
-                throw new Exception("Email \"" + user.Email + "\" is already taken");
+                throw new Exception("\"" + user.Email + "\" is already taken");
 
             PasswordUtils.CreatePasswordHash(requestDTO.Password, out var passwordHash, out var passwordSalt);
             user.PasswordHash = passwordHash;

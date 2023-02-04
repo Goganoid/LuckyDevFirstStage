@@ -4,9 +4,10 @@ import Container from 'react-bootstrap/Container';
 import Modal from 'react-bootstrap/Modal';
 import Row from 'react-bootstrap/Row';
 import { type Meal } from 'src/api/mealdb.service';
+import { isLoggedIn } from 'src/utils/storage';
 import styled from 'styled-components';
 import { PopupYtLink } from './Cards';
-
+import { UserApi} from 'src/api/user.service';
 export type MealDescriptionPopupProps = {
     show: boolean,
     handleClose: () => void,
@@ -23,8 +24,7 @@ const IngredientSpan = styled.span`
 
 export function MealDescriptionPopup(
     { show, handleClose, curMeal }: MealDescriptionPopupProps) {
-    
-    if (curMeal === undefined) return;
+    if (curMeal === undefined) return null;
     var ingredients = [];
     for (let i = 1; i <= 20; i++){
         const ingredient: string = (curMeal as any)[`strIngredient${i}`];
@@ -52,7 +52,6 @@ export function MealDescriptionPopup(
                 <img src={curMeal.strMealThumb} alt="" className='popup-image' />
                 <div style={{ width: 'calc(100% - 300px)' }}>
                     <div className='info'><span>Category: {curMeal?.strCategory || 'none'}</span></div>
-                    <div className='info'><span>DrinkAlternate: {curMeal?.strDrinkAlternate || 'none'}</span></div>
                     <div className='info'><span>Area: {curMeal?.strArea || 'none'}</span></div>
                     <div className='info'><span>Tags: {curMeal?.strTags || 'none'}</span></div>
                     {curMeal.strYoutube && <div className='info' style={{ overflow: 'hidden' }}><span>Youtube: <PopupYtLink href={curMeal.strYoutube}>{curMeal.strYoutube || 'none'}</PopupYtLink></span></div>}
@@ -68,12 +67,13 @@ export function MealDescriptionPopup(
             </div>
         </Modal.Body>
         <Modal.Footer>
-            <Button variant="secondary" onClick={handleClose} className='Bootstrap-Button-white'>
-                Close
-            </Button>
-            <Button variant="primary" onClick={handleClose} className='Bootstrap-Button'>
-                Save Changes
-            </Button>
+            {isLoggedIn() &&
+                <Button variant="primary" onClick={() => {
+                    UserApi.SaveMeal(curMeal.idMeal);
+                    handleClose();
+                }} className='Bootstrap-Button'>
+                Save to my list
+                </Button>}
         </Modal.Footer>
     </Modal>;
 }

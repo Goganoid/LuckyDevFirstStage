@@ -3,7 +3,9 @@ import { createRoot } from 'react-dom/client';
 import { ToastContainer } from 'react-toastify';
 import App from './App';
 import './assets/style/scss/site.scss';
-import { registerIcons, toastifyProps } from './config';
+import { registerIcons} from './config';
+import { toastifyProps } from './config/toastify.config';
+import reportWebVitals from './reportWebVitals';
 
 registerIcons();
 
@@ -31,4 +33,5 @@ root.render(<AppRenderer />);
 // If you want to start measuring performance in your app, pass a function
 // to log results (for example: reportWebVitals(console.log))
 // or send to an analytics endpoint. Learn more: https://bit.ly/CRA-vitals
-// reportWebVitals();
+reportWebVitals(console.log);
+

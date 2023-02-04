@@ -1,12 +1,7 @@
-import { cssTransition, type ToastContainerProps } from 'react-toastify';
+import { type ToastContainerProps, type ToastOptions } from 'react-toastify';
 
-const transition = cssTransition({
-  enter: 'custom__toast__animate__bounceIn',
-  exit: 'custom__toast__animate__bounceOut'
-});
 
 const toastifyProps: ToastContainerProps = {
-  transition,
   autoClose: 1500,
   draggable: false,
   newestOnTop: true,
@@ -14,6 +9,21 @@ const toastifyProps: ToastContainerProps = {
   position: 'top-center'
 };
 
+
+const errorToastOptions: ToastOptions = {
+  position: "top-center",
+  autoClose: 2500,
+  hideProgressBar: false,
+  closeOnClick: true,
+  pauseOnHover: true,
+  progress:undefined,
+  draggable: false,
+  theme: "colored",
+};
+
+
+
 export {
-  toastifyProps
+  toastifyProps,
+  errorToastOptions
 };

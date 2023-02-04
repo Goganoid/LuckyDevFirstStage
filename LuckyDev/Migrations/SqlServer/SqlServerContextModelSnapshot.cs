@@ -59,11 +59,11 @@ namespace RecipeWiki.Migrations.SqlServer
                     b.Property<int?>("CustomMealId")
                         .HasColumnType("int");
 
-                    b.Property<string>("IngredientInfoId")
-                        .IsRequired()
+                    b.Property<string>("Measure")
                         .HasColumnType("nvarchar(max)");
 
-                    b.Property<string>("Measure")
+                    b.Property<string>("Name")
+                        .IsRequired()
                         .HasColumnType("nvarchar(max)");
 
                     b.Property<int?>("UserId")
