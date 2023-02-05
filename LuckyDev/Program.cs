@@ -176,8 +176,15 @@ using (var scope = app.Services.CreateScope())
 {
     var services = scope.ServiceProvider;
     var context = services.GetRequiredService<DataContext>();
-    // context.Database.EnsureDeleted();
-    context.Database.Migrate();
+    try{
+        context.Database.Migrate();
+    }
+    catch(Exception e){
+        Console.WriteLine(e);
+        Console.WriteLine($"Exception occured during migration. Deleting database and trying again");
+        context.Database.EnsureDeleted();
+        context.Database.Migrate();
+    }
     DbInitializer.Initialize(context);
 }
 

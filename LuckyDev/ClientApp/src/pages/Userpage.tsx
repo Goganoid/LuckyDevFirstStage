@@ -3,6 +3,7 @@ import { UserApi, type Ingredient, type UserInformation, type UserMeals } from '
 import styled from 'styled-components';
 import { MyIngradients as MyIngredients, MyRecipes, SavedRecipes, TitleUser } from '../components/UserPage';
 import { LoadingSpinner } from '../components/LoadingSpinner';
+import { isLoggedIn } from 'src/utils/storage';
 
 
 const Profile = styled.div`
@@ -37,6 +38,7 @@ const Userpage: FunctionComponent<PropsWithChildren> = () => {
   const [loading, setLoading] = useState(true);
 
   useEffect(() => {
+    if (!isLoggedIn()) return;
     Promise.all([UserApi.GetUserInfo(), UserApi.GetMeals(), UserApi.GetUserIngredients()])
       .then(responses => {
         const [UserInfoResponse, UserMealsResponse, UserIngredientsResponse] = responses;
@@ -50,7 +52,7 @@ const Userpage: FunctionComponent<PropsWithChildren> = () => {
       })
 
   }, [])
-
+  if (!isLoggedIn()) return <p>Access denied</p>;
   return (
     <Fragment>
       <Profile>
