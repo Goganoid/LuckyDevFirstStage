@@ -51,10 +51,10 @@ export function MealDescriptionPopup(
         </Modal.Header>
         <Modal.Body className='show-grid'>
             <div className='modal-div'>
-                <div><img src={curMeal.strMealThumb === '' ? ImagePlaceholder : curMeal.strMealThumb} alt="" className='popup-image' /></div>
-                <div>
+                <div className='left'><img src={curMeal.strMealThumb === '' ? ImagePlaceholder : curMeal.strMealThumb} alt="" className='popup-image' /></div>
+                <div className='right'>
                     <div className='info'><span>Category: {curMeal?.strCategory === '' ? 'none' : curMeal.strCategory}</span></div>
-                    <div className='info'><span>Area:{curMeal?.strArea === '' ? 'none' : curMeal.strArea}</span></div>
+                    <div className='info'><span>Area: {curMeal?.strArea === '' ? 'none' : curMeal.strArea}</span></div>
                     {curMeal.strYoutube && <div className='info' style={{ overflow: 'hidden' }}><span>Youtube: <PopupYtLink href={curMeal.strYoutube}>{curMeal.strYoutube || 'none'}</PopupYtLink></span></div>}
                 </div>
             </div>

@@ -130,7 +130,7 @@ export function CreateRecipePopup({ show, handleClose }: MealDescriptionPopupPro
             <Modal.Title>Your new recipe</Modal.Title>
         </Modal.Header>
         <Modal.Body className='show-grid'>
-            <div className='modal-div'>
+            <div className='modal-new-div'>
                 <div className='left'>
                     <div className='info'><span>Give your recipe a name.</span>
                         <input

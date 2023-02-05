@@ -171,14 +171,14 @@ body{
 
 
 //new recipe popup
-.left {
+.modal-new-div > .left {
     flex-basis: 60%;
     // min-width: 25%;
 }
-.right {
+.modal-new-div > .right {
     flex-basis: 40%;
 }
-.right img {
+.modal-new-div > .right img {
     width: 100%;
     object-fit: cover;
     border-radius: 20px;
@@ -294,14 +294,23 @@ input.recipe-field {
     width: 250px;
     height: 250px;
     border-radius: 20px;
+    box-shadow: 0px 6px 3px 1px #BEBEBE;
 }
-.popup :where(.modal-div, .modal-ingredients) {
+.popup :where(.modal-new-div, .modal-div, .modal-ingredients) {
     flex-direction: row;
     display: flex;
     gap: 20px;
+    
+    flex-basis: 100%;
+    min-width: 100%;
 }
-.popup .modal-div > .short-info {
-    width: 100%;
+.popup .modal-div {
+    .left {
+        flex-basis: 30%;
+    }
+    .right {
+        flex-basis: 70%;
+    }
 }
 .popup .info {
     background-color: $tyles;
@@ -309,7 +318,8 @@ input.recipe-field {
     padding: 9px;
     margin-bottom: 10px;
     display: flex;
-    
+    flex-basis: 100%;
+    min-width: 100%;
     flex-direction: column;
 }
 
@@ -346,13 +356,15 @@ input.recipe-field {
         flex-direction: column-reverse;
     }
     #main > #right {
+        flex-basis: 100%;
         min-width: 100%;
         display: flex;
         justify-content: center;
         padding: 0;
     }
-    .popup .modal-div {
-        flex-direction: column;
+    .popup :where(.modal-new-div, .modal-div) {
+        flex-basis: 100%;
+        min-width: 100%;
         justify-content: space-between;
         > div {
             align-items: center;
@@ -364,6 +376,12 @@ input.recipe-field {
                 display: block;
             }
         }
+    }
+    .popup .modal-new-div {
+        flex-direction: column;
+    }
+    .popup .modal-new-div {
+        flex-direction: column-reverse;
     }
     .slider {
         height: 50vh;
@@ -382,9 +400,16 @@ input.recipe-field {
     .LogoWrapper h1 {
         font-size: 120%;
     }
-    
+    .right img {
+        width: 60% !important;
+    }
     .carousel-container {
         bottom: 40%;
+    }
+
+    .new-ingredient {
+        flex-basis: 100%;
+        min-width: 100%;
     }
 }
 
