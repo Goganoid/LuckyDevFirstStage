@@ -19,7 +19,10 @@ const Wrapper = styled.div`
     width: 90vw;
     margin: 0 auto;
 `;
+const LoadingWrapper = styled.div`
+  height: 80vh;
 
+`
 interface UserProfile {
   info: UserInformation,
   meals: UserMeals,
@@ -58,7 +61,7 @@ const Userpage: FunctionComponent<PropsWithChildren> = () => {
       <Profile>
         {loading
           ?
-          LoadingSpinner()
+          <LoadingWrapper>{LoadingSpinner()}</LoadingWrapper>
           :
           <UserContext.Provider value={{ ...userProfile!, setUserProfile }}>
             <Wrapper>

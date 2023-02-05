@@ -1,18 +1,16 @@
 import { useContext, useState, type FunctionComponent } from 'react';
 import { Container } from 'react-bootstrap';
 import Button from 'react-bootstrap/Button';
+import { toast } from 'react-toastify';
 import type { Meal } from 'src/api/mealdb.service';
 import { UserApi, type UserCustomMeal } from 'src/api/user.service';
+import { successToastOptions } from 'src/config/toastify.config';
 import { UserContext } from 'src/pages/Userpage';
 import styled from 'styled-components';
 import { MealCard } from '../Card';
-import { ItemWrapper } from './SavedRecipes';
-import { LoadingSpinner } from '../LoadingSpinner';
 import { MealDescriptionPopup } from '../MealDescriptionPopup';
 import { CreateRecipePopup } from './CreateRecipePopup';
-import { SavedMealList } from './SavedRecipes';
-import { toast } from 'react-toastify';
-import { successToastOptions } from 'src/config/toastify.config';
+import { ItemWrapper, SavedMealList } from './SavedRecipes';
 const Wrapper = styled.div`
   display: flex;
   flex-direction: column;
@@ -30,13 +28,11 @@ function CustomMealToMeal(customMeal: UserCustomMeal): Meal {
   meal.strMealThumb = customMeal.image;
   meal.strMeal = customMeal.name;
   meal.strInstructions = customMeal.instructions;
-  console.log(customMeal.ingredients);
   customMeal.ingredients.forEach((ingredient, idx) => {
     if (idx >= 20) return;
     (meal as any)[`strIngredient${idx}`] = ingredient.name;
     (meal as any)[`strMeasure${idx}`] = ingredient.measure ?? '';
   })
-  console.log(meal);
   return meal;
 }
 
@@ -46,7 +42,6 @@ const MyRecipes: FunctionComponent = () => {
   const [show, setShow] = useState(false);
   const handleNewRecipeClose = () => setNewRecipeShow(false);
   const handleClose = () => setShow(false);
-  const [loading, setLoading] = useState(false);
   const [curMeal, setCurMeal] = useState<Meal>();
   return (
     <div>
@@ -59,37 +54,34 @@ const MyRecipes: FunctionComponent = () => {
         />
         <Container>
           <SavedMealList>
-            {loading
-              ? <LoadingSpinner />
-              : userContext?.meals.userMeals.length === 0
-                ? <p>Empty :(</p>
-                : userContext?.meals.userMeals.map((customMeal, idx) => {
-                  let m = CustomMealToMeal(customMeal);
-                  return <ItemWrapper key={idx}>
-                    <MealCard
-                      key={m.idMeal}
-                      meal={m}
-                      setCurMeal={setCurMeal}
-                      setShow={setShow}
-                      onRemove={(meal) => {
-                        console.log(meal.idMeal);
-                        UserApi.DeleteCustomMeal(meal.idMeal).then(result => {
-                          if (result?.status === 200) {
-                            toast.success("Item Deleted", successToastOptions);
-                            userContext.setUserProfile({
-                              info: userContext.info,
-                              ingredients: userContext.ingredients,
-                              meals: {
-                                userMeals: userContext.meals.userMeals.filter(m=>m.id!==customMeal.id),
-                                savedMealsIds:userContext.meals.savedMealsIds
-                              }
-                            })
-                          }
-                        })
-                      }}
-                    />
-                  </ItemWrapper>
-                })
+            {userContext?.meals.userMeals.length === 0
+              ? <p>Empty :(</p>
+              : userContext?.meals.userMeals.map((customMeal, idx) => {
+                let m = CustomMealToMeal(customMeal);
+                return <ItemWrapper key={idx}>
+                  <MealCard
+                    key={m.idMeal}
+                    meal={m}
+                    setCurMeal={setCurMeal}
+                    setShow={setShow}
+                    onRemove={(meal) => {
+                      UserApi.DeleteCustomMeal(meal.idMeal).then(result => {
+                        if (result?.status === 200) {
+                          toast.success("Item Deleted", successToastOptions);
+                          userContext.setUserProfile({
+                            info: userContext.info,
+                            ingredients: userContext.ingredients,
+                            meals: {
+                              userMeals: userContext.meals.userMeals.filter(m => m.id !== customMeal.id),
+                              savedMealsIds: userContext.meals.savedMealsIds
+                            }
+                          })
+                        }
+                      })
+                    }}
+                  />
+                </ItemWrapper>
+              })
             }
           </SavedMealList>
         </Container>
