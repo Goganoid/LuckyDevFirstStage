@@ -1,6 +1,8 @@
 import React, { useContext } from 'react'
 import { Button, Col, Container, Row } from 'react-bootstrap';
+import { toast } from 'react-toastify';
 import { UserApi } from 'src/api/user.service';
+import { successToastOptions } from 'src/config/toastify.config';
 import { UserContext } from 'src/pages/Userpage'
 
 
@@ -19,7 +21,22 @@ export const IngredientsTable = () => {
             }
           });
     }
-
+    const handleUpdateMeasure = (idx: number) => {
+        UserApi.UpdateIngredient(userContext?.ingredients[idx]!).then(result => {
+            if (result?.status === 200) {
+                toast.success("Updated", successToastOptions);
+            }
+        })
+    };
+    const handleChangeMeasure = (idx: number, value: string)=>{
+        let copy = [...userContext?.ingredients!];
+        copy[idx].measure = value;
+        userContext?.setUserProfile({
+            info: userContext.info,
+            ingredients: copy,
+            meals: userContext.meals
+        })
+    }
     return (
         <Container className='mt-3' >
             {userContext?.ingredients.length===0 && <p>Empty :(</p> }
@@ -27,7 +44,12 @@ export const IngredientsTable = () => {
                 return (
                     <Row key={idx} className='mb-3'>
                         <Col>{ingredient.name}</Col>
-                        <Col><Button variant='primary' onClick={()=>handleRemove(ingredient.name)}>Remove</Button></Col>
+                        <Col><input type="text" value={ingredient.measure || ''}
+                                    onChange={(event) => handleChangeMeasure(idx, event.target.value)} /></Col>
+                        <Col>
+                            <Button variant='primary' onClick={() => handleRemove(ingredient.name)}>Remove</Button>
+                            <Button variant='primary' className='ms-3' onClick={() => handleUpdateMeasure(idx)}>Save Changes</Button>
+                        </Col>
                     </Row>
                 )
             })}

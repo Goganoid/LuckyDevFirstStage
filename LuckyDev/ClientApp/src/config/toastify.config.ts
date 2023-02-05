@@ -23,7 +23,7 @@ const errorToastOptions: ToastOptions = {
 
 const successToastOptions: ToastOptions = {
   position: "top-center",
-  autoClose: 5000,
+  autoClose: 2500,
   hideProgressBar: false,
   closeOnClick: true,
   pauseOnHover: true,

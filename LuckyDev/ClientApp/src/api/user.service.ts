@@ -106,6 +106,21 @@ class UserService extends BaseService {
             return err.response
         }
     }
+    public async UpdateIngredient(ingredient:Ingredient): Promise<AxiosResponse<any> | undefined>{
+        const url = `stored-ingredients/update/`;
+        try {
+            const data = await this.$http.put(url,JSON.stringify(ingredient), {
+                headers: {
+                    'Content-Type': 'application/json',
+                }
+            });
+            return data;
+        }
+        catch (error: any | AxiosError) {
+            const err = error as AxiosError;
+            return err.response
+        }
+    }
     public async DeleteIngredient(name: string): Promise<AxiosResponse<any>|undefined> {
         const url = `stored-ingredients/delete/${name}`;
         try {

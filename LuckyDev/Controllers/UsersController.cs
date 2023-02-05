@@ -132,6 +132,20 @@ public class UsersController : ControllerBase
     /// </summary>
     /// <response code="200">Request successful</response>
     /// <response code="401">Unauthorized</response>
+    [HttpPut("stored-ingredients/update/")]
+    public async Task<IActionResult> UpdateIngredient(IngredientDTO ingredientDTO)
+    {
+        var id = AuthController.GetUserId(HttpContext.User.Identity as ClaimsIdentity);
+        var user = await _context.Users.Include(u => u.StoredIngredients).FirstOrDefaultAsync(u => u.Id == id);
+        var ingredient = user!.StoredIngredients.Find(i => i.Name == ingredientDTO.Name);
+        if ( ingredient == null)
+            return NotFound("Ingredient not found");
+        ingredient.Measure = ingredientDTO.Measure;
+        _context.Users.Update(user);
+        await _context.SaveChangesAsync();
+        return Ok();
+    }
+    
     [HttpPost("stored-ingredients/add/{IngredientName}")]
     public async Task<IActionResult> AddStoredIngredient(string IngredientName)
     {
