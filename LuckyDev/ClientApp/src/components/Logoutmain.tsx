@@ -29,7 +29,7 @@ const logout = () => {
 return (
     <MDBContainer fluid className='d-flex align-items-center justify-content-center bg-image'>
     <div className='mask gradient-custom-3'></div>
-    <MDBCard className='m-5 MDBCard'>
+    <MDBCard className='MDBCard'>
         <MDBCardBody className='px-5'>
         <ImgWrapper src={logoutImg} alt="logout picture" />
         <h3 className="text-uppercase text-center mb-5">Oh no! You are leaving... Are you sure?</h3>

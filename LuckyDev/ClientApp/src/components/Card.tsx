@@ -50,7 +50,7 @@ export const RecipeName = styled.span`
 
 
 export const ItemWrapper = styled.div`
-position: relative;
+    position: relative;
      flex: 30%;
      flex-grow: 0;
      display: flex;
@@ -88,7 +88,7 @@ export type MealCardProps = {
 }
 
 export function MealCard({ meal, setCurMeal, setShow, onRemove }: MealCardProps): JSX.Element {
-    return <ItemWrapper>
+    return <ItemWrapper className="meal-tyles">
         {onRemove &&
             <CloseWrapper>
                     <FontAwesomeIcon icon={faTrash}  onClick={() => {
@@ -96,12 +96,10 @@ export function MealCard({ meal, setCurMeal, setShow, onRemove }: MealCardProps)
                         }} />
              </CloseWrapper>}
         <Item className='meal'>
-            
             <ImageWrapper>
                 <img
                     src={meal.strMealThumb==='' ? ImagePlaceholder : meal.strMealThumb}
                     alt=""
-                // height={180}
                 />
             </ImageWrapper>
             <RecipeContent>
