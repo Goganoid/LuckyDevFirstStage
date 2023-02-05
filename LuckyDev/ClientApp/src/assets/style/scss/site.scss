@@ -50,24 +50,7 @@ body{
 //Header
 .BrandContent {
   display: flex;
-  justify-content: space-between;
   font-family: Inter;
-  word-spacing: 0.05rem;
-}
-.StyledHeader {
-  transition: 0.2s;
-  position:fixed;
-  z-index: 10;
-
-  color: #fff;
-  width: 100%;
-  display: block;
-  font-size: 1rem;
-  background-color: #343A40;
-  margin-bottom: 1rem;
-  @media all and (max-width: 769px) {
-    font-size: 0.5rem;
-  }
 }
 .LogoImg {
   width: 80px;
@@ -329,7 +312,7 @@ body{
     }
     
     .carousel-container {
-        margin-bottom: 16%;
+        bottom: 40%;
     }
 }
 
@@ -338,7 +321,7 @@ body{
         width: 40px;
     }
     .carousel-container {
-        margin-bottom: 75%;
+        bottom: 50%;
     }
     .carousel-container h3 {
         font-size: 1em;
@@ -347,6 +330,8 @@ body{
         font-size: 0.7em;
         margin: 0.5em;
     }
+
+
     .button-on-slick :where(h3, .Bootstrap-Button, img) {
         transition: 0s;
     }.button-on-slick :where(h3, .Bootstrap-Button) {
@@ -354,13 +339,27 @@ body{
     }
     .button-on-slick .Bootstrap-Button {
         opacity: 1;
-    }.button-on-slick:hover :where(h3, .Bootstrap-Button, img) {
+    }
+    .button-on-slick:hover :where(h3, .Bootstrap-Button) {
         transform: translateY(0);
+    }
+    .button-on-slick:hover img {
         transform: scale(1, 1);
     }
+
+
     .MDBCard {
         margin: 0%;
         margin-bottom: 5%;
         max-width: 100%;
+        > div {
+            padding: auto 8% !important;
+        }
+        h2 {
+            font-size: 1.2em;
+        }
+        h6, input, label, button {
+            font-size: 0.8em;
+        }
     }
 }

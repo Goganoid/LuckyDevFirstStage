@@ -7,6 +7,7 @@ import headerLogo from '../assets/images/header_logo.png';
 import { LinkContainer } from 'react-router-bootstrap';
 import { NUGET_URL_CONFIG } from 'src/config/constants';
 import { isLoggedIn } from 'src/utils/storage';
+import styled from 'styled-components';
 
 // false - menu is always collapsed
 // 'sm', 'md', 'lg', 'xl', 'xxl' - determines collapse point
@@ -16,6 +17,19 @@ interface Props {
   className?: string;
 }
 
+const StyledHeader = styled(Navbar)`
+  transition: 0.2s;
+  position: fixed;
+  z-index: 10;
+
+  color: #fff;
+  width: 100%;
+  display: block;
+  font-size: 1rem;
+  background-color: #343A40;
+  margin-bottom: 1rem;
+`;
+
 const Header: React.FC<Props> = ({ className }) => {
   const [scrollClass, setScrollClass] = useState<string>(className || '');
 
@@ -24,22 +38,21 @@ const Header: React.FC<Props> = ({ className }) => {
 
     let scrollPosition = 0;
     async function handleScroll() {
-      if (document.documentElement.scrollTop < scrollPosition || document.documentElement.scrollTop <= 30) {
-          setScrollClass('StyledHeader');
+      if (document.documentElement.scrollTop < scrollPosition || document.documentElement.scrollTop <= 10) {
+        setScrollClass('');
       } else {
-          setScrollClass('StyledHeader header-scrolling');
+        setScrollClass('header-scrolling');
       }
       scrollPosition = document.documentElement.scrollTop;
     }
 
     return () => {
-      setScrollClass('StyledHeader');
       window.onscroll = null;
     };
   }, []);
 
   return (
-    <Navbar expand={expand} variant="dark" className={scrollClass}>
+    <StyledHeader expand={expand} variant="dark" className={scrollClass}>
       <Container fluid>
         <Navbar.Brand href="/">
           <div className='BrandContent'>
@@ -82,7 +95,7 @@ const Header: React.FC<Props> = ({ className }) => {
           </Offcanvas.Body>
         </Navbar.Offcanvas>
       </Container>
-    </Navbar>
+    </StyledHeader>
   )
 };
 
