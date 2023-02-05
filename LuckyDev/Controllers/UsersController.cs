@@ -86,7 +86,7 @@ public class UsersController : ControllerBase
         var meal = _mapper.Map<CustomMeal>(mealRequestDTO);
         user.UserMeals.Add(meal);
         await _context.SaveChangesAsync();
-        return Ok();
+        return Ok(_mapper.Map<CustomMealResponseDTO>(meal));
     }
 
     /// <summary>
@@ -120,6 +120,7 @@ public class UsersController : ControllerBase
         var id = AuthController.GetUserId(HttpContext.User.Identity as ClaimsIdentity);
         var user = await _context.Users
             .Include(u => u.UserMeals)
+                .ThenInclude(m=>m.Ingredients)
             .Include(u => u.StoredIngredients)
             .FirstOrDefaultAsync(u => u.Id == id);
         var meals = _mapper.Map<UserMealsResponseDTO>(user);

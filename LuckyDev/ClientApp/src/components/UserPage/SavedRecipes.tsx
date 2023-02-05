@@ -9,7 +9,7 @@ import { MealCard } from '../Card';
 import { MealDescriptionPopup } from '../MealDescriptionPopup';
 
 
-const SavedMealList = styled.div`
+export const SavedMealList = styled.div`
   display: grid; 
   grid-template-columns: repeat(2, 1fr);
   grid-gap: 1rem; 
@@ -23,8 +23,7 @@ const SavedMealList = styled.div`
   }
 `
 
-const ItemWrapper = styled.div`
-
+export const ItemWrapper = styled.div`
   display: flex;
   justify-content: center;
 `

@@ -9,7 +9,8 @@ export interface Ingredient {
 }
 // Describes meals that our database stores
 export interface UserCustomMeal {
-    id: number;
+    id?: number;
+    image: string;
     name: string;
     area: string;
     category: string;
@@ -79,10 +80,14 @@ class UserService extends BaseService {
             return err.response
         }
     }
-    public async AddCustomMeal(name: string): Promise<AxiosResponse<any>|undefined> {
-        const url = `stored-ingredients/add/${name}`;
+    public async AddCustomMeal(meal: UserCustomMeal): Promise<AxiosResponse<any>|undefined> {
+        const url = `meals/custom/add`;
         try {
-            const data = await this.$http.post(url);
+            const data = await this.$http.post(url,JSON.stringify(meal), {
+                headers: {
+                    'Content-Type': 'application/json',
+                }
+            });
             return data;
         }
         catch (error: any | AxiosError) {
@@ -103,6 +108,17 @@ class UserService extends BaseService {
     }
     public async DeleteIngredient(name: string): Promise<AxiosResponse<any>|undefined> {
         const url = `stored-ingredients/delete/${name}`;
+        try {
+            const data = await this.$http.delete(url);
+            return data;
+        }
+        catch (error: any | AxiosError) {
+            const err = error as AxiosError;
+            return err.response
+        }
+    }
+    public async DeleteCustomMeal(mealId: string): Promise<AxiosResponse<any>|undefined> {
+        const url = `meals/custom/delete/${mealId}`;
         try {
             const data = await this.$http.delete(url);
             return data;

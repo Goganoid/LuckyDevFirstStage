@@ -7,7 +7,8 @@ import { type Meal } from 'src/api/mealdb.service';
 import { isLoggedIn } from 'src/utils/storage';
 import styled from 'styled-components';
 import { PopupYtLink } from './Cards';
-import { UserApi} from 'src/api/user.service';
+import { UserApi } from 'src/api/user.service';
+import ImagePlaceholder from '../assets/images/img-placeholder.png';
 export type MealDescriptionPopupProps = {
     show: boolean,
     handleClose: () => void,
@@ -28,7 +29,7 @@ export function MealDescriptionPopup(
     var ingredients = [];
     for (let i = 1; i <= 20; i++){
         const ingredient: string = (curMeal as any)[`strIngredient${i}`];
-        if (ingredient !== null && ingredient!=="") {
+        if (ingredient !== null && ingredient!=="" && ingredient!==undefined) {
             const measure: string = (curMeal as any)[`strMeasure${i}`];
             ingredients.push(
                 <Row key={i}>
@@ -49,7 +50,7 @@ export function MealDescriptionPopup(
         </Modal.Header>
         <Modal.Body className='show-grid'>
             <div className='modal-div'>
-                <div><img src={curMeal.strMealThumb} alt="" className='popup-image' /></div>
+                <div><img src={curMeal.strMealThumb==='' ? ImagePlaceholder : curMeal.strMealThumb} alt="" className='popup-image' /></div>
                 <div>
                     <div className='info'><span>Category: {curMeal?.strCategory || 'none'}</span></div>
                     <div className='info'><span>Area: {curMeal?.strArea || 'none'}</span></div>
@@ -67,7 +68,7 @@ export function MealDescriptionPopup(
             </div>
         </Modal.Body>
         <Modal.Footer>
-            {isLoggedIn() &&
+            {isLoggedIn() && curMeal.custom!==true &&
                 <Button variant="primary" onClick={() => {
                     UserApi.SaveMeal(curMeal.idMeal);
                     handleClose();

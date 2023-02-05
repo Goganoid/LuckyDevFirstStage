@@ -1,12 +1,17 @@
-import { useState } from 'react';
+import { AxiosError } from 'axios';
+import { useContext, useState, type ChangeEvent } from 'react';
 import { Col, Row } from 'react-bootstrap';
 import Button from 'react-bootstrap/Button';
 import Container from 'react-bootstrap/Container';
 import Modal from 'react-bootstrap/Modal';
 import Select from 'react-select';
+import { toast } from 'react-toastify';
+import { UserApi, type UserCustomMeal } from 'src/api/user.service';
 import { areaOptions, categoryOptions, convertToFilterList, ingredientOptions } from 'src/config/constants';
+import { errorToastOptions, successToastOptions } from 'src/config/toastify.config';
+import { isFileImage } from 'src/utils/isFileImage';
 import styled from 'styled-components';
-
+import { UserContext } from 'src/pages/Userpage';
 export type MealDescriptionPopupProps = {
     show: boolean,
     handleClose: () => void,
@@ -16,53 +21,19 @@ const Instructions = styled.span`
     white-space: pre-wrap;
 `
 
-const Input = ({name}) => {
-
-    const [measure, setMeasure] = useState('');
-
-    function measureChange(e: any) {
-        setMeasure(e.target.value);
-    }
-
-    return (
-    <div className='ingredient-wrapper'>
-        <span>{name}</span>
-        <input placeholder="Your quantities here" defaultValue={measure} onChange={measureChange} />;
-    </div>
-    )
-};
 
 export function CreateRecipePopup({ show, handleClose }: MealDescriptionPopupProps) {
-
-    function getAllI() {
-        const allWithClass = Array.from(
-            document.getElementsByClassName('ingredient-wrapper')
-        );
-        console.log(allWithClass);
-        allWithClass.forEach(e => {
-            console.log(`name: ${e.children[0].innerHTML}; measure: ${e.children[1].defaultValue}`);
-            // setNewRecipe({
-            //     ...newRecipe,
-            //     ...ingredients, [{name: e.children[0].innerHTML, measure: e.children[1].defaultValue}]
-            // });
-        });
-    };
-
-    const [inputList, setInputList] = useState([]);
-    const onAddBtnClick = (event: any) => {
-        setInputList(inputList.concat(<Input key={inputList.length} name={curIngredient} />));
-    };
-
-    const [curIngredient, setCurIngredient] = useState('');
-    const [newRecipe, setNewRecipe] = useState({
+    const userContext = useContext(UserContext)!;
+    const [newRecipe, setNewRecipe] = useState<UserCustomMeal>({
         name: '',
-        imgSource: '',
-        linkSource: '',
+        image: '',
         area: '',
         category: '',
-        ingredients: [] as any[],
+        ingredients: [],
         instructions: ''
     });
+
+    const [selectedIngredient, setSelectedIngredient] = useState('');
 
     function handleInputsChange(e: any) {
         const value = e.target.value;
@@ -85,17 +56,74 @@ export function CreateRecipePopup({ show, handleClose }: MealDescriptionPopupPro
             category: value
         });
     };
-    function handleIngradientsChange(e: any) {
-        // const newIngradients = [];
-        // for (let i = 0; i < e.length; i++) {
-        //     newIngradients.push(e[i].value);
-        // }
-        // setNewRecipe({
-        //     ...newRecipe,
-        //     ingredients: newIngradients
-        // });
-        setCurIngredient(e.value);
+
+
+
+    const handleAddIngredient = () => {
+        setNewRecipe({
+            ...newRecipe,
+            ingredients: [...newRecipe.ingredients, { name: selectedIngredient, measure: '' }]
+        })
+    };
+
+    const handleRemoveIngredient = (idx: number) => {
+        let copy = [...newRecipe.ingredients];
+        copy.splice(idx, 1);
+        setNewRecipe({ ...newRecipe, ingredients: copy });
     }
+
+    const handleChangeMeasure = (idx: number, value: string) => {
+        let copy = [...newRecipe.ingredients];
+        copy[idx].measure = value;
+        setNewRecipe({ ...newRecipe, ingredients: copy });
+    }
+
+    const handleAddImage = (event: ChangeEvent<HTMLInputElement>) => {
+        if (event.target.files != null && event.target.files.length > 0) {
+            let file = event.target.files[0];
+            if (file.size > 2_000_000) {
+                toast.error("Image size must less than 2Mb", errorToastOptions);
+                event.target.files = null;
+                return;
+            }
+            else if (!isFileImage(file)) {
+                toast.error("File is not an image", errorToastOptions);
+                event.target.files = null;
+                return;
+            }
+            else {
+                let reader = new FileReader();
+                reader.onloadend = () => {
+                    setNewRecipe({
+                        ...newRecipe,
+                        image: reader.result! as string
+                    })
+                }
+                reader.readAsDataURL(file);
+            }
+        }
+    }
+
+
+
+    const Selector = <div className='d-inline-flex ms-3'>
+        <Select
+            options={convertToFilterList(ingredientOptions)}
+            isClearable={true}
+            isSearchable={true}
+            onChange={(newValue, { action }) => {
+                if (action === 'select-option')
+                    setSelectedIngredient(newValue?.value!);
+                if (action === 'deselect-option' || action === 'clear')
+                    setSelectedIngredient('');
+            }} />
+        <Button disabled={
+            selectedIngredient === '' ||
+            newRecipe.ingredients.some(i => i.name === selectedIngredient) ||
+            newRecipe.ingredients.length>=20} onClick={handleAddIngredient}>Add</Button>
+    </div>;
+
+
 
     return <Modal show={show} onHide={handleClose} size="lg" className='popup'>
         <Modal.Header closeButton>
@@ -115,10 +143,11 @@ export function CreateRecipePopup({ show, handleClose }: MealDescriptionPopupPro
                     <div className='info'><span>Include a link to a photo of your dish.</span>
                         <input
                             name="imgSource"
-                            defaultValue={newRecipe.imgSource}
-                            type="text"
-                            onChange={handleInputsChange}>
+                            type="file"
+                            onChange={handleAddImage}
+                        >
                         </input>
+                        {newRecipe.image !== '' && <img width={180} src={newRecipe.image} alt="" />}
                     </div>
                     <div className='info'><span>What category does your recipe belong to?</span>
                         <Select
@@ -136,40 +165,25 @@ export function CreateRecipePopup({ show, handleClose }: MealDescriptionPopupPro
                             onChange={handleAreaChange}
                         />
                     </div>
-                    <div className='info'><span>Include a link to the video guide for your recipe. (optional)</span>
-                        <input
-                            name="linkSource"
-                            defaultValue={newRecipe.linkSource}
-                            type="text"
-                            onChange={handleInputsChange}>
-                        </input>
-                    </div>
                 </div>
             </div>
             <h3>List all the ingredients you need and their quantities</h3>
             <Container className='modal-div info'>
                 <div className='info'><span>Ingredients:</span>
                     <Container className='d-flex flex-column'>
-                        <Row>
-                            <Col>Ingredient 1</Col>
-                            <Col><input type="text" value="450g" /></Col>
-                            <Col>X</Col>
-                        </Row>
-                        <Row>
-                            <Col>Ingredient 2</Col>
-                            <Col><input type="text" value="450g" /> </Col>
-                            <Col>X</Col>
-                        </Row>
-                        {inputList}
+                        {newRecipe.ingredients.length === 0 && <p>Start adding ingredients to your recipe.</p>}
+                        {newRecipe.ingredients.map((ingredient, idx) => (
+                            <Row key={idx} className='mb-3'>
+                                <Col>{ingredient.name}</Col>
+                                <Col><input type="text" value={ingredient.measure || ''}
+                                    onChange={(event) => handleChangeMeasure(idx, event.target.value)} /></Col>
+                                <Col><Button variant='primary'
+                                    onClick={() => handleRemoveIngredient(idx)}>Remove</Button></Col>
+                            </Row>
+                        ))}
                     </Container>
                     <div className='d-flex w-100'>
-                        <Select
-                            options={convertToFilterList(ingredientOptions)}
-                            isClearable={true}
-                            isSearchable={true}
-                            onChange={handleIngradientsChange}
-                        />
-                        <Button onClick={onAddBtnClick}>Add</Button>
+                        {Selector}
                     </div>
                 </div>
 
@@ -190,13 +204,41 @@ export function CreateRecipePopup({ show, handleClose }: MealDescriptionPopupPro
                 Close
             </Button>
             <Button
-            variant="primary"
-            onClick={() => {
-                getAllI();
-                console.log(newRecipe);
-                handleClose();
-            }} 
-            className='Bootstrap-Button'>
+                variant="primary"
+                onClick={() => {
+                    console.log(newRecipe);
+                    if (newRecipe.name === '') {
+                        toast.error(`Name is empty`, errorToastOptions);
+                        return;
+                    }
+                    UserApi.AddCustomMeal(newRecipe).then(result => {
+                        console.log(result);
+                        if (result?.status === 200) {
+                            toast.success("Recipe added", successToastOptions);
+                            userContext.setUserProfile({
+                                info: userContext.info,
+                                ingredients: userContext.ingredients,
+                                meals: {
+                                  userMeals: [...userContext.meals.userMeals,result.data],
+                                  savedMealsIds:userContext.meals.savedMealsIds
+                                }
+                              })
+                        }
+                        else {
+                            const errorMessage = result?.data;
+                            if (errorMessage)
+                                toast.error(`Error:${errorMessage}`, errorToastOptions);
+                            else
+                                toast.error(`Error:${result?.status}`, errorToastOptions);
+                        }
+                        handleClose();
+                    }).catch((error: AxiosError<any>) => {
+                        console.log(error);
+
+                    })
+                    
+                }}
+                className='Bootstrap-Button'>
                 Save Changes
             </Button>
         </Modal.Footer>
