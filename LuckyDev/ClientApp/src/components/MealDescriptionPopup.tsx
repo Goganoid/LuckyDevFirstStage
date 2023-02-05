@@ -58,7 +58,7 @@ export function MealDescriptionPopup(
                     {curMeal.strYoutube && <div className='info' style={{ overflow: 'hidden' }}><span>Youtube: <PopupYtLink href={curMeal.strYoutube}>{curMeal.strYoutube || 'none'}</PopupYtLink></span></div>}
                 </div>
             </div>
-            {ingredients.length != 0 && <><h3>Ingredients</h3>
+            {ingredients.length !== 0 && <><h3>Ingredients</h3>
                 <Container className='modal-ingredients info'>
                     {ingredients}
                 </Container></>}

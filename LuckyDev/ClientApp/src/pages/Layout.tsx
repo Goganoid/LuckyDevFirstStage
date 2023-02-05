@@ -8,6 +8,7 @@ const Main = styled.div`
   justify-content: space-between;
   align-items: stretch;
   height: 100%;
+  width: 100%;
 `;
 
 const Layout: FunctionComponent<PropsWithChildren> = () => (
