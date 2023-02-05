@@ -8,6 +8,11 @@ const ImgWrapper = styled.img`
     margin-left: auto;
     margin-right: auto;
     width: 50%;
+    @media screen and (max-width: 420px) {
+        &{
+            width: 100%;
+        }
+    }
 `;
 
 export default function Logoutmain() {
@@ -24,7 +29,7 @@ const logout = () => {
 return (
     <MDBContainer fluid className='d-flex align-items-center justify-content-center bg-image'>
     <div className='mask gradient-custom-3'></div>
-    <MDBCard className='m-5' style={{ maxWidth: '600px' }}>
+    <MDBCard className='m-5 MDBCard'>
         <MDBCardBody className='px-5'>
         <ImgWrapper src={logoutImg} alt="logout picture" />
         <h3 className="text-uppercase text-center mb-5">Oh no! You are leaving... Are you sure?</h3>

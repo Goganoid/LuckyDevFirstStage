@@ -24,15 +24,16 @@ const Header: React.FC<Props> = ({ className }) => {
 
     let scrollPosition = 0;
     async function handleScroll() {
-      if (document.documentElement.scrollTop > scrollPosition) {
-        setScrollClass('StyledHeader header-scrolling');
+      if (document.documentElement.scrollTop < scrollPosition || document.documentElement.scrollTop <= 30) {
+          setScrollClass('StyledHeader');
       } else {
-        setScrollClass('StyledHeader');
+          setScrollClass('StyledHeader header-scrolling');
       }
       scrollPosition = document.documentElement.scrollTop;
     }
 
     return () => {
+      setScrollClass('StyledHeader');
       window.onscroll = null;
     };
   }, []);

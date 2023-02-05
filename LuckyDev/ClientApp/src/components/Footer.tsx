@@ -25,9 +25,10 @@ const Footer: FunctionComponent = () => (
   <StyledFooter>
     <BrandContent>
     <div>
-      <p>Проект для хакатону INT20H.
-        <br />
-        Над проектом працювала команда LuckyDev.</p> 
+      <p>
+        Project for hackathon INT20H.<br />
+        The LuckyDev team worked on the project.
+      </p> 
     </div>
     </BrandContent>
   </StyledFooter>

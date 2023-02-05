@@ -82,18 +82,27 @@ body{
 .slider {
     width: 100%;
     margin: 3%;
-    aspect-ratio: 16 / 9;
+    vertical-align: middle; 
     background-color: $background;
+    position: relative;
+    overflow: hidden;
+    border-radius: 15px;
+    box-shadow: 0px 6px 3px 1px #BEBEBE;
 }
 .slider img {
-    aspect-ratio: 16 / 9;
+    position: absolute;
+    height: 100vh;
+    width: 100%;
 }
-.button-on-slick :where(h3, .Bootstrap-Button) {
-    transform: translateY(50px);
+.button-on-slick :where(h3, .Bootstrap-Button, img) {
     transition: 0.2s;
 }
-.button-on-slick:hover :where(h3, .Bootstrap-Button) {
+.button-on-slick :where(h3, .Bootstrap-Button) {
+    transform: translateY(100%);
+}
+.button-on-slick:hover :where(h3, .Bootstrap-Button, img) {
     transform: translateY(0);
+    transform: scale(1.05, 1.05);
 }
 .button-on-slick .Bootstrap-Button {
     opacity: 0;
@@ -262,6 +271,9 @@ body{
 .olb {
     outline: 3px solid black;
 }
+.MDBCard {
+    max-width: 600px;
+}
 
 
 
@@ -289,15 +301,54 @@ body{
         }
     }
     .slider {
-        height: 200px;
+        height: 50vh;
     }
     .slider img {
-        height: 200px;
+        height: 50vh;
+    }
+    .button-on-slick :where(h3, .Bootstrap-Button) {
+        transform: translateY(200%);
+    }
+    
+    .LogoImg {
+        width: 25%;
+        transform: translateY(-10%);
+    }
+    .LogoWrapper h1 {
+        font-size: 120%;
+    }
+    
+    .carousel-container {
+        margin-bottom: 16%;
     }
 }
 
 @media screen and (max-width: 420px) {
     .LogoImg {
         width: 40px;
+    }
+    .carousel-container {
+        margin-bottom: 75%;
+    }
+    .carousel-container h3 {
+        font-size: 1em;
+    }
+    .carousel-container button {
+        font-size: 0.7em;
+        margin: 0.5em;
+    }
+    .button-on-slick :where(h3, .Bootstrap-Button, img) {
+        transition: 0s;
+    }.button-on-slick :where(h3, .Bootstrap-Button) {
+        transform: translateY(0);
+    }
+    .button-on-slick .Bootstrap-Button {
+        opacity: 1;
+    }.button-on-slick:hover :where(h3, .Bootstrap-Button, img) {
+        transform: translateY(0);
+        transform: scale(1, 1);
+    }
+    .MDBCard {
+        max-width: 100%;
     }
 }
