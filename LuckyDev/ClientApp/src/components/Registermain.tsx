@@ -9,6 +9,7 @@ import { Link } from 'react-router-dom';
 import { toast } from 'react-toastify';
 import { AuthApi } from 'src/api/auth.service';
 import { errorToastOptions } from 'src/config/toastify.config';
+import { setUserData } from 'src/utils/storage';
 
 export default function Registermain() {
   const [name1, setFirstName] = useState('');
@@ -52,7 +53,10 @@ export default function Registermain() {
       AuthApi.Register(name1, name2, email, password1).then(response => {
         console.log(response);
         if (response.status === 200) {
-           window.location.href = "login";
+          AuthApi.Login(email, password1).then(res => {
+            setUserData(res.data.token, res.data.id);
+            window.location.href = "/";
+          })
         }
       }).catch((error: AxiosError<any>) => {
         console.log(error);
