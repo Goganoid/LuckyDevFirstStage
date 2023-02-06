@@ -18,7 +18,6 @@ const Wrapper = styled.div`
   gap: 20px;
 `;
 
-
 function CustomMealToMeal(customMeal: UserCustomMeal): Meal {
   let meal = {} as Meal;
   meal.custom = true;
@@ -31,8 +30,8 @@ function CustomMealToMeal(customMeal: UserCustomMeal): Meal {
   meal.strYoutube = customMeal.youtubeUrl;
   customMeal.ingredients.forEach((ingredient, idx) => {
     if (idx >= 20) return;
-    (meal as any)[`strIngredient${idx}`] = ingredient.name;
-    (meal as any)[`strMeasure${idx}`] = ingredient.measure ?? '';
+    (meal as any)[`strIngredient${idx+1}`] = ingredient.name;
+    (meal as any)[`strMeasure${idx+1}`] = ingredient.measure ?? '';
   })
   return meal;
 }

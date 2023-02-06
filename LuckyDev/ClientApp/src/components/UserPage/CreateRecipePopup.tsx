@@ -1,4 +1,3 @@
-import { AxiosError } from 'axios';
 import { useContext, useState, type ChangeEvent } from 'react';
 import { Col, Row } from 'react-bootstrap';
 import Button from 'react-bootstrap/Button';
@@ -12,15 +11,15 @@ import { errorToastOptions, successToastOptions } from 'src/config/toastify.conf
 import { isFileImage } from 'src/utils/isFileImage';
 import styled from 'styled-components';
 import { UserContext } from 'src/pages/Userpage';
+
 export type MealDescriptionPopupProps = {
     show: boolean,
     handleClose: () => void,
-}
+};
 
 const Instructions = styled.span`
     white-space: pre-wrap;
-`
-
+`;
 
 export function CreateRecipePopup({ show, handleClose }: MealDescriptionPopupProps) {
     const userContext = useContext(UserContext)!;
@@ -57,8 +56,6 @@ export function CreateRecipePopup({ show, handleClose }: MealDescriptionPopupPro
             category: value
         });
     };
-
-
 
     const handleAddIngredient = () => {
         setNewRecipe({
@@ -105,8 +102,6 @@ export function CreateRecipePopup({ show, handleClose }: MealDescriptionPopupPro
         }
     }
 
-
-
     const Selector = <div className='d-inline-flex ms-3'>
         <Select
             options={convertToFilterList(ingredientOptions)}
@@ -123,8 +118,6 @@ export function CreateRecipePopup({ show, handleClose }: MealDescriptionPopupPro
             newRecipe.ingredients.some(i => i.name === selectedIngredient) ||
             newRecipe.ingredients.length>=20} onClick={handleAddIngredient}>Add</Button>
     </div>;
-
-
 
     return <Modal show={show} onHide={handleClose} size="lg" className='popup'>
         <Modal.Header closeButton>
@@ -235,7 +228,10 @@ export function CreateRecipePopup({ show, handleClose }: MealDescriptionPopupPro
                                   userMeals: [...userContext.meals.userMeals,result.data],
                                   savedMealsIds:userContext.meals.savedMealsIds
                                 }
-                              })
+                            });
+                            setNewRecipe({name: '', image: '', area: '', category: '', 
+                                ingredients: [], instructions: '', youtubeUrl: '',
+                            });
                         }
                         else {
                             const errorMessage = result?.data;
@@ -245,11 +241,7 @@ export function CreateRecipePopup({ show, handleClose }: MealDescriptionPopupPro
                                 toast.error(`Error:${result?.status}`, errorToastOptions);
                         }
                         handleClose();
-                    }).catch((error: AxiosError<any>) => {
-                        console.log(error);
-
                     })
-                    
                 }}
                 className='Bootstrap-Button'>
                 Add

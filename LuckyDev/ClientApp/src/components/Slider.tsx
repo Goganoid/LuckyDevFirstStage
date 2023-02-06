@@ -1,4 +1,3 @@
-//@ts-nocheck
 import { useEffect, useState, type FunctionComponent } from 'react';
 import Button from 'react-bootstrap/Button';
 import Carousel from 'react-bootstrap/Carousel';
@@ -12,15 +11,14 @@ const SliderImage = styled.img`
     width: 100%;
     height: 100%;
     object-fit: cover;
-`
+`;
 const ItemStyle = {
     height: '500px'
-}
+};
 type SliderStorage = {
     items: Meal[],
     last_update: string
-}
-
+};
 
 const Slider: FunctionComponent = () => {
 
@@ -31,7 +29,7 @@ const Slider: FunctionComponent = () => {
         for (let i = 1; i <= 20; i++) {
             ingradientList.push(`strIngredient${i}`)
         }
-    }
+    };
     findIngradients();
 
     let measureList: string[] = [];
@@ -39,7 +37,7 @@ const Slider: FunctionComponent = () => {
         for (let i = 1; i <= 20; i++) {
             measureList.push(`strMeasure${i}`)
         }
-    }
+    };
     findMeasure();
 
     const [show, setShow] = useState(false);

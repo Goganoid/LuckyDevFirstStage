@@ -1,17 +1,14 @@
-//@ts-nocheck
 import { useEffect, useState, type FunctionComponent } from 'react';
 import Button from 'react-bootstrap/Button';
 import { Container } from 'react-bootstrap';
 import { type Meal } from 'src/api/mealdb.service';
-import { MealsFilter, MealsLoader } from 'src/api/meals_loader.service';
+import { type MealsFilter, MealsLoader } from 'src/api/meals_loader.service';
 import styled from 'styled-components';
 import { Filter } from './Filter';
 import { itemsPerLoad } from '../config/constants';
 import BounceLoader from "react-spinners/BounceLoader";
 import { MealDescriptionPopup } from './MealDescriptionPopup';
 import { MealCard } from './Card';
-
-
 
 const MealsList = styled.div`
     margin-top: 35px;
@@ -25,6 +22,7 @@ const MealsList = styled.div`
 
 export const PopupYtLink = styled.a`
 `;
+
 const Cards: FunctionComponent = () => {
 
     const [meals, setMeals] = useState<Meal[]>([]);
@@ -38,10 +36,7 @@ const Cards: FunctionComponent = () => {
         area: '',
         category: '',
         ingredients: []
-    })
-
-
-
+    });
 
     const [show, setShow] = useState(false);
     const handleClose = () => setShow(false);
@@ -53,12 +48,12 @@ const Cards: FunctionComponent = () => {
     }
     useEffect(() => {
         setShowLoadButton(!MealsLoader.IsEnd() && !loading);
-    }, [meals, loading])
+    }, [meals, loading]);
     useEffect(() => {
         MealsLoader.TakeNext(itemsPerLoad, searchFilters).then(result => {
             if (result != null) setMeals(result)
             setLoading(false);
-        })
+        });
     // eslint-disable-next-line react-hooks/exhaustive-deps
     }, []);
     const meal = meals.map((m, idx) =>
@@ -106,7 +101,3 @@ const Cards: FunctionComponent = () => {
 }
 
 export default Cards;
-
-
-
-

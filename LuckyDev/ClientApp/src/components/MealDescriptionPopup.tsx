@@ -18,7 +18,7 @@ export type MealDescriptionPopupProps = {
 
 const Instructions = styled.span`
     white-space: pre-wrap;
-`
+`;
 
 const IngredientSpan = styled.span`
     padding-left: 3%;

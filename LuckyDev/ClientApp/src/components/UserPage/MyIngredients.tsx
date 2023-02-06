@@ -7,7 +7,6 @@ import { UserContext } from 'src/pages/Userpage';
 import styled from 'styled-components';
 import { IngredientsTable } from '../IngredientsTable/IngredientsTable';
 
-
 const IngredientsWrapper = styled.div`
   display: flex;
   flex-direction: column;

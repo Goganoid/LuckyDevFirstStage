@@ -11,7 +11,6 @@ export const IngredientsTable = () => {
 
     const handleRemove = (ingredientName: string) => {
         UserApi.DeleteIngredient(ingredientName).then(result => {
-            console.log(result);
             if (result?.status === 200) {
               userContext?.setUserProfile({
                 info: userContext.info,
