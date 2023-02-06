@@ -1,8 +1,10 @@
 import { useContext, useEffect, useState, type FunctionComponent } from 'react';
 import { Container } from 'react-bootstrap';
+import { toast } from 'react-toastify';
 import { MealDbApi, type Meal } from 'src/api/mealdb.service';
 import { UserApi } from 'src/api/user.service';
 import { LoadingSpinner } from 'src/components/LoadingSpinner';
+import { successToastOptions } from 'src/config/toastify.config';
 import { UserContext } from 'src/pages/Userpage';
 import styled from 'styled-components';
 import { MealCard } from '../Card';
@@ -55,38 +57,41 @@ const SavedRecipes: FunctionComponent = () => {
     <>
       <h2>Saved Recipes: </h2>
       <MealDescriptionPopup
-                        show={show}
-                        handleClose={handleClose}
-                        curMeal={curMeal}
-                    />
+        show={show}
+        handleClose={handleClose}
+        curMeal={curMeal}
+      />
       <Container>
         <SavedMealList>
           {loading
             ? <LoadingSpinner />
             : savedMeals.length === 0
               ? <p>Empty :(</p>
-              : savedMeals.map((m,idx) => {
-              return <ItemWrapper key={idx}>
-                <MealCard
-                  key={m.idMeal}
-                  meal={m}
-                  setCurMeal={setCurMeal}
-                  setShow={setShow}
-                  onRemove={(meal) => {
-                    UserApi.DeleteSavedMeal(meal.idMeal).then(result => {
-                      if(result?.status===200) userContext.setUserProfile({
-                        info: userContext.info,
-                        ingredients: userContext.ingredients,
-                        meals: {
-                          userMeals: userContext.meals.userMeals,
-                          savedMealsIds:userContext.meals.savedMealsIds.filter(id=>id!==meal.idMeal)
+              : savedMeals.map((m, idx) => {
+                return <ItemWrapper key={idx}>
+                  <MealCard
+                    key={m.idMeal}
+                    meal={m}
+                    setCurMeal={setCurMeal}
+                    setShow={setShow}
+                    onRemove={(meal) => {
+                      UserApi.DeleteSavedMeal(meal.idMeal).then(result => {
+                        toast.info("Deleting...", {...successToastOptions, autoClose:1500});
+                        if (result?.status === 200) {
+                          userContext.setUserProfile({
+                            info: userContext.info,
+                            ingredients: userContext.ingredients,
+                            meals: {
+                              userMeals: userContext.meals.userMeals,
+                              savedMealsIds: userContext.meals.savedMealsIds.filter(id => id !== meal.idMeal)
+                            }
+                          })
                         }
                       })
-                    })
-                  }}
-                />
-              </ItemWrapper>
-            })
+                    }}
+                  />
+                </ItemWrapper>
+              })
           }
         </SavedMealList>
       </Container>

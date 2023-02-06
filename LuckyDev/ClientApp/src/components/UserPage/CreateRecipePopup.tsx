@@ -225,6 +225,7 @@ export function CreateRecipePopup({ show, handleClose }: MealDescriptionPopupPro
                         toast.error(`Name is empty`, errorToastOptions);
                         return;
                     }
+                    console.log(newRecipe);
                     UserApi.AddCustomMeal(newRecipe).then(result => {
                         if (result?.status === 200) {
                             toast.success("Recipe added", successToastOptions);
