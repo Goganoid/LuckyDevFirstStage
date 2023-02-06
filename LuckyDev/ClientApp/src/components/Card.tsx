@@ -88,7 +88,6 @@ export type MealCardProps = {
 }
 
 export function MealCard({ meal, setCurMeal, setShow, onRemove }: MealCardProps): JSX.Element {
-    // console.log(meal);
     const matches = (meal as any).matches ?? 0;
     return <ItemWrapper className="meal-tyles">
         {onRemove &&

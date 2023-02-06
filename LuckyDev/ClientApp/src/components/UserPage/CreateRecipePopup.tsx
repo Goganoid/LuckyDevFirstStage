@@ -1,4 +1,3 @@
-import { AxiosError } from 'axios';
 import { useContext, useState, type ChangeEvent } from 'react';
 import { Col, Row } from 'react-bootstrap';
 import Button from 'react-bootstrap/Button';
@@ -246,11 +245,7 @@ export function CreateRecipePopup({ show, handleClose }: MealDescriptionPopupPro
                                 toast.error(`Error:${result?.status}`, errorToastOptions);
                         }
                         handleClose();
-                    }).catch((error: AxiosError<any>) => {
-                        console.log(error);
-
                     })
-                    
                 }}
                 className='Bootstrap-Button'>
                 Add
