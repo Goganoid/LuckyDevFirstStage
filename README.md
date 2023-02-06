@@ -19,6 +19,6 @@ Frontend: https://recipewikifront.azurewebsites.net/
 
 Backend: https://recipewiki.azurewebsites.net/swagger
 
-Please, note that Azure has to warm up the server on the first request so the response take 30-40 seconds. If you encounter any problems, DM me in Telegram [@yokano](https://t.me/yokano).
+Please, note that Azure has to warm up the server on the first request so the response may take 30-40 seconds. If you encounter any problems, DM me in Telegram [@yokano](https://t.me/yokano).
 You can run the local development version using instructions inside the `LuckyDev` folder.
 
