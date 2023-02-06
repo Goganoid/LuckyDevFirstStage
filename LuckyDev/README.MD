@@ -1,5 +1,5 @@
 ## Where is the client?
-Open ClientApp folder and follow instruction inside it.
+Open ClientApp folder and follow instructions inside it.
 
 ## Starting the server
 
