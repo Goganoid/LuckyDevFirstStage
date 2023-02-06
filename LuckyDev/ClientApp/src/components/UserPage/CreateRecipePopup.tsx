@@ -225,7 +225,6 @@ export function CreateRecipePopup({ show, handleClose }: MealDescriptionPopupPro
                         toast.error(`Name is empty`, errorToastOptions);
                         return;
                     }
-                    console.log(newRecipe);
                     UserApi.AddCustomMeal(newRecipe).then(result => {
                         if (result?.status === 200) {
                             toast.success("Recipe added", successToastOptions);
@@ -236,7 +235,10 @@ export function CreateRecipePopup({ show, handleClose }: MealDescriptionPopupPro
                                   userMeals: [...userContext.meals.userMeals,result.data],
                                   savedMealsIds:userContext.meals.savedMealsIds
                                 }
-                              })
+                            });
+                            setNewRecipe({name: '', image: '', area: '', category: '', 
+                                ingredients: [], instructions: '', youtubeUrl: '',
+                            });
                         }
                         else {
                             const errorMessage = result?.data;
