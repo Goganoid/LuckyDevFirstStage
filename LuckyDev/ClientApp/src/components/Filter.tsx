@@ -22,7 +22,6 @@ export const FilterMenu = styled.div`
     border-radius: 30px;
 `;
 
-
 export type FilterProps = {
     setSearchFilters: React.Dispatch<React.SetStateAction<MealsFilter>>,
     searchFilters: MealsFilter,
@@ -55,7 +54,6 @@ export function Filter({ setSearchFilters, searchFilters, setMeals, setLoading }
                         name: event.target.value
                     })
                 }}></input>
-
             <h5>Category:</h5>
             <Select
                 className='filter-item'
@@ -74,7 +72,6 @@ export function Filter({ setSearchFilters, searchFilters, setMeals, setLoading }
                             category: ''
                         });
                 }} />
-
             <h5>Area:</h5>
             <Select
                 className='filter-item'
@@ -93,7 +90,6 @@ export function Filter({ setSearchFilters, searchFilters, setMeals, setLoading }
                             area: ''
                         });
                 }} />
-
             <h5>Ingredients:</h5>
             <Select
                 className='filter-item'
@@ -115,7 +111,6 @@ export function Filter({ setSearchFilters, searchFilters, setMeals, setLoading }
                         });
                     }
                 }} />
-
             <Button className='Bootstrap-Button d-flex mt-4 mx-auto w-90%' onClick={() => {
                 setLoading(true);
                 MealsLoader.Reset();

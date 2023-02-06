@@ -48,18 +48,17 @@ export const RecipeName = styled.span`
     }
 `;
 
-
 export const ItemWrapper = styled.div`
     position: relative;
-     flex: 30%;
-     flex-grow: 0;
-     display: flex;
-     /* justify-content: center; */
-     margin-bottom: 36px;
-     padding: 20px;
-     background-color: #D6D6D6;
-     border-radius: 15px;
-     transition: 0.2s;
+    flex: 30%;
+    flex-grow: 0;
+    display: flex;
+    /* justify-content: center; */
+    margin-bottom: 36px;
+    padding: 20px;
+    background-color: #D6D6D6;
+    border-radius: 15px;
+    transition: 0.2s;
     &:hover {
         transform: translateY(-6px);
         box-shadow: 0px 6px 3px 1px #BEBEBE;
@@ -73,7 +72,7 @@ const CloseWrapper = styled.div`
 
 
 export const Item = styled.div`
-position: relative;
+    position: relative;
     display: flex;
     justify-content: space-between;
     gap: 20px;

@@ -10,7 +10,6 @@ import styled from 'styled-components';
 import { MealCard } from '../Card';
 import { MealDescriptionPopup } from '../MealDescriptionPopup';
 
-
 export const SavedMealList = styled.div`
   display: grid; 
   grid-template-columns: repeat(2, 1fr);
@@ -23,12 +22,12 @@ export const SavedMealList = styled.div`
       align-items: center;
     }
   }
-`
+`;
 
 export const ItemWrapper = styled.div`
   display: flex;
   justify-content: center;
-`
+`;
 
 const SavedRecipes: FunctionComponent = () => {
   const userContext = useContext(UserContext);

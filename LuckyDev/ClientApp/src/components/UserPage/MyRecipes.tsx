@@ -18,7 +18,6 @@ const Wrapper = styled.div`
   gap: 20px;
 `;
 
-
 function CustomMealToMeal(customMeal: UserCustomMeal): Meal {
   let meal = {} as Meal;
   meal.custom = true;

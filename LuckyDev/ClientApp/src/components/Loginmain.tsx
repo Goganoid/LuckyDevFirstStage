@@ -1,7 +1,4 @@
-import {
-  MDBCard,
-  MDBCardBody, MDBContainer, MDBInput
-} from 'mdb-react-ui-kit';
+import { MDBCard, MDBCardBody, MDBContainer, MDBInput } from 'mdb-react-ui-kit';
 import { useState } from 'react';
 import { Button } from 'react-bootstrap';
 import { Link } from 'react-router-dom';
@@ -16,11 +13,11 @@ export default function Loginmain() {
 
   const handleEmail = (e: any) => {
     setEmail(e.target.value);
-  }
+  };
 
   const handlePassword = (e: any) => {
     setPassword(e.target.value);
-  }
+  };
 
   const handleSubmit = (e: any) => {
     e.preventDefault()

@@ -1,8 +1,5 @@
 import { AxiosError } from 'axios';
-import {
-  MDBCard,
-  MDBCardBody, MDBContainer, MDBInput
-} from 'mdb-react-ui-kit';
+import { MDBCard, MDBCardBody, MDBContainer, MDBInput } from 'mdb-react-ui-kit';
 import { useState } from 'react';
 import { Button } from 'react-bootstrap';
 import { Link } from 'react-router-dom';
@@ -18,33 +15,26 @@ export default function Registermain() {
   const [password1, setPassword1] = useState('');
   const [password2, setPassword2] = useState('');
 
-
-  // Handling the first name change
   const handleFirstName = (e: any) => {
     setFirstName(e.target.value);
   };
 
-  // Handling the second name change
   const handleSecondName = (e: any) => {
     setSecondName(e.target.value);
   };
 
-  // Handling the email change
   const handleEmail = (e: any) => {
     setEmail(e.target.value);
   };
 
-  // Handling the password1 change
   const handlePassword1 = (e: any) => {
     setPassword1(e.target.value);
   };
 
-  // Handling the password2 change
   const handlePassword2 = (e: any) => {
     setPassword2(e.target.value);
   };
 
-  // Handling the form submission
   const handleSubmit = (e: any) => {
     e.preventDefault()
     if (password1 !== password2) {
@@ -84,5 +74,3 @@ export default function Registermain() {
     </MDBContainer>
   )
 };
-
-
