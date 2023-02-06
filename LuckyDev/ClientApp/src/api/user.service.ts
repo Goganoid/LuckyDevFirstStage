@@ -42,6 +42,19 @@ class UserService extends BaseService {
     public static get Instance(): UserService {
         return this._sampleService || (this._sampleService = new this(this._controller));
     }
+
+    public async Ping(): Promise<AxiosResponse<any> | undefined>{
+        const url = `ping`;
+        try {
+            const data = await this.$http.get(url);
+            return data;
+        }
+        catch (error: any | AxiosError) {
+            const err = error as AxiosError;
+            return err.response;
+        }
+    }
+
     public async GetUserIngredients(): Promise<AxiosResponse<Ingredient[]>>{
         const url = `stored-ingredients/get`;
         const data = await this.$http.get<Ingredient[]>(url);

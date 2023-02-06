@@ -36,7 +36,12 @@ public class UsersController : ControllerBase
         _context = context;
         _appSettings = appSettings.Value;
     }
-
+    [AllowAnonymous]
+    [HttpGet("ping")]
+    public ActionResult Ping()
+    {
+        return Ok("Pong");
+    }
     /// <summary>
     /// Add mealId received from the MealDB API to user's saved meals
     /// </summary>
@@ -86,7 +91,8 @@ public class UsersController : ControllerBase
         var meal = _mapper.Map<CustomMeal>(mealRequestDTO);
         user.UserMeals.Add(meal);
         await _context.SaveChangesAsync();
-        return Ok(_mapper.Map<CustomMealResponseDTO>(meal));
+        var response = _mapper.Map<CustomMealResponseDTO>(meal);
+        return Ok(response);
     }
 
     /// <summary>
