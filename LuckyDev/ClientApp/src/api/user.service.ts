@@ -30,7 +30,7 @@ export interface UserInformation{
         email: string
 }
 
-
+// Service that handles all requests connected with user actions
 class UserService extends BaseService {
     private static _sampleService: UserService;
     private static _controller: string = 'Users';

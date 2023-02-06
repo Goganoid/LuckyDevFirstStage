@@ -7,8 +7,8 @@ import { LoadingSpinner } from 'src/components/LoadingSpinner';
 import { successToastOptions } from 'src/config/toastify.config';
 import { UserContext } from 'src/pages/Userpage';
 import styled from 'styled-components';
-import { MealCard } from '../Card';
-import { MealDescriptionPopup } from '../MealDescriptionPopup';
+import { MealCard } from '../Catalogue/Card';
+import { MealDescriptionPopup } from '../Catalogue/MealDescriptionPopup';
 
 export const SavedMealList = styled.div`
   display: grid; 

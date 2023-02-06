@@ -1,5 +1,5 @@
 import { Fragment, type FunctionComponent, type PropsWithChildren } from 'react';
-import Logoutmain from 'src/components/Logoutmain';
+import Logoutmain from '../components/Auth/Logoutmain';
 
 const Logout: FunctionComponent<PropsWithChildren> = () => (
   <Fragment>

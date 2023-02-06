@@ -8,7 +8,7 @@ import { isLoggedIn } from 'src/utils/storage';
 import styled from 'styled-components';
 import { PopupYtLink } from './Cards';
 import { UserApi } from 'src/api/user.service';
-import ImagePlaceholder from '../assets/images/img-placeholder.png';
+import ImagePlaceholder from '../../assets/images/img-placeholder.png';
 import { Form } from 'react-bootstrap';
 export type MealDescriptionPopupProps = {
     show: boolean,

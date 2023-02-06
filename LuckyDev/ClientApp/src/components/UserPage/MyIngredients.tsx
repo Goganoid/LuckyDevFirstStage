@@ -5,7 +5,7 @@ import { UserApi, type Ingredient } from 'src/api/user.service';
 import { convertToFilterList, ingredientOptions } from 'src/config/constants';
 import { UserContext } from 'src/pages/Userpage';
 import styled from 'styled-components';
-import { IngredientsTable } from '../IngredientsTable';
+import { IngredientsTable } from './IngredientsTable';
 
 const IngredientsWrapper = styled.div`
   display: flex;

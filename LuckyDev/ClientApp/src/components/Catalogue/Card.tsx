@@ -3,7 +3,7 @@ import Button from 'react-bootstrap/Button';
 import { type Meal } from 'src/api/mealdb.service';
 import styled from 'styled-components';
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
-import ImagePlaceholder from '../assets/images/img-placeholder.png';
+import ImagePlaceholder from '../../assets/images/img-placeholder.png';
 export const RecipeContent = styled.div`
     display: flex;
     flex-direction: column;

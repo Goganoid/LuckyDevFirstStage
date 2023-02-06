@@ -5,7 +5,7 @@ import { type Meal } from 'src/api/mealdb.service';
 import { type MealsFilter, MealsLoader } from 'src/api/meals_loader.service';
 import styled from 'styled-components';
 import { Filter } from './Filter';
-import { itemsPerLoad } from '../config/constants';
+import { itemsPerLoad } from '../../config/constants';
 import BounceLoader from "react-spinners/BounceLoader";
 import { MealDescriptionPopup } from './MealDescriptionPopup';
 import { MealCard } from './Card';

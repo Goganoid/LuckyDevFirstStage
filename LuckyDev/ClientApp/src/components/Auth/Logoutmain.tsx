@@ -1,6 +1,6 @@
 import { MDBCard, MDBCardBody, MDBContainer } from 'mdb-react-ui-kit';
 import { Button } from 'react-bootstrap';
-import logoutImg from '../assets/images/logout.png';
+import logoutImg from '../../assets/images/logout.png';
 import styled from 'styled-components';
 
 const ImgWrapper = styled.img`

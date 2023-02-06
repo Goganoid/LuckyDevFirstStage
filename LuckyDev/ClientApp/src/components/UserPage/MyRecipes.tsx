@@ -7,8 +7,8 @@ import { UserApi, type UserCustomMeal } from 'src/api/user.service';
 import { successToastOptions } from 'src/config/toastify.config';
 import { UserContext } from 'src/pages/Userpage';
 import styled from 'styled-components';
-import { MealCard } from '../Card';
-import { MealDescriptionPopup } from '../MealDescriptionPopup';
+import { MealCard } from '../Catalogue/Card';
+import { MealDescriptionPopup } from '../Catalogue/MealDescriptionPopup';
 import { CreateRecipePopup } from './CreateRecipePopup';
 import { ItemWrapper, SavedMealList } from './SavedRecipes';
 const Wrapper = styled.div`

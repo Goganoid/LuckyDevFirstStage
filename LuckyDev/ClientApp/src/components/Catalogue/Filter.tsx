@@ -7,7 +7,7 @@ import { UserApi } from 'src/api/user.service';
 import { areaOptions, categoryOptions, convertToFilterList, ingredientOptions, type FilterItem } from 'src/config/constants';
 import { isLoggedIn } from 'src/utils/storage';
 import styled from 'styled-components';
-import { itemsPerLoad } from '../config/constants';
+import { itemsPerLoad } from '../../config/constants';
 
 export const FilterMenu = styled.div`
     float: right;
