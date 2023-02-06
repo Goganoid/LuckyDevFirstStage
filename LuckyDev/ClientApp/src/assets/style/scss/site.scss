@@ -200,9 +200,9 @@ body{
     }
 }
 .ingredients-list {
-    border-bottom: 1px solid $black-text;
+    border-bottom: 1px solid #BEBEBE;
     padding-bottom: 5px;
-    margin-bottom: 10px;
+    margin-bottom: 10px;    
     
     > .ingredient-name {
         flex-basis: 55%;
@@ -351,6 +351,32 @@ input.recipe-field {
 }
 
 
+//Ingredients table
+.ingredients-table {
+    margin-bottom: 10px;
+    padding-bottom: 5px;
+    border-bottom: 1px solid #BEBEBE;
+    display: flex;
+    > .ingredient-name {
+        flex-basis: 35%;
+        display: flex;
+        align-items: center;
+    }
+    > .ingredient-count {
+        flex-basis: 30%;
+        > input {
+            border: 1px;
+            height: 100%;
+            border-radius: 5px;
+            padding: auto 15px;
+        }
+    }
+    > .ingredient-buttons {
+        width: auto;
+        flex-basis: auto;
+    }
+}
+
 
 @media screen and (max-width: 992px) {
     #main {
@@ -398,8 +424,7 @@ input.recipe-field {
     }
     
     .LogoImg {
-        width: 25%;
-        transform: translateY(-10%);
+        width: 2em;
     }
     .LogoWrapper h1 {
         font-size: 120%;
@@ -414,13 +439,49 @@ input.recipe-field {
     .new-ingredient {
         flex-basis: 100%;
         min-width: 100%;
+        > div {
+            > div {
+                flex-basis: 60%;
+            }
+            > button {
+                flex-basis: 25%;
+            }
+        }
+    }
+
+    .ingredients-list {
+        > .ingredient-name {
+            flex-basis: 20%;
+        }
+        > .ingredient-count {
+            flex-basis: 20%;
+        }
+        > .ingredient-button {
+            flex-basis: 20%;
+        }
+    }
+    .BrandContent {
+        display: flex;
+        vertical-align: middle;
+        padding: 0;
+        * {
+            margin: 0;
+        }
+    }
+
+    .ingredients-table {
+        > .ingredient-buttons {
+            display: flex;
+            justify-content: right;
+            flex-basis: auto;
+            @media screen and (max-width: 768px) {
+                margin-top: 10px;
+            }
+        }
     }
 }
 
-@media screen and (max-width: 420px) {
-    .LogoImg {
-        width: 40px;
-    }
+@media screen and (max-width: 500px) {
     .carousel-container {
         bottom: 50%;
     }
@@ -462,5 +523,12 @@ input.recipe-field {
         h6, input, label, button {
             font-size: 0.8em;
         }
+    }
+
+    .ingredients-list * {
+        font-size: 0.7em;
+    }
+    .LogoImg {
+        width: 1.5em;
     }
 }

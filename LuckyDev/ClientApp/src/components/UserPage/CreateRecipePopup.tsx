@@ -182,7 +182,7 @@ export function CreateRecipePopup({ show, handleClose }: MealDescriptionPopupPro
             </div>
             <h3>List all the ingredients you need and their quantities</h3>
             <Container className='modal-div info'>
-                <div className='info'><h6>Ingredients:</h6>
+                <div className='info border-0'><h6>Ingredients:</h6>
                     <Container className='d-flex flex-column'>
                         {newRecipe.ingredients.length === 0 && <p style={{fontWeight: "lighter"}}>Start adding ingredients to your recipe.</p>}
                         {newRecipe.ingredients.map((ingredient, idx) => (
@@ -191,7 +191,7 @@ export function CreateRecipePopup({ show, handleClose }: MealDescriptionPopupPro
                                 <Col className='ingredient-count'><input type="text" 
                                     value={ingredient.measure || ''} placeholder="Enter the quantity"
                                     onChange={(event) => handleChangeMeasure(idx, event.target.value)} /></Col>
-                                <Col className='ingredient-button'><Button variant='primary'
+                                <Col className='ingredient-button'><Button variant='primary' className='Bootstrap-Button-white'
                                     onClick={() => handleRemoveIngredient(idx)}>Remove</Button></Col>
                             </Row>
                         ))}
@@ -200,7 +200,6 @@ export function CreateRecipePopup({ show, handleClose }: MealDescriptionPopupPro
                         {Selector}
                     </div>
                 </div>
-
             </Container>
             <h3>Write your recipe below</h3>
             <div className='info'>

@@ -42,13 +42,16 @@ export const IngredientsTable = () => {
             {userContext?.ingredients.length===0 && <p>Empty :(</p> }
             {userContext?.ingredients.map((ingredient,idx) => {
                 return (
-                    <Row key={idx} className='mb-3'>
-                        <Col sm={3}>{ingredient.name}</Col>
-                        <Col sm={2}><input type="text" className='d-block w-100' value={ingredient.measure || ''}
-                                    onChange={(event) => handleChangeMeasure(idx, event.target.value)} /></Col>
-                        <Col sm={7}>
-                            <Button variant='primary' onClick={() => handleRemove(ingredient.name)}>Remove</Button>
-                            <Button variant='primary' className='ms-3' onClick={() => handleUpdateMeasure(idx)}>Save Changes</Button>
+                    <Row key={idx} className='ingredients-table'>
+                        <Col className='ingredient-name'>{ingredient.name}</Col>
+                        <Col className='ingredient-count'><input type="text" className='d-block w-100' 
+                            value={ingredient.measure || ''} placeholder='Write count here...'
+                            onChange={(event) => handleChangeMeasure(idx, event.target.value)} /></Col>
+                        <Col className='ingredient-buttons'>
+                            <Button variant='primary' className='ms-3 Bootstrap-Button-white'
+                                onClick={() => handleRemove(ingredient.name)}>Remove</Button>
+                            <Button variant='primary' className='ms-3 Bootstrap-Button'
+                                onClick={() => handleUpdateMeasure(idx)}>Save Changes</Button>
                         </Col>
                     </Row>
                 )

@@ -1,6 +1,6 @@
 import { MealDbApi } from 'src/api/mealdb.service';
 import type { Meal } from "./mealdb.service";
-import { sort } from 'fast-sort';
+// import { sort } from 'fast-sort';
 const alphabet = "abcdefghijklmnopqrstuvwxyz";
 type IngredientsMatched = {
     matches: number;
@@ -82,10 +82,10 @@ class MealsLoaderService {
                 break;
             }
         }
-        this._meals = sort(this._meals).by([
-            { desc: m => m.matches  },
-            { asc: m => m.strMeal },
-          ]);
+        // this._meals = sort(this._meals).by([
+        //     { desc: m => m.matches  },
+        //     { asc: m => m.strMeal },
+        //   ]);
         const result = this._meals.slice(this.last_meal, this.last_meal + n);
         this.last_meal += n;
         return Promise.resolve(result);

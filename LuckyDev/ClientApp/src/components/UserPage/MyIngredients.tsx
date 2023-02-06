@@ -18,9 +18,12 @@ const IngredientsWrapper = styled.div`
 const MyIngredients: FunctionComponent = () => {
   const userContext = useContext(UserContext);
   const [selectedIngredient, setSelectedIngredient] = useState<string>('');
+
   if (userContext === null) return <></>;
+
   const handleAddIngredient = () => {
     if (selectedIngredient === '') return;
+
     UserApi.AddIngredient(selectedIngredient).then(result => {
       if (result?.status === 200) {
         userContext?.setUserProfile({
@@ -31,26 +34,31 @@ const MyIngredients: FunctionComponent = () => {
       }
     });
   }
-  
-  
-  const Selector = <div className='d-inline-flex ms-3'>
-    <Select
-      options={convertToFilterList(ingredientOptions)}
-      isClearable={true}
-      isSearchable={true}
-      onChange={(newValue, { action }) => {
-        if (action === 'select-option')
-          setSelectedIngredient(newValue?.value!);
-        if (action === 'deselect-option' || action === 'clear')
-          setSelectedIngredient('');
-      } } />
-    <Button disabled={selectedIngredient === '' || userContext.ingredients.some(i => i.name === selectedIngredient)} onClick={handleAddIngredient}>Add</Button>
-  </div>;
+    
+    
+  const Selector = (
+    <div className='d-flex ms-3'>
+      <Select
+        options={convertToFilterList(ingredientOptions)}
+        isClearable={true}
+        isSearchable={true}
+        onChange={(newValue, { action }) => {
+          if (action === 'select-option')
+            setSelectedIngredient(newValue?.value!);
+          if (action === 'deselect-option' || action === 'clear')
+            setSelectedIngredient('');
+        } } />
+      <Button className='Bootstrap-Button'
+        disabled={selectedIngredient === '' || userContext.ingredients.some(i => i.name === selectedIngredient)}
+        onClick={handleAddIngredient}>Add</Button>
+    </div>
+  );
+
   return (
     <>
-      <div className='d-flex align-items-center'>
+      <div>
         <h2>My ingredients: </h2>
-        {Selector}
+        <div className='new-ingredient'>{Selector}</div>
       </div>
       
       <IngredientsWrapper>
