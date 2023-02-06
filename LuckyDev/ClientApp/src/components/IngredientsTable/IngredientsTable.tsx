@@ -43,10 +43,10 @@ export const IngredientsTable = () => {
             {userContext?.ingredients.map((ingredient,idx) => {
                 return (
                     <Row key={idx} className='mb-3'>
-                        <Col>{ingredient.name}</Col>
-                        <Col><input type="text" value={ingredient.measure || ''}
+                        <Col sm={3}>{ingredient.name}</Col>
+                        <Col sm={2}><input type="text" className='d-block w-100' value={ingredient.measure || ''}
                                     onChange={(event) => handleChangeMeasure(idx, event.target.value)} /></Col>
-                        <Col>
+                        <Col sm={7}>
                             <Button variant='primary' onClick={() => handleRemove(ingredient.name)}>Remove</Button>
                             <Button variant='primary' className='ms-3' onClick={() => handleUpdateMeasure(idx)}>Save Changes</Button>
                         </Col>
