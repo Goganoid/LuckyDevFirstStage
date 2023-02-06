@@ -14,8 +14,8 @@ Browser will automatically open http://localhost:3000
 In case of error in fast-sort package, install it manually using `npm i fast-sort`
 
 ## Project structure
- - src/api/ — Services handling api requests
- - src/assets — images and styling
+ - api/ — Services handling api requests
+ - assets/ — images and styling
  - components/ — React components
  - Config/ — various configs
  - Pages/ — Components assembled into a pages
