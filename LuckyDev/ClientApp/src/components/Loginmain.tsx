@@ -25,11 +25,9 @@ export default function Loginmain() {
   const handleSubmit = (e: any) => {
     e.preventDefault()
     AuthApi.Login(email, password).then(response => {
-      console.log(response);
       setUserData(response.data.token, response.data.id);
       window.location.href = "/";
     }).catch(error => {
-      console.log(error);
       const errorMessage = error?.response?.data.message;
       if (errorMessage)
         toast.error(`Error:${errorMessage}`, errorToastOptions);

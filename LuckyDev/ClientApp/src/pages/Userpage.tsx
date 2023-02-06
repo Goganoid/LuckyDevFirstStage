@@ -45,7 +45,6 @@ const Userpage: FunctionComponent<PropsWithChildren> = () => {
     Promise.all([UserApi.GetUserInfo(), UserApi.GetMeals(), UserApi.GetUserIngredients()])
       .then(responses => {
         const [UserInfoResponse, UserMealsResponse, UserIngredientsResponse] = responses;
-        console.log(UserInfoResponse, UserMealsResponse, UserIngredientsResponse);
         setUserProfile({
           info: UserInfoResponse.data,
           meals: UserMealsResponse.data,

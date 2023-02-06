@@ -73,9 +73,7 @@ const SavedRecipes: FunctionComponent = () => {
                   setCurMeal={setCurMeal}
                   setShow={setShow}
                   onRemove={(meal) => {
-                    console.log(meal.idMeal);
                     UserApi.DeleteSavedMeal(meal.idMeal).then(result => {
-                      console.log(result);
                       if(result?.status===200) userContext.setUserProfile({
                         info: userContext.info,
                         ingredients: userContext.ingredients,

@@ -39,7 +39,6 @@ export function Filter({ setSearchFilters, searchFilters, setMeals, setLoading }
                 src='free-icon-magnifying-glass-126474.png'
                 alt='x'
                 onClick={() => {
-                    console.log(searchFilters);
                     setLoading(true);
                     MealsLoader.Reset();
                     MealsLoader.TakeNext(itemsPerLoad, searchFilters).then(result => {
@@ -119,7 +118,6 @@ export function Filter({ setSearchFilters, searchFilters, setMeals, setLoading }
                 }} />
 
             <Button className='Bootstrap-Button d-flex mt-4 mx-auto w-90%' onClick={() => {
-                console.log(searchFilters);
                 setLoading(true);
                 MealsLoader.Reset();
                 MealsLoader.TakeNext(itemsPerLoad, searchFilters).then(result => {
@@ -130,7 +128,6 @@ export function Filter({ setSearchFilters, searchFilters, setMeals, setLoading }
              {isLoggedIn() && <Button className='Bootstrap-Button d-flex mt-4 mx-auto'
                 onClick={() => {
                     UserApi.GetUserIngredients().then(result => {
-                        console.log(result);
                         const ingredients = result.data.map(i => i.name);
                         setSearchFilters({ ...searchFilters, ingredients:ingredients });
                     })

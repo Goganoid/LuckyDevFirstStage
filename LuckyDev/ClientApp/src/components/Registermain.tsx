@@ -51,7 +51,6 @@ export default function Registermain() {
       toast.error("Passwords don't match!", errorToastOptions);
     } else {
       AuthApi.Register(name1, name2, email, password1).then(response => {
-        console.log(response);
         if (response.status === 200) {
           AuthApi.Login(email, password1).then(res => {
             setUserData(res.data.token, res.data.id);
@@ -59,7 +58,6 @@ export default function Registermain() {
           })
         }
       }).catch((error: AxiosError<any>) => {
-        console.log(error);
         const errorMessage = error?.response?.data.message;
         if (errorMessage)
           toast.error(`Error:${errorMessage}`, errorToastOptions);

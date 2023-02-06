@@ -1,4 +1,4 @@
-import { useEffect, useState, type FunctionComponent } from 'react';
+import { useEffect, type FunctionComponent } from 'react';
 import { RouterProvider } from 'react-router-dom';
 import { toast } from 'react-toastify';
 import { UserApi } from './api/user.service';
@@ -13,9 +13,7 @@ const App: FunctionComponent = () => {
   useEffect(() => {
     const init_str = localStorage.getItem("init");
     if (init_str != null) {
-      console.log(init_str);
       const hoursSinceUpdate = dateDiffInHours(new Date(init_str), new Date());
-      console.log(hoursSinceUpdate);
       if (hoursSinceUpdate < 2) {
         return;
       }

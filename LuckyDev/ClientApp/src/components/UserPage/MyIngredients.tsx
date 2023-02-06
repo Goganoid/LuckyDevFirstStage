@@ -22,7 +22,6 @@ const MyIngredients: FunctionComponent = () => {
   const handleAddIngredient = () => {
     if (selectedIngredient === '') return;
     UserApi.AddIngredient(selectedIngredient).then(result => {
-      console.log(result);
       if (result?.status === 200) {
         userContext?.setUserProfile({
           info: userContext.info,
