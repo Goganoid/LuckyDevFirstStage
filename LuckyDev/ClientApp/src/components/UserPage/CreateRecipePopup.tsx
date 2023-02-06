@@ -30,7 +30,8 @@ export function CreateRecipePopup({ show, handleClose }: MealDescriptionPopupPro
         area: '',
         category: '',
         ingredients: [],
-        instructions: ''
+        instructions: '',
+        youtubeUrl: ''
     });
 
     const [selectedIngredient, setSelectedIngredient] = useState('');
@@ -149,6 +150,15 @@ export function CreateRecipePopup({ show, handleClose }: MealDescriptionPopupPro
                         >
                         </input>
                     </div>
+                    <div className='info'><span>Paste a video link</span>
+                        <input
+                            name="youtubeUrl"
+                            className='recipe-field'
+                            defaultValue={newRecipe.youtubeUrl}
+                            type="text"
+                            onChange={handleInputsChange}>
+                        </input>
+                    </div>
                     <div className='info'><span>What category does your recipe belong to?</span>
                         <Select
                             options={convertToFilterList(categoryOptions)}
@@ -246,7 +256,7 @@ export function CreateRecipePopup({ show, handleClose }: MealDescriptionPopupPro
                     
                 }}
                 className='Bootstrap-Button'>
-                Save Changes
+                Add
             </Button>
         </Modal.Footer>
     </Modal>;

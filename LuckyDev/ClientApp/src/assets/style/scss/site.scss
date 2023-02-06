@@ -312,6 +312,7 @@ input.recipe-field {
         flex-basis: 70%;
     }
 }
+
 .popup .info {
     border: 1px solid rgb(32, 32, 32);
     border-radius: 15px;
@@ -376,6 +377,9 @@ input.recipe-field {
                 display: block;
             }
         }
+    } 
+    .modal-div{
+        flex-direction: column;
     }
     .popup .modal-new-div {
         flex-direction: column;

@@ -16,6 +16,7 @@ export interface UserCustomMeal {
     category: string;
     ingredients: Ingredient[];
     instructions: string;
+    youtubeUrl: string;
 }
 export interface UserMeals {
     savedMealsIds: string[];

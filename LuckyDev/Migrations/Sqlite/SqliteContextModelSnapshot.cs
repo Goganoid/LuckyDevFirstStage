@@ -46,6 +46,10 @@ namespace RecipeWiki.Migrations.Sqlite
                     b.Property<int>("UserId")
                         .HasColumnType("INTEGER");
 
+                    b.Property<string>("YoutubeUrl")
+                        .IsRequired()
+                        .HasColumnType("TEXT");
+
                     b.HasKey("Id");
 
                     b.HasIndex("UserId");

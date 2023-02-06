@@ -14,4 +14,5 @@ public class MealRequestDTO
 
     /// <example>Add eggs, flour and water...</example>
     public required string Instructions { get; set; }
+    public string YoutubeUrl { get; set; }
 }

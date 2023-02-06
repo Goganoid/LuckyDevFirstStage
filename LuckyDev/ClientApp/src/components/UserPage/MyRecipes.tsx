@@ -28,6 +28,7 @@ function CustomMealToMeal(customMeal: UserCustomMeal): Meal {
   meal.strMealThumb = customMeal.image;
   meal.strMeal = customMeal.name;
   meal.strInstructions = customMeal.instructions;
+  meal.strYoutube = customMeal.youtubeUrl;
   customMeal.ingredients.forEach((ingredient, idx) => {
     if (idx >= 20) return;
     (meal as any)[`strIngredient${idx}`] = ingredient.name;

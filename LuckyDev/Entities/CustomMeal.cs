@@ -22,4 +22,6 @@ public class CustomMeal
 
     /// <example>Add eggs, flour and water...</example>
     public string Instructions { get; set; } = string.Empty;
+
+    public string YoutubeUrl { get; set; } = string.Empty;
 }

@@ -3,7 +3,7 @@ import { useEffect, useState, type FunctionComponent } from 'react';
 import Button from 'react-bootstrap/Button';
 import Carousel from 'react-bootstrap/Carousel';
 import { MealDbApi, type Meal } from 'src/api/mealdb.service';
-import dateDiffInDays from 'src/utils/dateDiff';
+import {dateDiffInDays} from 'src/utils/dateDiff';
 import styled from 'styled-components';
 import { MealDescriptionPopup } from './MealDescriptionPopup';
 
