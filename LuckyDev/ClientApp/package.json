@@ -1,5 +1,5 @@
 {
-  "name": "aspnet-core-react-redux-playground-template",
+  "name": "recipe-wiki",
   "version": "0.1.0",
   "private": true,
   "dependencies": {

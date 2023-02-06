@@ -22,5 +22,5 @@ public class CustomMealResponseDTO
 
     /// <example>Add eggs, flour and water...</example>
     public required string Instructions { get; set; }
-    public string YoutubeUrl { get; set; }
+    public required string YoutubeUrl { get; set; }
 }
