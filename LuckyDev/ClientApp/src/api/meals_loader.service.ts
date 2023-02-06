@@ -1,7 +1,12 @@
 import { MealDbApi } from 'src/api/mealdb.service';
 import type { Meal } from "./mealdb.service";
-
+import { sort } from 'fast-sort';
 const alphabet = "abcdefghijklmnopqrstuvwxyz";
+type IngredientsMatched = {
+    matches: number;
+}
+
+export type SearchResults = Meal & IngredientsMatched;
 
 export type MealsFilter = {
     name: string,
@@ -14,7 +19,7 @@ export type MealsFilter = {
 
 class MealsLoaderService {
     private static _sampleService: MealsLoaderService;
-    private _meals: Meal[] = [];
+    private _meals: SearchResults[] = [];
     private last_letter = 0;
     private last_meal = 0;
     private end = false;
@@ -33,38 +38,41 @@ class MealsLoaderService {
         this.end = false;
     }
 
-    private Filter(meals: Meal[], filters: MealsFilter) {
+    private Filter(meals: Meal[], filters: MealsFilter): SearchResults[] {
+        let results = meals.map(meal => { return { ...meal, matches: 0 } }) as SearchResults[];
         if (filters.name !== '') {
-            meals = meals.filter(meal => meal.strMeal.toLowerCase().includes(filters.name.toLowerCase()!));
+            results = results.filter(meal => meal.strMeal.toLowerCase().includes(filters.name.toLowerCase()!));
         }
         if (filters.category !== '') {
-            meals = meals.filter(meal => meal.strCategory === filters.category);
+            results = results.filter(meal => meal.strCategory === filters.category);
         }
         if (filters.area !== '') {
-            meals = meals.filter(meal => meal.strArea === filters.area);
+            results = results.filter(meal => meal.strArea === filters.area);
         }
         if (filters.ingredients.length !== 0) {
-            meals = meals.filter(meal => {
-                let occured = false;
+            results = results.map((meal) => {
                 for (let filterIngredient of filters.ingredients) {
-                    
                     for (let i = 1; i <= 20; i++) {
-                        if ((meal as any)[`strIngredient${i}`] === filterIngredient)
-                            occured = true;
+                        if ((meal as any)[`strIngredient${i}`] == null) continue;
+                        if ((meal as any)[`strIngredient${i}`].toLowerCase() === filterIngredient.toLowerCase())
+                        {
+                            meal.matches += 1;
+                        }
                     }
-                    
                 }
-                return occured;
+                return meal
             });
+            results = results.filter((meal) => meal.matches > 0);
         }
-        return meals
+        return results
     }
 
-    public async TakeNext(n: number, filters?: MealsFilter): Promise<Meal[]> {
+    public async TakeNext(n: number, filters?: MealsFilter): Promise<SearchResults[]> {
         if (this.end) return Promise.resolve([]);
         while (this.last_meal + n > this._meals.length) {
-            let new_meals = await MealDbApi.getMeals(alphabet[this.last_letter]) ?? [];
-            if(filters) new_meals = this.Filter(new_meals,filters)
+            const request = await MealDbApi.getMeals(alphabet[this.last_letter]) ?? [];
+            let new_meals: SearchResults[] = request.map(meal => { return { ...meal, matches: 0 }});
+            if (filters) new_meals = this.Filter(new_meals, filters);
             this._meals.push(...new_meals);
 
             if (this.last_letter < alphabet.length - 1) this.last_letter += 1;
@@ -74,6 +82,10 @@ class MealsLoaderService {
                 break;
             }
         }
+        this._meals = sort(this._meals).by([
+            { desc: m => m.matches  },
+            { asc: m => m.strMeal },
+          ]);
         const result = this._meals.slice(this.last_meal, this.last_meal + n);
         this.last_meal += n;
         return Promise.resolve(result);

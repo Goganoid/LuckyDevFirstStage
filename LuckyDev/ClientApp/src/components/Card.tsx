@@ -88,6 +88,8 @@ export type MealCardProps = {
 }
 
 export function MealCard({ meal, setCurMeal, setShow, onRemove }: MealCardProps): JSX.Element {
+    // console.log(meal);
+    const matches = (meal as any).matches ?? 0;
     return <ItemWrapper className="meal-tyles">
         {onRemove &&
             <CloseWrapper>
@@ -104,6 +106,9 @@ export function MealCard({ meal, setCurMeal, setShow, onRemove }: MealCardProps)
             </ImageWrapper>
             <RecipeContent>
                 <RecipeName>{meal.strMeal}</RecipeName>
+                {matches>0 && <span>
+                  Matches {(meal as any).matches} ingredient{matches>1 ? 's' : ''}
+                </span>}
                 <div>
                     <Button
                         className='Bootstrap-Button meal-select'

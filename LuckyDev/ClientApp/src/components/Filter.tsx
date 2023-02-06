@@ -103,7 +103,6 @@ export function Filter({ setSearchFilters, searchFilters, setMeals, setLoading }
                 isClearable={true}
                 isSearchable={true}
                 onChange={(newValue: MultiValue<FilterItem>, { action }) => {
-                    console.log(newValue, action);
                     if (action === 'select-option' || action === 'remove-value')
                         setSearchFilters({
                             ...searchFilters,
@@ -120,7 +119,7 @@ export function Filter({ setSearchFilters, searchFilters, setMeals, setLoading }
             <Button className='Bootstrap-Button d-flex mt-4 mx-auto w-90%' onClick={() => {
                 setLoading(true);
                 MealsLoader.Reset();
-                MealsLoader.TakeNext(itemsPerLoad, searchFilters).then(result => {
+                    MealsLoader.TakeNext(itemsPerLoad, searchFilters).then(result => {
                     setMeals(result);
                     setLoading(false);
                 });
