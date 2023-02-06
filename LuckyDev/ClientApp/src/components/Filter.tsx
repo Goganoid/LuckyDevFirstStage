@@ -27,9 +27,10 @@ export type FilterProps = {
     searchFilters: MealsFilter,
     setMeals: React.Dispatch<React.SetStateAction<Meal[]>>,
     setLoading: React.Dispatch<React.SetStateAction<boolean>>,
+    setShowLoadButton: React.Dispatch<React.SetStateAction<boolean>>
 }
 
-export function Filter({ setSearchFilters, searchFilters, setMeals, setLoading }: FilterProps) {
+export function Filter({ setSearchFilters, searchFilters, setShowLoadButton, setMeals, setLoading }: FilterProps) {
     return (
     <FilterMenu>
         <form className='search-form'>
