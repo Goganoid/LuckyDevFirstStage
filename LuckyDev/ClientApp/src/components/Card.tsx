@@ -77,7 +77,10 @@ export const Item = styled.div`
     justify-content: space-between;
     gap: 20px;
     width: 100%;
-    
+    @media screen and (max-width:400px) {
+        flex-direction: column;
+        align-items: center;
+    }
 `;
 export type MealCardProps = {
     meal: Meal,
