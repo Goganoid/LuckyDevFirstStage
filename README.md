@@ -15,9 +15,7 @@ Frontend:
 
 Production version is hosted on Azure.
 
-Frontend: https://recipewikifront.azurewebsites.net/
-
-Backend: https://recipewiki.azurewebsites.net/swagger
+Website: https://recipewiki.azurewebsites.net/
 
 Please, note that Azure has to warm up the server on the first request so the response may take 30-40 seconds. If you encounter any problems, DM me in Telegram [@yokano](https://t.me/yokano).
 You can run the local development version using instructions inside the `LuckyDev` folder.
