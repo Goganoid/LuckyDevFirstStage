@@ -88,6 +88,7 @@ const Header: React.FC<Props> = ({ className }) => {
                   <LinkContainer to='/auth/logout'><Nav.Link>Logout</Nav.Link></LinkContainer>
                   </>
               }
+              <LinkContainer to='/'><Nav.Link>Main</Nav.Link></LinkContainer>
               <Nav.Link href={NUGET_URL_CONFIG.SwaggerDocs}>API</Nav.Link>
             </Nav>
           </Offcanvas.Body>
