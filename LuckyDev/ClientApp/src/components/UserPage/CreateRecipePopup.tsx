@@ -35,9 +35,6 @@ export function CreateRecipePopup({ show, handleClose }: MealDescriptionPopupPro
 
     const [selectedIngredient, setSelectedIngredient] = useState('');
     const [isDisabled, setIsDisabled] = useState<boolean>(false);
-    const handleClick = () => {
-        setIsDisabled(true);
-    };
 
     function handleInputsChange(e: any) {
         const value = e.target.value;
@@ -223,6 +220,7 @@ export function CreateRecipePopup({ show, handleClose }: MealDescriptionPopupPro
                         toast.error(`Name is empty`, errorToastOptions);
                         return;
                     }
+                    setIsDisabled(true);
                     UserApi.AddCustomMeal(newRecipe).then(result => {
                         if (result?.status === 200) {
                             toast.success("Recipe added", successToastOptions);
@@ -237,7 +235,6 @@ export function CreateRecipePopup({ show, handleClose }: MealDescriptionPopupPro
                             setNewRecipe({name: '', image: '', area: '', category: '', 
                                 ingredients: [], instructions: '', youtubeUrl: '',
                             });
-                            handleClick();
                         }
                         else {
                             const errorMessage = result?.data;
