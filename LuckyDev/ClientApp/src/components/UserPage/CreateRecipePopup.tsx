@@ -235,6 +235,7 @@ export function CreateRecipePopup({ show, handleClose }: MealDescriptionPopupPro
                             setNewRecipe({name: '', image: '', area: '', category: '', 
                                 ingredients: [], instructions: '', youtubeUrl: '',
                             });
+                            handleClick();
                         }
                         else {
                             const errorMessage = result?.data;
