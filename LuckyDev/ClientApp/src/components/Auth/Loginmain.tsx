@@ -4,7 +4,7 @@ import { Button } from 'react-bootstrap';
 import { Link } from 'react-router-dom';
 import { toast } from 'react-toastify';
 import { AuthApi } from 'src/api/auth.service';
-import { errorToastOptions } from 'src/config/toastify.config';
+import { errorToastOptions, successToastOptions } from 'src/config/toastify.config';
 import { setUserData } from 'src/utils/storage';
 
 export default function Loginmain() {
@@ -20,7 +20,8 @@ export default function Loginmain() {
   };
 
   const handleSubmit = (e: any) => {
-    e.preventDefault()
+    e.preventDefault();
+    toast.info("Sending request...", successToastOptions);
     AuthApi.Login(email, password).then(response => {
       setUserData(response.data.token, response.data.id);
       window.location.href = "/";

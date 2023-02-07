@@ -5,7 +5,7 @@ import { Button } from 'react-bootstrap';
 import { Link } from 'react-router-dom';
 import { toast } from 'react-toastify';
 import { AuthApi } from 'src/api/auth.service';
-import { errorToastOptions } from 'src/config/toastify.config';
+import {errorToastOptions, successToastOptions } from 'src/config/toastify.config';
 import { setUserData } from 'src/utils/storage';
 
 export default function Registermain() {
@@ -37,6 +37,7 @@ export default function Registermain() {
 
   const handleSubmit = (e: any) => {
     e.preventDefault();
+    toast.info("Sending request...", successToastOptions);
     if (password1 !== password2) {
       toast.error("Passwords don't match!", errorToastOptions);
     } else {

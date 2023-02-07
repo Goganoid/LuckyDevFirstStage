@@ -4,6 +4,8 @@ export const itemsPerLoad = 6;
 
 
 export const NUGET_URL_CONFIG = {
+    // Server:'https://recipewiki.azurewebsites.net',
+    // SwaggerDocs: 'https://recipewiki.azurewebsites.net/swagger'
     Server:'http://localhost:5001',
     SwaggerDocs: 'http://localhost:5001/swagger'
   };

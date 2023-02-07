@@ -10,6 +10,8 @@ import { PopupYtLink } from './Cards';
 import { UserApi } from 'src/api/user.service';
 import ImagePlaceholder from '../../assets/images/img-placeholder.png';
 import { Form } from 'react-bootstrap';
+import { toast } from 'react-toastify';
+import { successToastOptions } from 'src/config/toastify.config';
 export type MealDescriptionPopupProps = {
     show: boolean,
     handleClose: () => void,
@@ -70,6 +72,7 @@ export function MealDescriptionPopup(
         <Modal.Footer>
             {isLoggedIn() && curMeal.custom !== true &&
                 <Button variant="primary" onClick={() => {
+                    toast.info("Sending request...", successToastOptions);
                     UserApi.SaveMeal(curMeal.idMeal);
                     handleClose();
                 }} className='Bootstrap-Button'>
