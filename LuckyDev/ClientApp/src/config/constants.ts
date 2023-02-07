@@ -4,7 +4,8 @@ export const itemsPerLoad = 6;
 
 
 export const NUGET_URL_CONFIG = {
-    SwaggerDocs: 'https://localhost:5001/swagger'
+    Server:'http://localhost:5001',
+    SwaggerDocs: 'http://localhost:5001/swagger'
   };
 
 export type FilterItem = {

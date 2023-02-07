@@ -88,12 +88,12 @@ public class AuthController : ControllerBase
     [HttpPost("register")]
     public IActionResult Register([FromBody] RegisterRequestDTO requestDTO)
     {
-        // map model to entity
-        var user = _mapper.Map<User>(requestDTO);
+        
 
         try
         {
-            if (string.IsNullOrWhiteSpace(requestDTO.Password))
+            Console.WriteLine(string.IsNullOrEmpty(requestDTO.Password.Trim()));
+            if (string.IsNullOrEmpty(requestDTO.Password.Trim()))
                 throw new Exception("Password is required");
             if (string.IsNullOrWhiteSpace(requestDTO.FirstName))
                 throw new Exception("First name is required");
@@ -101,6 +101,10 @@ public class AuthController : ControllerBase
                 throw new Exception("Last name is required");
             if (string.IsNullOrWhiteSpace(requestDTO.Email))
                 throw new Exception("Email is required");
+            
+            // map model to entity
+            var user = _mapper.Map<User>(requestDTO);
+            
             if (_context.Users.Any(x => x.Email == user.Email))
                 throw new Exception("\"" + user.Email + "\" is already taken");
 

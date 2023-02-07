@@ -36,7 +36,7 @@ export default function Registermain() {
   };
 
   const handleSubmit = (e: any) => {
-    e.preventDefault()
+    e.preventDefault();
     if (password1 !== password2) {
       toast.error("Passwords don't match!", errorToastOptions);
     } else {
@@ -49,6 +49,11 @@ export default function Registermain() {
         }
       }).catch((error: AxiosError<any>) => {
         const errorMessage = error?.response?.data.message;
+        const emailErrors = error?.response?.data?.errors?.Email;
+        if (emailErrors && emailErrors.length > 0) {
+          toast.error(`Error:${emailErrors[0]}`, errorToastOptions);
+          return;
+        }
         if (errorMessage)
           toast.error(`Error:${errorMessage}`, errorToastOptions);
         else
@@ -67,7 +72,9 @@ export default function Registermain() {
           <MDBInput onChange={handleEmail} value={email} wrapperClass='mb-4' label='Your Email' size='lg' id='form3' type='email' />
           <MDBInput onChange={handlePassword1} value={password1} wrapperClass='mb-4' label='Password' size='lg' id='form4' type='password' />
           <MDBInput onChange={handlePassword2} value={password2} wrapperClass='mb-4' label='Repeat your password' size='lg' id='form5' type='password' />
-          <Button onClick={handleSubmit} className='mb-4 w-100 Auth-Button' size='lg' variant="primary">Register</Button>
+          <Button onClick={handleSubmit} className='mb-4 w-100 Auth-Button' size='lg' variant="primary"
+            disabled={[name1,name2,email,password1,password2].some(value=>value.trim().length===0)}
+          >Register</Button>
           <h6 className="text-uppercase text-center mb-5">Already have an account? <Link to="/auth/login">login</Link></h6>
         </MDBCardBody>
       </MDBCard>

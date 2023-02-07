@@ -1,3 +1,5 @@
+using System.ComponentModel.DataAnnotations;
+
 namespace RecipeWiki.Entities.DTO.User;
 
 public class RegisterRequestDTO
@@ -8,9 +10,10 @@ public class RegisterRequestDTO
     /// <example>Doe</example> 
     public required string LastName { get; set; }
 
-    /// <example>john_doe@gmail.com</example> 
+    /// <example>john_doe@gmail.com</example>
+    [EmailAddress] 
     public required string Email { get; set; }
 
-    /// <example>123456</example> 
+    /// <example>123456</example>
     public required string Password { get; set; }
 }

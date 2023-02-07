@@ -176,28 +176,28 @@ using (var scope = app.Services.CreateScope())
 {
     var services = scope.ServiceProvider;
     var context = services.GetRequiredService<DataContext>();
-    try{
+    try
+    {
         context.Database.Migrate();
     }
-    catch(Exception e){
+    catch (Exception e)
+    {
         Console.WriteLine(e);
         Console.WriteLine($"Exception occured during migration. Deleting database and trying again");
         context.Database.EnsureDeleted();
         context.Database.Migrate();
     }
+
     DbInitializer.Initialize(context);
 }
 
 // Register the Swagger generator and the Swagger UI middlewares
 // Configure the HTTP request pipeline.
-// if (app.Environment.IsDevelopment())
-// {
-    app.UseSwagger();
-    // app.UseSwaggerUI();
-    app.UseSwaggerUI(c => { c.SwaggerEndpoint("/swagger/v1/swagger.json", "TestWebApi"); });
-// }
+app.UseSwagger();
+app.UseSwaggerUI(c => { c.SwaggerEndpoint("/swagger/v1/swagger.json", "TestWebApi"); });
 
-app.UseHttpsRedirection();
+if (!app.Environment.IsDevelopment())
+    app.UseHttpsRedirection();
 
 app.UseCors();
 
@@ -205,14 +205,5 @@ app.UseRouting();
 app.UseAuthentication();
 app.UseAuthorization();
 app.MapControllers();
-
-// Killing .NET debug session does not kill spawned Node.js process (have to manually kill)
-// app.UseSpa(spa =>
-// {
-//     spa.Options.SourcePath = spaSrcPath;
-//
-//     // if (app.Environment.IsDevelopment())
-//     //     spa.UseReactDevelopmentServer(npmScript: "start");
-// });
 
 app.Run();
