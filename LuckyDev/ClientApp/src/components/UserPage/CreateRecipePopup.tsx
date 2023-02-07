@@ -243,6 +243,7 @@ export function CreateRecipePopup({ show, handleClose }: MealDescriptionPopupPro
                             else
                                 toast.error(`Error:${result?.status}`, errorToastOptions);
                         }
+                        setIsDisabled(false);
                         handleClose();
                     })
                 }}
