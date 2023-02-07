@@ -237,6 +237,7 @@ export function CreateRecipePopup({ show, handleClose }: MealDescriptionPopupPro
                             setNewRecipe({name: '', image: '', area: '', category: '', 
                                 ingredients: [], instructions: '', youtubeUrl: '',
                             });
+                            handleClick();
                         }
                         else {
                             const errorMessage = result?.data;
@@ -246,7 +247,6 @@ export function CreateRecipePopup({ show, handleClose }: MealDescriptionPopupPro
                                 toast.error(`Error:${result?.status}`, errorToastOptions);
                         }
                         handleClose();
-                        handleClick();
                     })
                 }}
                 className='Bootstrap-Button'>
