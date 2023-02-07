@@ -10,6 +10,8 @@ import { PopupYtLink } from './Cards';
 import { UserApi } from 'src/api/user.service';
 import ImagePlaceholder from '../../assets/images/img-placeholder.png';
 import { Form } from 'react-bootstrap';
+import { toast } from 'react-toastify';
+import { errorToastOptions, successToastOptions } from 'src/config/toastify.config';
 export type MealDescriptionPopupProps = {
     show: boolean,
     handleClose: () => void,
@@ -35,7 +37,7 @@ export function MealDescriptionPopup(
             ingredients.push(
                 <Row key={i}>
                     <Col>
-                        <Form.Check label={ingredient} className='ms-3'/>
+                        <Form.Check label={ingredient} className='ms-3' />
                     </Col>
                     <Col>
                         <IngredientSpan>{measure}</IngredientSpan>
@@ -44,6 +46,21 @@ export function MealDescriptionPopup(
             )
         }
     }
+
+    const SaveMealButton = <Button variant="primary" onClick={() => {
+        toast.info("Sending request...", successToastOptions);
+        UserApi.SaveMeal(curMeal.idMeal).then(result => {
+            console.log(result);
+            if (result?.status === 200) toast.success("Meal saved", successToastOptions);
+            else if (result?.status === 409) toast.error("Meal is already saved", errorToastOptions);
+            else toast.error(`Error:${result?.status}`);
+            handleClose();
+        });
+        // handleClose();
+    }} className='Bootstrap-Button'>
+        Save to my list
+    </Button>;
+    const LoginButton = <Button variant='primary' onClick={()=>window.location.href='/auth/login'}>Login to save</Button>
 
     return <Modal show={show} onHide={handleClose} size="lg" className='popup'>
         <Modal.Header closeButton>
@@ -68,13 +85,8 @@ export function MealDescriptionPopup(
             </div>
         </Modal.Body>
         <Modal.Footer>
-            {isLoggedIn() && curMeal.custom !== true &&
-                <Button variant="primary" onClick={() => {
-                    UserApi.SaveMeal(curMeal.idMeal);
-                    handleClose();
-                }} className='Bootstrap-Button'>
-                    Save to my list
-                </Button>}
+            {!isLoggedIn() && LoginButton }
+            {isLoggedIn() && curMeal.custom !== true && SaveMealButton}
         </Modal.Footer>
     </Modal>;
 }

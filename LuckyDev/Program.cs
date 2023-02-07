@@ -42,7 +42,7 @@ builder.Services.AddSignalR();
 
 // Add Brotli/Gzip response compression (prod only)
 builder.Services.AddResponseCompressionConfig(builder.Configuration);
-
+builder.Services.AddControllersWithViews();
 // Config change in asp.net core 3.0+ - 'Async' suffix in action names get stripped by default - so, to access them by full name with 'Async' part - opt out of this feature.
 builder.Services.AddMvc(opt => opt.SuppressAsyncSuffixInActionNames = false);
 
@@ -198,12 +198,12 @@ app.UseSwaggerUI(c => { c.SwaggerEndpoint("/swagger/v1/swagger.json", "TestWebAp
 
 if (!app.Environment.IsDevelopment())
     app.UseHttpsRedirection();
-
+app.UseStaticFiles();
 app.UseCors();
 
 app.UseRouting();
 app.UseAuthentication();
 app.UseAuthorization();
 app.MapControllers();
-
+app.MapFallbackToFile("/index.html");
 app.Run();

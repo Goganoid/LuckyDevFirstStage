@@ -10,6 +10,7 @@ export const IngredientsTable = () => {
     const userContext = useContext(UserContext);
 
     const handleRemove = (ingredientName: string) => {
+        toast.info("Sending request...", successToastOptions);
         UserApi.DeleteIngredient(ingredientName).then(result => {
             if (result?.status === 200) {
               userContext?.setUserProfile({
@@ -21,6 +22,7 @@ export const IngredientsTable = () => {
           });
     }
     const handleUpdateMeasure = (idx: number) => {
+        toast.info("Sending request...", successToastOptions);
         UserApi.UpdateIngredient(userContext?.ingredients[idx]!).then(result => {
             if (result?.status === 200) {
                 toast.success("Updated", successToastOptions);
