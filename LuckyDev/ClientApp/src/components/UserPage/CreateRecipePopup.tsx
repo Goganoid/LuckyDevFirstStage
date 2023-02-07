@@ -34,6 +34,10 @@ export function CreateRecipePopup({ show, handleClose }: MealDescriptionPopupPro
     });
 
     const [selectedIngredient, setSelectedIngredient] = useState('');
+    const [isDisabled, setIsDisabled] = useState<boolean>(false);
+    const handleClick = () => {
+        setIsDisabled(true);
+    };
 
     function handleInputsChange(e: any) {
         const value = e.target.value;
@@ -213,6 +217,7 @@ export function CreateRecipePopup({ show, handleClose }: MealDescriptionPopupPro
             </Button>
             <Button
                 variant="primary"
+                disabled={isDisabled}
                 onClick={() => {
                     if (newRecipe.name === '') {
                         toast.error(`Name is empty`, errorToastOptions);
@@ -241,6 +246,7 @@ export function CreateRecipePopup({ show, handleClose }: MealDescriptionPopupPro
                                 toast.error(`Error:${result?.status}`, errorToastOptions);
                         }
                         handleClose();
+                        handleClick();
                     })
                 }}
                 className='Bootstrap-Button'>
