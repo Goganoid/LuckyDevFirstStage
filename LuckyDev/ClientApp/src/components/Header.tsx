@@ -52,7 +52,7 @@ const Header: React.FC<Props> = ({ className }) => {
   }, []);
 
   return (
-    <StyledHeader expand={expand} variant="dark" className={scrollClass}>
+    <StyledHeader expand={expand} variant="dark" className={scrollClass} collapseOnSelect={true}>
       <Container fluid>
         <Navbar.Brand href="/">
           <div className='BrandContent'>
