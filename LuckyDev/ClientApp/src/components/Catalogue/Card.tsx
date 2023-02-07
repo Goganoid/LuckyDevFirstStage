@@ -68,6 +68,7 @@ const CloseWrapper = styled.div`
     position: absolute;
     top:5px;
     right:10px;
+    z-index: 99;
 `
 
 
