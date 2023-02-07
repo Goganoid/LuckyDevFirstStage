@@ -68,11 +68,11 @@ export const areaOptions = [
     'Morrocan',
     'Polish',
     'Portuguese',
-    'Russian',
     'Spanish',
     'Thai',
     'Tunisian',
     'Turkish',
+    'Ukrainian',
     'Unknown',
     'Vietnamese',
 ]
